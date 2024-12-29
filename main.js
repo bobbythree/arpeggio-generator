@@ -9,27 +9,27 @@ const chords = {
   },
   ii: {
     chord: 'ii - D3',
-    rootNoteSemitonesFromC4 : -6
+    rootNoteSemitonesFromC4 : -5
   },
   iii: {
     chord: 'iii - E3',
-    rootNoteSemitonesFromC4 : -5
+    rootNoteSemitonesFromC4 : -3
   },
   IV: {
     chord: 'IV - F3', 
-    rootNoteSemitonesFromC4 : -4
+    rootNoteSemitonesFromC4 : -2
   },
   V: {
     chord: 'V - G3',
-    rootNoteSemitonesFromC4 : -3
+    rootNoteSemitonesFromC4 : 0
   },
   vi: {
     chord: 'vi - A3',
-    rootNoteSemitonesFromC4 : -2
+    rootNoteSemitonesFromC4 : +2
   },
   vii: {
     chord: 'vii - B3',
-    rootNoteSemitonesFromC4 : -1
+    rootNoteSemitonesFromC4 : +4
   },
 }
 
@@ -48,17 +48,18 @@ for (const chord in chords) {
   button.innerHTML = chords[chord].chord;
   buttonDiv.appendChild(button);
   button.onclick = () => {
-    playArp(chords[chord].rootNoteSemitonesFromC4);
+    if(chord === 'I' || chord === 'IV') {
+      playArp(chords[chord].rootNoteSemitonesFromC4);
+    }
   }
 }
 
-function playArp(semitonesFromC4)
-{
+function playArp(semitonesFromC4) {
   console.info('Playing Arp from root note: ' + calculateFrequency(semitonesFromC4));
   const now = Tone.now();
   var timeOffset = .25;
   synth.triggerAttackRelease(calculateFrequency(semitonesFromC4), "2n", now);
-  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 2), "8n", now + timeOffset);
-  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 4), "8n", now + timeOffset  * 2);
-  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 7), "8n", now + timeOffset  * 3);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 4), "8n", now + timeOffset);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 7), "8n", now + timeOffset  * 2);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 11), "8n", now + timeOffset  * 3);
 }
