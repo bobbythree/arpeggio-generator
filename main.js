@@ -1,120 +1,64 @@
+//setup music functionality
+const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+const c4_frequency = 261.626;
+
 const chords = {
   I: {
-    chord: 'I',
-    func : playArp1,
-    
+    chord: 'I - C3',
+    rootNoteSemitonesFromC4 : -7  
   },
   ii: {
-    chord: 'ii',
-    func : playArp2,
-    
+    chord: 'ii - D3',
+    rootNoteSemitonesFromC4 : -6
   },
   iii: {
-    chord: 'iii',
-    func : playArp3,
-    
+    chord: 'iii - E3',
+    rootNoteSemitonesFromC4 : -5
   },
   IV: {
-    chord: 'IV',
-    func : playArp4,
-    
+    chord: 'IV - F3', 
+    rootNoteSemitonesFromC4 : -4
   },
   V: {
-    chord: 'V',
-    func : playArp5,
-    
+    chord: 'V - G3',
+    rootNoteSemitonesFromC4 : -3
   },
   vi: {
-    chord: 'vi',
-    func : playArp6,
-    
+    chord: 'vi - A3',
+    rootNoteSemitonesFromC4 : -2
   },
   vii: {
-    chord: 'vii',
-    func : playArp7,
-    
+    chord: 'vii - B3',
+    rootNoteSemitonesFromC4 : -1
   },
 }
 
 //create buttons with functionality
 const buttonDiv = document.getElementById('button-div');
 
-for (const x in chords) {
+//helper function to calculate frequency of notes offset from C4
+function calculateFrequency(semitonesFromC4) {
+  var noteFrequency = c4_frequency * Math.pow(2, semitonesFromC4 / 12);
+  return noteFrequency;
+}
+
+//draw the buttons
+for (const chord in chords) {
   const button = document.createElement('button');
-  button.innerHTML = chords[x].chord;
+  button.innerHTML = chords[chord].chord;
   buttonDiv.appendChild(button);
   button.onclick = () => {
-    chords[x].func();
+    playArp(chords[chord].rootNoteSemitonesFromC4);
   }
 }
 
-
-//aprpeggio functions
-function playArp1() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+function playArp(semitonesFromC4)
+{
+  console.info('Playing Arp from root note: ' + calculateFrequency(semitonesFromC4));
   const now = Tone.now();
-  synth.triggerAttackRelease("C3", "2n", now);
-  synth.triggerAttackRelease("G3", "8n", now + 0.25);
-  synth.triggerAttackRelease("A3", "8n", now + 0.5);
-  synth.triggerAttackRelease("E4", "8n", now + 0.75);
+  var timeOffset = .25;
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4), "2n", now);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 2), "8n", now + timeOffset);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 4), "8n", now + timeOffset  * 2);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + 7), "8n", now + timeOffset  * 3);
 }
-
-function playArp2() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const now = Tone.now();
-  synth.triggerAttackRelease("D3", "2n", now);
-  synth.triggerAttackRelease("F3", "8n", now + 0.25);
-  synth.triggerAttackRelease("A3", "8n", now + 0.5);
-  synth.triggerAttackRelease("C4", "8n", now + 0.75);
-}
-
-function playArp3() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const now = Tone.now();
-  synth.triggerAttackRelease("E3", "2n", now);
-  synth.triggerAttackRelease("G3", "8n", now + 0.25);
-  synth.triggerAttackRelease("B3", "8n", now + 0.5);
-  synth.triggerAttackRelease("D4", "8n", now + 0.75);
-}
-
-function playArp4() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const now = Tone.now();
-  synth.triggerAttackRelease("F3", "2n", now);
-  synth.triggerAttackRelease("A3", "8n", now + 0.25);
-  synth.triggerAttackRelease("C4", "8n", now + 0.5);
-  synth.triggerAttackRelease("E4", "8n", now + 0.75);
-}
-
-function playArp5() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const now = Tone.now();
-  synth.triggerAttackRelease("G3", "2n", now);
-  synth.triggerAttackRelease("B3", "8n", now + 0.25);
-  synth.triggerAttackRelease("D4", "8n", now + 0.5);
-  synth.triggerAttackRelease("F4", "8n", now + 0.75);
-}
-
-function playArp6() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const now = Tone.now();
-  synth.triggerAttackRelease("A3", "2n", now);
-  synth.triggerAttackRelease("C4", "8n", now + 0.25);
-  synth.triggerAttackRelease("E4", "8n", now + 0.5);
-  synth.triggerAttackRelease("G4", "8n", now + 0.75);
-}
-
-function playArp7() {
-  const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-  const now = Tone.now();
-  synth.triggerAttackRelease("B3", "2n", now);
-  synth.triggerAttackRelease("D4", "8n", now + 0.25);
-  synth.triggerAttackRelease("F4", "8n", now + 0.5);
-  synth.triggerAttackRelease("A4", "8n", now + 0.75);
-}
-
-const playBtn1 = document.getElementById('play-btn1')
-const playBtn2 = document.getElementById('play-btn2')
-const playBtn3 = document.getElementById('play-btn3')
-
-
