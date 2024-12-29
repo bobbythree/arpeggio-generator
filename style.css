@@ -1,0 +1,26 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: 'border-box';
+}
+
+#heading {
+	text-align: center;
+	padding: 1rem;
+}
+
+#button-div {
+	text-align: center;
+	padding-top: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+#button-div button {
+	padding: 1rem;
+	background: steelblue;
+	color: lightgray;
+	width: 3rem;
+}
