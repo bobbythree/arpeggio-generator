@@ -4,13 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/15.1.3/Tone.js" integrity="sha512-l/S587UA2X7JyCkDqZiEX+4OC6Hp8FC0PE1MFi3+KFLk3n1lxQAtSq8YTZ4ig2YFpJal2Jhz3H3iIFyv3KScFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <link rel="stylesheet" href="style.css">  
-  <title></title>
+  <link rel="stylesheet" href="style.css">
+  <title>Arpeggio Generator</title>
 </head>
 <body>
   <h1 id="heading">Arpeggio Generator</h1>
-  <div id="button-div"></div>
-
-  <script src="main.js" type="module"></script> 
+  <button id="power-button">Power Off</button>
+  <div id="dropdown-div"></div>
+  <div id="keyboard-div">
+    <div id="keyboard">
+      <button class="note" data-note="C">C</button>
+      <button class="note" data-note="C#">C#</button>
+      <button class="note" data-note="D">D</button>
+      <button class="note" data-note="D#">D#</button>
+      <button class="note" data-note="E">E</button>
+      <button class="note" data-note="F">F</button>
+      <button class="note" data-note="F#">F#</button>
+      <button class="note" data-note="G">G</button>
+      <button class="note" data-note="G#">G#</button>
+      <button class="note" data-note="A">A</button>
+      <button class="note" data-note="A#">A#</button>
+      <button class="note" data-note="B">B</button>
+    </div>
+    <div id="octave-controls">
+      <button id="decrease-octave">- Octave</button>
+      <button id="increase-octave">+ Octave</button>
+    </div>
+  </div>
+  
+  <script src="main.js" type="module"></script>
 </body>
 </html>
