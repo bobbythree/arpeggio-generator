@@ -33,6 +33,49 @@ const chords = {
   },
 }
 
+//Intervals in semitones to play this type of chord
+const chordIntervals = {
+  major: [0, 4, 5, 7],
+  minor: [0, 3, 5, 7],
+  diminished: [0, 3, 5, 6],
+  augmented: [0, 4, 5, 8],
+  major7: [0, 4, 7, 11],
+  minor7: [0, 3, 7, 10],
+  dominant7: [0, 4, 7, 10],
+  halfDiminished7: [0, 3, 6, 10],
+  diminished7: [0, 3, 6, 9],
+  minorMajor7: [0, 3, 7, 11],
+  augmentedMajor7: [0, 4, 8, 11],
+  augmented7: [0, 4, 8, 10],
+  sus2: [0, 2, 5, 7],
+  sus4: [0, 5, 7, 12],
+  add9: [0, 4, 7, 14],
+  add11: [0, 4, 7, 17],
+  add13: [0, 4, 7, 21]
+};
+
+//create dropdown for chord selection
+const dropdownDiv = document.getElementById('dropdown-div');
+const dropdown = document.createElement('select');
+
+//populate dropdown with chord options from chordintervals
+for (const chord in chordIntervals) {
+  const option = document.createElement('option');
+  option.value = chord;
+  option.text = chord;
+  dropdown.appendChild(option);
+}
+
+dropdownDiv.appendChild(dropdown);
+
+//add event listener to dropdown
+dropdown.addEventListener('change', (event) => {
+  const selectedChord = event.target.value;
+  if (selectedChord === 'I' || selectedChord === 'IV') {
+    playArp(chords[selectedChord].rootNoteSemitonesFromC4);
+  }
+});
+
 //create buttons with functionality
 const buttonDiv = document.getElementById('button-div');
 
