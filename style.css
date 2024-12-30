@@ -5,13 +5,25 @@
 
 #dropdown-div {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin-top: 2rem;
 }
 
 #dropdown-div select {
   padding: 10px 20px;
   font-size: 16px;
+  margin-bottom: 1rem; /* Add some space between the dropdowns */
+}
+
+#dropdown-div label {
+  font-size: 16px;
+  margin-bottom: 0.5rem; /* Add some space between the label and the dropdown */  
+  align-items: center;
+}
+
+#pattern-label {
+  margin-top: 1rem; /* Add some space between the chord dropdown and the pattern label */
 }
 
 #keyboard {
@@ -64,4 +76,4 @@
 	cursor: pointer;
 	text-align: center;
 	background-color: darkred; /* Initial color */
-  }
+}

@@ -27,9 +27,16 @@ const chordIntervals = {
 
 //create dropdown for chord selection
 const dropdownDiv = document.getElementById('dropdown-div');
-const dropdown = document.createElement('select');
 
-//populate dropdown with chord options from chordintervals
+const chordLabel = document.createElement('label');
+chordLabel.textContent = 'Select Chord: ';
+chordLabel.setAttribute('for', 'chord-dropdown');
+dropdownDiv.appendChild(chordLabel);
+
+const dropdown = document.createElement('select');
+dropdown.id = 'chord-dropdown';
+
+//populate dropdown with chord options from chordIntervals
 for (const chord in chordIntervals) {
   const option = document.createElement('option');
   option.value = chord;
@@ -46,7 +53,13 @@ dropdown.addEventListener('change', (event) => {
 });
 
 //create dropdown for arpeggio pattern selection
+const patternLabel = document.createElement('label');
+patternLabel.textContent = 'Select Pattern: ';
+patternLabel.setAttribute('for', 'pattern-dropdown');
+dropdownDiv.appendChild(patternLabel);
+
 const patternDropdown = document.createElement('select');
+patternDropdown.id = 'pattern-dropdown';
 const patterns = ['Rising', 'Falling', 'Ping Pong', 'Random'];
 
 //populate dropdown with pattern options
