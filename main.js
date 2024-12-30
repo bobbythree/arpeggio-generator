@@ -2,6 +2,7 @@
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 const c4_frequency = 261.626;
 let currentOctave = 4;
+let powerOn = false; // Power state
 
 //Intervals in semitones to play this type of chord
 const chordIntervals = {
@@ -50,10 +51,11 @@ function calculateFrequency(semitonesFromC4) {
 }
 
 function playArp(semitonesFromC4, chord) {
+  if (!powerOn) return; // Do nothing if power is off
   console.info('Playing Arp from root note: ' + calculateFrequency(semitonesFromC4));
   const now = Tone.now();
   var timeOffset = .25;
-  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4), "4n", now);
+  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4), "2n", now);
   chordIntervals[chord].slice(1).forEach((interval, index) => {
     synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + interval), "8n", now + timeOffset * (index + 1));
   });
@@ -95,4 +97,9 @@ document.getElementById('increase-octave').addEventListener('click', () => {
   if (currentOctave < 7) {
     currentOctave++;
   }
+});
+
+document.getElementById('power-button').addEventListener('click', () => {
+  powerOn = !powerOn;
+  document.getElementById('power-button').textContent = powerOn ? 'Power On' : 'Power Off';
 });

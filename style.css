@@ -1,53 +1,66 @@
 #heading {
-	text-align: center;
-	margin-top: 2rem;
-  }
+  text-align: center;
+  margin-top: 2rem;
+}
+
 #dropdown-div {
-	display: flex;
-	justify-content: center;
-	margin-top: 2rem;
-  }
-  
-  #dropdown-div select {
-	padding: 10px 20px;
-	font-size: 16px;
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+#dropdown-div select {
+  padding: 10px 20px;
+  font-size: 16px;
+}
 
 #keyboard {
-	display: flex;
-	justify-content: center;
-	margin-top: 2rem;
-  }
-  
-  .note {
-	width: 40px;
-	height: 100px;
-	margin: 0 2px;
-	background-color: white;
-	border: 1px solid black;
-	border-radius: 5px;
-	text-align: center;
-	line-height: 100px;
-	cursor: pointer;
-  }
-  
-  .note[data-note$='#'] {
-	background-color: black;
-	color: white;
-	height: 60px;
-	margin-top: 0px;
-	z-index: 1;
-	position: relative;
-  }
-  
-  #octave-controls {
-	display: flex;
-	justify-content: center;
-	margin-top: 1rem;
-  }
-  
-  #octave-controls button {
-	margin: 0 10px;
-	padding: 10px 20px;
-	cursor: pointer;
-  }
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  position: relative;
+  height: 100px;
+}
+
+.note {
+  width: 40px;
+  height: 100px;
+  margin: 0 2px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 100px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.note[data-note$='#'] {
+  background-color: black;
+  color: white;
+  height: 60px;
+  margin-top: 0;
+  z-index: 2;
+  width: 30px;
+}
+
+#octave-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+#octave-controls button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+#power-button {
+  display: block;
+  margin: 1rem auto;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+}
