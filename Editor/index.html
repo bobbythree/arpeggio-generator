@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop Scene Editor</title>
+    <style>
+        #icon-container {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            cursor: grab;
+        }
+        #scene {
+            width: 800px;
+            height: 600px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="icon-container">
+        <img src=".\images\cloud.png" class="icon" data-type="cloud" draggable="true">
+        <img src=".\images\tree.png" class="icon" data-type="tree" draggable="true">
+    </div>
+    <div id="scene"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.2.0/pixi.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
