@@ -1,8 +1,8 @@
 //setup music functionality
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-const c4_frequency = 261.626;
-let currentOctave = 4;
-let powerOn = false; // Power state
+const c4_frequency = 261.626;   // To calculate frequency of notes, we need a datum
+let currentOctave = 4;          // Initial octave
+let powerOn = false;            // Power state
 
 //Intervals in semitones to play this type of chord
 const chordIntervals = {
@@ -37,6 +37,7 @@ for (const chord in chordIntervals) {
   dropdown.appendChild(option);
 }
 
+//Add the dropdown to the page
 dropdownDiv.appendChild(dropdown);
 
 //add event listener to dropdown
@@ -50,6 +51,7 @@ function calculateFrequency(semitonesFromC4) {
   return noteFrequency;
 }
 
+// Function to play an arpeggio based on the root note and selected chord
 function playArp(semitonesFromC4, chord) {
   if (!powerOn) return; // Do nothing if power is off
   console.info('Playing Arp from root note: ' + calculateFrequency(semitonesFromC4));
@@ -61,7 +63,7 @@ function playArp(semitonesFromC4, chord) {
   });
 }
 
-// Keyboard and octave controls
+// Keyboard and octave controls - makes the math easier by embedding the note semitone offset for the keyboard
 const notes = {
   'C': 0,
   'C#': 1,
@@ -79,6 +81,7 @@ const notes = {
 
 let selectedChord = 'major'; // Default chord
 
+// Control the UI state based on powerOn
 function setUIState(powerOn) {
   document.querySelector('select').disabled = !powerOn;
   document.querySelectorAll('.note').forEach(button => {
@@ -91,20 +94,24 @@ function setUIState(powerOn) {
 // Set initial UI state
 setUIState(powerOn);
 
+// Event listener for power button
 document.getElementById('power-button').addEventListener('click', async () => {
   powerOn = !powerOn;
   const powerButton = document.getElementById('power-button');
   powerButton.textContent = powerOn ? 'Power On' : 'Power Off';
   powerButton.style.backgroundColor = powerOn ? 'lightgreen' : 'darkred';
 
+  //This allows us to play music right away after powering on,
+  // bypassing the limit where audio won't play until user interacts with the page
   if (powerOn && Tone.context.state === 'suspended') {
-    await Tone.context.resume();
+    await Tone.context.resume(); 
   }
 
   // Update UI state
   setUIState(powerOn);
 });
 
+// Event listeners for note buttons
 document.querySelectorAll('.note').forEach(button => {
   button.addEventListener('click', () => {
     const note = button.getAttribute('data-note');
@@ -113,6 +120,7 @@ document.querySelectorAll('.note').forEach(button => {
   });
 });
 
+// Event listeners for octave buttons
 document.getElementById('decrease-octave').addEventListener('click', () => {
   if (currentOctave > 1) {
     currentOctave--;
