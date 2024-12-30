@@ -79,6 +79,32 @@ const notes = {
 
 let selectedChord = 'major'; // Default chord
 
+function setUIState(powerOn) {
+  document.querySelector('select').disabled = !powerOn;
+  document.querySelectorAll('.note').forEach(button => {
+    button.disabled = !powerOn;
+  });
+  document.getElementById('decrease-octave').disabled = !powerOn;
+  document.getElementById('increase-octave').disabled = !powerOn;
+}
+
+// Set initial UI state
+setUIState(powerOn);
+
+document.getElementById('power-button').addEventListener('click', async () => {
+  powerOn = !powerOn;
+  const powerButton = document.getElementById('power-button');
+  powerButton.textContent = powerOn ? 'Power On' : 'Power Off';
+  powerButton.style.backgroundColor = powerOn ? 'lightgreen' : 'darkred';
+
+  if (powerOn && Tone.context.state === 'suspended') {
+    await Tone.context.resume();
+  }
+
+  // Update UI state
+  setUIState(powerOn);
+});
+
 document.querySelectorAll('.note').forEach(button => {
   button.addEventListener('click', () => {
     const note = button.getAttribute('data-note');
@@ -96,16 +122,5 @@ document.getElementById('decrease-octave').addEventListener('click', () => {
 document.getElementById('increase-octave').addEventListener('click', () => {
   if (currentOctave < 7) {
     currentOctave++;
-  }
-});
-
-document.getElementById('power-button').addEventListener('click', async () => {
-  powerOn = !powerOn;
-  const powerButton = document.getElementById('power-button');
-  powerButton.textContent = powerOn ? 'Power On' : 'Power Off';
-  powerButton.style.backgroundColor = powerOn ? 'lightgreen' : 'darkred';
-
-  if (powerOn && Tone.context.state === 'suspended') {
-    await Tone.context.resume();
   }
 });
