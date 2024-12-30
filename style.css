@@ -1,3 +1,18 @@
+#heading {
+	text-align: center;
+	margin-top: 2rem;
+  }
+#dropdown-div {
+	display: flex;
+	justify-content: center;
+	margin-top: 2rem;
+  }
+  
+  #dropdown-div select {
+	padding: 10px 20px;
+	font-size: 16px;
+  }
+
 #keyboard {
 	display: flex;
 	justify-content: center;
