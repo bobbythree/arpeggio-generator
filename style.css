@@ -58,9 +58,10 @@
 }
 
 #power-button {
-  display: block;
-  margin: 1rem auto;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-align: center;
-}
+	display: block;
+	margin: 1rem auto;
+	padding: 10px 20px;
+	cursor: pointer;
+	text-align: center;
+	background-color: darkred; /* Initial color */
+  }

@@ -99,7 +99,13 @@ document.getElementById('increase-octave').addEventListener('click', () => {
   }
 });
 
-document.getElementById('power-button').addEventListener('click', () => {
+document.getElementById('power-button').addEventListener('click', async () => {
   powerOn = !powerOn;
-  document.getElementById('power-button').textContent = powerOn ? 'Power On' : 'Power Off';
+  const powerButton = document.getElementById('power-button');
+  powerButton.textContent = powerOn ? 'Power On' : 'Power Off';
+  powerButton.style.backgroundColor = powerOn ? 'lightgreen' : 'darkred';
+
+  if (powerOn && Tone.context.state === 'suspended') {
+    await Tone.context.resume();
+  }
 });
