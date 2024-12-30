@@ -1,26 +1,38 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: 'border-box';
-}
-
-#heading {
-	text-align: center;
-	padding: 1rem;
-}
-
-#button-div {
-	text-align: center;
-	padding-top: 3rem;
+#keyboard {
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	gap: 1rem;
-}
-
-#button-div button {
-	padding: 1rem;
-	background: steelblue;
-	color: lightgray;
-	width: 3rem;
-}
+	margin-top: 2rem;
+  }
+  
+  .note {
+	width: 40px;
+	height: 100px;
+	margin: 0 2px;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 100px;
+	cursor: pointer;
+  }
+  
+  .note[data-note$='#'] {
+	background-color: black;
+	color: white;
+	height: 60px;
+	margin-top: 0px;
+	z-index: 1;
+	position: relative;
+  }
+  
+  #octave-controls {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+  }
+  
+  #octave-controls button {
+	margin: 0 10px;
+	padding: 10px 20px;
+	cursor: pointer;
+  }
