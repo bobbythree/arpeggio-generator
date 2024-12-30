@@ -20,9 +20,9 @@ const chordIntervals = {
   augmented7: [0, 4, 8, 10],
   sus2: [0, 2, 7],
   sus4: [0, 5, 7],
-  add9: [0, 4, 7, 14],
-  add11: [0, 4, 7, 17],
-  add13: [0, 4, 7, 21]
+  major9: [0, 4, 7, 11, 14], // Replaced add9 with major9
+  major11: [0, 4, 7, 11, 14, 17], // Replaced add11 with major11
+  major13: [0, 4, 7, 11, 14, 21] // Replaced add13 with major13
 };
 
 //create dropdown for chord selection
