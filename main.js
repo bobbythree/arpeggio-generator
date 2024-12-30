@@ -45,6 +45,28 @@ dropdown.addEventListener('change', (event) => {
   selectedChord = event.target.value;
 });
 
+//create dropdown for arpeggio pattern selection
+const patternDropdown = document.createElement('select');
+const patterns = ['Rising', 'Falling', 'Ping Pong', 'Random'];
+
+//populate dropdown with pattern options
+patterns.forEach(pattern => {
+  const option = document.createElement('option');
+  option.value = pattern;
+  option.text = pattern;
+  patternDropdown.appendChild(option);
+});
+
+//Add the pattern dropdown to the page
+dropdownDiv.appendChild(patternDropdown);
+
+let selectedPattern = 'Rising'; // Default pattern
+
+//add event listener to pattern dropdown
+patternDropdown.addEventListener('change', (event) => {
+  selectedPattern = event.target.value;
+});
+
 //helper function to calculate frequency of notes offset from C4
 function calculateFrequency(semitonesFromC4) {
   var noteFrequency = c4_frequency * Math.pow(2, semitonesFromC4 / 12);
@@ -57,9 +79,26 @@ function playArp(semitonesFromC4, chord) {
   console.info('Playing Arp from root note: ' + calculateFrequency(semitonesFromC4));
   const now = Tone.now();
   var timeOffset = .25;
-  synth.triggerAttackRelease(calculateFrequency(semitonesFromC4), "2n", now);
-  chordIntervals[chord].slice(1).forEach((interval, index) => {
-    synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + interval), "8n", now + timeOffset * (index + 1));
+  const intervals = chordIntervals[chord];
+
+  let notesToPlay = [];
+  switch (selectedPattern) {
+    case 'Rising':
+      notesToPlay = intervals;
+      break;
+    case 'Falling':
+      notesToPlay = intervals.slice().reverse();
+      break;
+    case 'Ping Pong':
+      notesToPlay = intervals.concat(intervals.slice().reverse().slice(1));
+      break;
+    case 'Random':
+      notesToPlay = intervals.slice().sort(() => Math.random() - 0.5);
+      break;
+  }
+
+  notesToPlay.forEach((interval, index) => {
+    synth.triggerAttackRelease(calculateFrequency(semitonesFromC4 + interval), "8n", now + timeOffset * index);
   });
 }
 
