@@ -123,6 +123,7 @@ let selectedChord = 'major'; // Default chord
 // Control the UI state based on powerOn
 function setUIState(powerOn) {
   document.querySelector('select').disabled = !powerOn;
+  patternDropdown.disabled = !powerOn;
   document.querySelectorAll('.note').forEach(button => {
     button.disabled = !powerOn;
   });
