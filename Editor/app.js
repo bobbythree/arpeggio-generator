@@ -4,7 +4,6 @@ const app = new PIXI.Application({
     backgroundColor: 0x1099bb,
 });
 
-app.stage.eventMode = 'static';
 app.stage.hitArea = app.screen;
 
 // Add the PIXI app to the UI
@@ -48,15 +47,16 @@ app.view.addEventListener("drop", (event) => {
     sprite.y = event.clientY - rect.top;
 
     // Enable interactivity for the sprite
-    sprite.interactive = true;
-    //sprite.buttonMode = true;
+    sprite.eventMode = "dynamic";
 
     // Add functionality to move, rotate, and scale
     sprite
         .on("pointerdown", onDragStart)
         .on("pointerup", onDragEnd)
         .on("pointerupoutside", onDragEnd)
-        .on("pointermove", onDragMove);
+        .on("pointermove", onDragMove)
+        .on("pointerover", onPointerOver) 
+        .on("pointerout", onPointerOut);  
 
     sprite.scale.set(.5); // Scale down the sprite
     
@@ -90,6 +90,16 @@ function onDragMove() {
         this.x = newPosition.x - this.width / 2;
         this.y = newPosition.y - this.height / 2;
     }
+}
+
+// Pointer over event handler
+function onPointerOver() {
+    this.tint = 0xAAAAAA; // Tint the sprite
+}
+
+// Pointer out event handler
+function onPointerOut() {
+    this.tint = 0xFFFFFF; // Reset the tint
 }
 
 //TODO: This shouldn't be mouse wheel so mobile and tablet are supported
