@@ -1,0 +1,21 @@
+body {
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+  }
+#icon-container {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    background-color: #f0f0f0;
+}
+.icon {
+    width: 50px;
+    height: 50px;
+    cursor: grab;
+}
+#scene {
+    width: 800px;
+    height: 600px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
