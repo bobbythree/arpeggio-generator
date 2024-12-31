@@ -1,4 +1,4 @@
-import { sceneObjects } from "./data/scene";
+import { sceneObjects } from "./data/scene.js";
 
 const app = new PIXI.Application({
     width: 1280,
@@ -19,6 +19,16 @@ app.stage.addChild(background);
 
 const iconContainer = document.getElementById("icon-container");
 
+// Dynamically create icons from sceneObjects
+for (const [type, obj] of Object.entries(sceneObjects)) {
+    const img = document.createElement('img');
+    img.src = obj.image;
+    img.className = 'icon';
+    img.dataset.type = type;
+    img.draggable = true;
+    iconContainer.appendChild(img);
+}
+
 // Add drag-and-drop functionality
 iconContainer.addEventListener("dragstart", (event) => {
     event.dataTransfer.setData("type", event.target.dataset.type);
@@ -36,21 +46,17 @@ app.view.addEventListener("drop", (event) => {
 
     // Create a sprite based on the type
     let sprite;
-    if (type === "cloud") {
-        sprite = PIXI.Sprite.from("./images/cloud.png");
-    } else if (type === "tree") {
-        sprite = PIXI.Sprite.from("./images/tree.png");
+    if (sceneObjects[type]) {
+        sprite = PIXI.Sprite.from(sceneObjects[type].image);
     }
 
     // Set initial position to the drop location
-    //TODO: This can be improved...
     const rect = app.view.getBoundingClientRect();
     sprite.x = event.clientX - rect.left;
     sprite.y = event.clientY - rect.top;
 
     // Enable interactivity for the sprite
     sprite.eventMode = "dynamic";
-    // Set the anchor point to the center
     sprite.anchor.set(0.5, 0.5);
 
     // Add functionality to move, rotate, and scale
