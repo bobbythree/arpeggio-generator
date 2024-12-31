@@ -3,9 +3,13 @@ const app = new PIXI.Application({
     height: 600,
     backgroundColor: 0x1099bb,
 });
+
+app.stage.eventMode = 'static';
+app.stage.hitArea = app.screen;
+
+//Add the PIXI app to the UI
 document.getElementById("scene").appendChild(app.view);
 
-// References to icons and the PIXI stage
 const iconContainer = document.getElementById("icon-container");
 
 // Add drag-and-drop functionality
@@ -32,13 +36,14 @@ app.view.addEventListener("drop", (event) => {
     }
 
     // Set initial position to the drop location
+    //TODO: This can be improved...
     const rect = app.view.getBoundingClientRect();
     sprite.x = event.clientX - rect.left;
     sprite.y = event.clientY - rect.top;
 
     // Enable interactivity for the sprite
     sprite.interactive = true;
-    sprite.buttonMode = true;
+    //sprite.buttonMode = true;
 
     // Add functionality to move, rotate, and scale
     sprite
@@ -46,7 +51,6 @@ app.view.addEventListener("drop", (event) => {
         .on("pointerup", onDragEnd)
         .on("pointerupoutside", onDragEnd)
         .on("pointermove", onDragMove);
-
 
     sprite.scale.set(0.25); // Scale down the sprite
     
@@ -77,8 +81,8 @@ function onDragEnd() {
 function onDragMove() {
     if (dragging) {
         const newPosition = dragData.getLocalPosition(this.parent);
-        this.x = newPosition.x;
-        this.y = newPosition.y;
+        this.x = newPosition.x - this.width / 2;
+        this.y = newPosition.y - this.height / 2;
     }
 }
 
@@ -90,6 +94,7 @@ app.view.addEventListener("wheel", (event) => {
     }
 });
 
+//TODO: This shouldn't be -/+ so mobile and tablet are supported
 window.addEventListener("keydown", (event) => {
     if (dragTarget) {
         // Scale with keyboard keys
