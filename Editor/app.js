@@ -1,3 +1,5 @@
+import { sceneObjects } from "./data/scene";
+
 const app = new PIXI.Application({
     width: 1280,
     height: 720,
