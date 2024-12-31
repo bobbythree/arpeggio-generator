@@ -94,7 +94,7 @@ function onDragMove() {
 
 // Pointer over event handler
 function onPointerOver() {
-    this.tint = 0xAAAAAA; // Tint the sprite
+    this.tint = 0xFFAAAA; // Tint the sprite
 }
 
 // Pointer out event handler
@@ -105,12 +105,14 @@ function onPointerOut() {
 //TODO: This shouldn't be mouse wheel so mobile and tablet are supported
 app.view.addEventListener("wheel", (event) => {
     if (dragTarget) {
-        // Rotate with the mouse wheel
-        dragTarget.rotation += event.deltaY * 0.01;
+        // Rotate about the center point with the mouse wheel
+        dragTarget.pivot.set(dragTarget.width / 2, dragTarget.height / 2);
+        dragTarget.rotation += event.deltaY * 0.001;
+        
     }
 });
 
-//TODO: This shouldn't be -/+ so mobile and tablet are supported
+//TODO: This shouldn't be -/+ and delete so mobile and tablet are supported
 window.addEventListener("keydown", (event) => {
     if (dragTarget) {
         // Scale with keyboard keys
