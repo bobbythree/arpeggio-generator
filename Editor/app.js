@@ -48,6 +48,8 @@ app.view.addEventListener("drop", (event) => {
 
     // Enable interactivity for the sprite
     sprite.eventMode = "dynamic";
+    // Set the anchor point to the center
+    sprite.anchor.set(0.5, 0.5);
 
     // Add functionality to move, rotate, and scale
     sprite
@@ -87,8 +89,8 @@ function onDragEnd() {
 function onDragMove() {
     if (dragging) {
         const newPosition = dragData.getLocalPosition(this.parent);
-        this.x = newPosition.x - this.width / 2;
-        this.y = newPosition.y - this.height / 2;
+        this.x = newPosition.x;
+        this.y = newPosition.y;
     }
 }
 
@@ -105,8 +107,7 @@ function onPointerOut() {
 //TODO: This shouldn't be mouse wheel so mobile and tablet are supported
 app.view.addEventListener("wheel", (event) => {
     if (dragTarget) {
-        // Rotate about the center point with the mouse wheel
-        dragTarget.pivot.set(dragTarget.width / 2, dragTarget.height / 2);
+        // Rotate with the mouse wheel
         dragTarget.rotation += event.deltaY * 0.001;
         
     }
