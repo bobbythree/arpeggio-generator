@@ -1,6 +1,6 @@
 const app = new PIXI.Application({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     backgroundColor: 0x1099bb,
 });
 
@@ -52,7 +52,7 @@ app.view.addEventListener("drop", (event) => {
         .on("pointerupoutside", onDragEnd)
         .on("pointermove", onDragMove);
 
-    sprite.scale.set(0.25); // Scale down the sprite
+    sprite.scale.set(.5); // Scale down the sprite
     
     // Add the sprite to the stage
     app.stage.addChild(sprite);
