@@ -48,6 +48,22 @@ app.view.addEventListener("drop", (event) => {
     let sprite;
     if (sceneObjects[type]) {
         sprite = PIXI.Sprite.from(sceneObjects[type].image);
+        
+        // Create text for the mood
+        const moodText = new PIXI.Text(sceneObjects[type].mood, {
+            fontFamily: 'Arial',
+            fontSize: 24,
+            fill: 0xffffff,
+            align: 'center'
+        });
+        
+        // Center the text on the sprite
+        moodText.anchor.set(0.5);
+        moodText.x = sprite.width / 2;
+        moodText.y = sprite.height / 2;
+        
+        // Add the text as a child of the sprite
+        sprite.addChild(moodText);
     }
 
     // Set initial position to the drop location
