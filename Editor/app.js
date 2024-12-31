@@ -7,8 +7,14 @@ const app = new PIXI.Application({
 app.stage.eventMode = 'static';
 app.stage.hitArea = app.screen;
 
-//Add the PIXI app to the UI
+// Add the PIXI app to the UI
 document.getElementById("scene").appendChild(app.view);
+
+// Add background image
+const background = PIXI.Sprite.from("./images/background.jpg");
+background.width = app.screen.width;
+background.height = app.screen.height;
+app.stage.addChild(background);
 
 const iconContainer = document.getElementById("icon-container");
 
