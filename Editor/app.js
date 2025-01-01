@@ -119,13 +119,15 @@ function onDragMove() {
 }
 
 // Pointer over event handler
-function onPointerOver() {
+function onPointerOver(event) {
     this.tint = 0xFFAAAA; // Tint the sprite
+    dragTarget = this;
 }
 
 // Pointer out event handler
 function onPointerOut() {
     this.tint = 0xFFFFFF; // Reset the tint
+    dragTarget = null;
 }
 
 //TODO: This shouldn't be mouse wheel so mobile and tablet are supported
