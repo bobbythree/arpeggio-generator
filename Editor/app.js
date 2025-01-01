@@ -59,8 +59,8 @@ app.view.addEventListener("drop", (event) => {
         
         // Center the text on the sprite
         moodText.anchor.set(0.5);
-        moodText.x = sprite.width / 2;
-        moodText.y = sprite.height / 2;
+        moodText.x = 0;
+        moodText.y = 0;
         
         // Add the text as a child of the sprite
         sprite.addChild(moodText);
@@ -135,7 +135,6 @@ app.view.addEventListener("wheel", (event) => {
     if (dragTarget) {
         // Rotate with the mouse wheel
         dragTarget.rotation += event.deltaY * 0.001;
-        
     }
 });
 
