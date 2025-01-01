@@ -59,8 +59,8 @@ app.view.addEventListener("drop", (event) => {
         
         // Center the text on the sprite
         moodText.anchor.set(0.5);
-        moodText.x = sprite.width / 2;
-        moodText.y = sprite.height / 2;
+        moodText.x = 0;
+        moodText.y = 0;
         
         // Add the text as a child of the sprite
         sprite.addChild(moodText);
@@ -119,13 +119,15 @@ function onDragMove() {
 }
 
 // Pointer over event handler
-function onPointerOver() {
+function onPointerOver(event) {
     this.tint = 0xFFAAAA; // Tint the sprite
+    dragTarget = this;
 }
 
 // Pointer out event handler
 function onPointerOut() {
     this.tint = 0xFFFFFF; // Reset the tint
+    dragTarget = null;
 }
 
 //TODO: This shouldn't be mouse wheel so mobile and tablet are supported
@@ -133,7 +135,6 @@ app.view.addEventListener("wheel", (event) => {
     if (dragTarget) {
         // Rotate with the mouse wheel
         dragTarget.rotation += event.deltaY * 0.001;
-        
     }
 });
 
