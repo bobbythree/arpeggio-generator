@@ -1,8 +1,20 @@
 const moods = {
-	"happy": {
-		"chordName": "major9",
-		"chordIntervals": [0, 4, 7, 11, 14]
-	},
+	"happy": [{
+			"chordName": "Cmajor9",
+			"chordIntervals": [0, 4, 7, 11, 14],
+			"rootNote": "C"
+		},
+		{
+			"chordName": "Cmajor",
+			"chordIntervals": [0, 4, 7, 12],
+			"rootNote": "C"
+		},
+		{
+			"chordName": "Gmajor",
+			"chordIntervals": [0, 4, 7, 12],
+			"rootNote": "G"
+		}
+	],
 	"sad": {
 		"chordName": "minor",
 		"chordIntervals": [0, 3, 7]
