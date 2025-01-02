@@ -105,7 +105,6 @@ function onDragStart(event) {
 
 function onDragEnd() {
     dragging = false;
-    dragTarget = null;
     dragData = null;
     this.alpha = 1;
 }
