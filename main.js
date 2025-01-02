@@ -6,23 +6,26 @@ let powerOn = false;            // Power state
 
 //Intervals in semitones to play this type of chord
 const chordIntervals = {
-  major: [0, 4, 7],
-  minor: [0, 3, 7],
+  major: [0, 4, 7, 12],
+  minor: [0, 3, 7, 12],
   diminished: [0, 3, 6],
-  augmented: [0, 4, 8],
+  augmented: [0, 4, 8, 12],
   major7: [0, 4, 7, 11],
   minor7: [0, 3, 7, 10],
+  minor9: [0, 3, 7, 10, 14],
+  minor11: [0, 3, 7, 10, 14, 17],
   dominant7: [0, 4, 7, 10],
   halfDiminished7: [0, 3, 6, 10],
   diminished7: [0, 3, 6, 9],
-  minorMajor7: [0, 3, 7, 11],
+  minorMajor7: [0, 3, 7, 11, 15],
   augmentedMajor7: [0, 4, 8, 11],
   augmented7: [0, 4, 8, 10],
   sus2: [0, 2, 7],
-  sus4: [0, 5, 7],
+  sus4: [0, 5, 7, 12],
   major9: [0, 4, 7, 11, 14], // Replaced add9 with major9
   major11: [0, 4, 7, 11, 14, 17], // Replaced add11 with major11
-  major13: [0, 4, 7, 11, 14, 17, 21] // Replaced add13 with major13
+  major13: [0, 4, 7, 11, 14, 17, 21], // Replaced add13 with major13
+  wholetone: [0, 2, 4, 6, 8, 10, 12]
 };
 
 //create dropdown for chord selection
