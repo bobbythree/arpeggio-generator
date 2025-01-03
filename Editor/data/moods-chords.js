@@ -4,122 +4,122 @@ export const moods = {
 	"happy": [{
 			"chordName": "Cmajor9",
 			"chordIntervals": [0, 4, 7, 11, 14],
-			"rootNote": "C5"
+			"rootNoteFreq": 523.251 // C5
 		},
 		{
 			"chordName": "Cmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "C4"
+			"rootNoteFreq": 261.626 // C4
 		},
 		{
 			"chordName": "Gmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "G3"
+			"rootNoteFreq": 196 // G3
 		},
 		{
 			"chordName": "C5",
 			"chordIntervals": [0, 7],
-			"rootNote": "C2"
+			"rootNoteFreq": 65.406 // C2
 		},
 	],
 	"sad": [{
 		"chordName": "Cmajor9",
 		"chordIntervals": [0, 4, 7, 11, 14],
-		"rootNote": "C5"
+		"rootNoteFreq": "C5"
 		},
 		{
 			"chordName": "Cmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "C4"
+			"rootNoteFreq": "C4"
 		},
 		{
 			"chordName": "Gmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "G3"
+			"rootNoteFreq": "G3"
 		},
 		{
 			"chordName": "C5",
 			"chordIntervals": [0, 7],
-			"rootNote": "C2"
+			"rootNoteFreq": "C2"
 		},
 	],
 	"spooky": [{
 		"chordName": "Cmajor9",
 		"chordIntervals": [0, 4, 7, 11, 14],
-		"rootNote": "C5"
+		"rootNoteFreq": "C5"
 		},
 		{
 			"chordName": "Cmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "C4"
+			"rootNoteFreq": "C4"
 		},
 		{
 			"chordName": "Gmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "G3"
+			"rootNoteFreq": "G3"
 		},
 		{
 			"chordName": "C5",
 			"chordIntervals": [0, 7],
-			"rootNote": "C2"
+			"rootNoteFreq": "C2"
 		},
 	],
 	"serene": [{
 		"chordName": "Csus4",
 		"chordIntervals": [0, 5, 7, 12],
-		"rootNote": "C5"
+		"rootNoteFreq": "C5"
 		},
 		{
 			"chordName": "F5",
 			"chordIntervals": [0, 7],
-			"rootNote": "F4"
+			"rootNoteFreq": "F4"
 		},
 		{
 			"chordName": "COctave",
 			"chordIntervals": [0, 12],
-			"rootNote": "C2"
+			"rootNoteFreq": "C2"
 		},
 	],
 	"nostalgic": [{
 		"chordName": "Cmajor9",
 		"chordIntervals": [0, 4, 7, 11, 14],
-		"rootNote": "C5"
+		"rootNoteFreq": "C5"
 		},
 		{
 			"chordName": "Cmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "C4"
+			"rootNoteFreq": "C4"
 		},
 		{
 			"chordName": "Gmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "G3"
+			"rootNoteFreq": "G3"
 		},
 		{
 			"chordName": "C5",
 			"chordIntervals": [0, 7],
-			"rootNote": "C2"
+			"rootNoteFreq": "C2"
 		},
 	],
 	"angry": [{
 		"chordName": "Cmajor9",
 		"chordIntervals": [0, 4, 7, 11, 14],
-		"rootNote": "C5"
+		"rootNoteFreq": "C5"
 		},
 		{
 			"chordName": "Cmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "C4"
+			"rootNoteFreq": "C4"
 		},
 		{
 			"chordName": "Gmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNote": "G3"
+			"rootNoteFreq": "G3"
 		},
 		{
 			"chordName": "C5",
 			"chordIntervals": [0, 7],
-			"rootNote": "C2"
+			"rootNoteFreq": "C2"
 		},
 	],
 }

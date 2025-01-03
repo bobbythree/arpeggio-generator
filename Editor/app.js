@@ -108,7 +108,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    playArp('c4', 'happy')
+    playArp(0, 'happy')
 }
 
 function onDragMove() {
