@@ -1,6 +1,6 @@
 // To predict next note in a chord, we add 12 to each note in the array
 // For example, if the chord is Cmajor, the notes are [0, 4, 7, 12] and the next notes are [12, 16, 19, 24]
-const moods = {
+export const moods = {
 	"happy": [{
 			"chordName": "Cmajor9",
 			"chordIntervals": [0, 4, 7, 11, 14],

@@ -1,4 +1,5 @@
 import { sceneObjects } from "./data/scene.js";
+import { playArp } from "./audio/argeggiator.js";
 
 const app = new PIXI.Application({
     width: 1280,
@@ -107,6 +108,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
+    playArp('c4', 'happy')
 }
 
 function onDragMove() {
