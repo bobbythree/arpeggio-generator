@@ -20,14 +20,36 @@ app.stage.addChild(background);
 
 const iconContainer = document.getElementById("icon-container");
 
-// Dynamically create icons from sceneObjects
+// Create a container for each mood
+const moodContainers = {};
+
 for (const [type, obj] of Object.entries(sceneObjects)) {
+    if (!moodContainers[obj.mood]) {
+        // Create a new container for the mood
+        const moodContainer = document.createElement('div');
+        moodContainer.className = 'mood-container';
+        
+        // Create a label for the mood
+        const moodLabel = document.createElement('label');
+        moodLabel.textContent = obj.mood;
+        moodContainer.appendChild(moodLabel);
+
+        // Add the mood container to the icon container
+        iconContainer.appendChild(moodContainer);
+
+        // Store the mood container
+        moodContainers[obj.mood] = moodContainer;
+    }
+
+    // Create the icon
     const img = document.createElement('img');
     img.src = obj.image;
     img.className = 'icon';
     img.dataset.type = type;
     img.draggable = true;
-    iconContainer.appendChild(img);
+
+    // Add the icon to the appropriate mood container
+    moodContainers[obj.mood].appendChild(img);
 }
 
 // Add drag-and-drop functionality
