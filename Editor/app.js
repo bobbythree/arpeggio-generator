@@ -182,12 +182,24 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-//helper func for getting the correct arp. then call playArp
+//utils
 function getArpFromSceneObj(sceneObj) {
-    const chordIndex = sceneObjects[sceneObj].chordIndex;
+    const chordName = sceneObjects[sceneObj].chordName;
     const mood = sceneObjects[sceneObj].mood;
-    const rootNote = sceneObjects[sceneObj].rootNote;
-    const intervals = moods[mood][chordIndex].chordIntervals;
+    const moods = moods[mood];
+    
+    let rootNote;
+    let intervals;
+
+    chords.forEach((chord) => {
+        if(chord.chordName === chordName) {
+            rootNote = chord.rootNote;
+            intervals = chord.intervals;
+        }
+
+        //TODO get rootnote and intervals
+    });
+
 
     playArp(rootNote, intervals)
     

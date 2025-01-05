@@ -21,3 +21,9 @@ export function playArp(rootNote, intervals) {
         synth.triggerAttackRelease(calculateFrequency(rootNote + interval), "8n", now + timeOffset * index);       
       });
     }
+
+const arpPatterns = [];
+
+function addArp() {
+  
+}

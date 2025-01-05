@@ -9,7 +9,7 @@ export const moods = {
 		{
 			"chordName": "Cmajor",
 			"chordIntervals": [0, 4, 7, 12],
-			"rootNoteFreq": 0 // C4
+			"rootNote": 0 // C4
 		},
 		{
 			"chordName": "Gmajor",
