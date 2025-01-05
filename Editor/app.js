@@ -88,6 +88,8 @@ app.view.addEventListener("drop", (event) => {
         
         // Add the text as a child of the sprite
         sprite.addChild(moodText);
+
+        getArpFromSceneObj(type)
     }
 
     // Set initial position to the drop location
@@ -131,7 +133,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    getArpFromSceneObj('cloud')
+    // getArpFromSceneObj('cloud')
     // TODO: get current obj and pass to getArpFromSceneObj
 }
 
