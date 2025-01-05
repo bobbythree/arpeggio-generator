@@ -1,4 +1,5 @@
 import { moods } from "../data/moods-chords.js";
+import { sceneObjects } from "../data/scene.js";
 
 //setup music functionality
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
@@ -11,16 +12,17 @@ function calculateFrequency(rootNote) {
   }
 
 // Function to play an arpeggio based on moods-chords object
-export function playArp(rootNote, mood) {
+export function playArp(sceneObj) {
     // console.info('Playing Arp from root note: ' + calculateFrequency(rootNote));
     const now = Tone.now();
     var timeOffset = .25;
-    const intervals = moods[mood][0].chordIntervals; // TODO: change [0]
+
+    const chordIndex = sceneObjects[sceneObj].chordIndex;
+    const mood = sceneObjects[sceneObj].mood;
+    const rootNote = sceneObjects[sceneObj].rootNote;
+    const intervals = moods[mood][chordIndex].chordIntervals; 
     
     intervals.forEach((interval, index) => {
-        // synth.triggerAttackRelease(moods[mood][0].rootNoteFreq + interval * 200, "8n", now + timeOffset * index);
-        // let root = moods[mood][0].rootNoteFreq;
-        synth.triggerAttackRelease(calculateFrequency(rootNote + interval), "8n", now + timeOffset * index);
-       
+        synth.triggerAttackRelease(calculateFrequency(rootNote + interval), "8n", now + timeOffset * index);       
       });
     }

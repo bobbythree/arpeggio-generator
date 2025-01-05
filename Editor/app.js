@@ -130,7 +130,8 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    playArp(0, 'happy')
+    // playArp(0, 'happy')
+    playArp('cloud')
 }
 
 function onDragMove() {
