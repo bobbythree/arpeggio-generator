@@ -1,5 +1,6 @@
 import { sceneObjects } from "./data/scene.js";
 import { playArp } from "./audio/argeggiator.js";
+import { moods } from "./data/moods-chords.js";
 
 const app = new PIXI.Application({
     width: 1280,
@@ -20,14 +21,36 @@ app.stage.addChild(background);
 
 const iconContainer = document.getElementById("icon-container");
 
-// Dynamically create icons from sceneObjects
+// Create a container for each mood
+const moodContainers = {};
+
 for (const [type, obj] of Object.entries(sceneObjects)) {
+    if (!moodContainers[obj.mood]) {
+        // Create a new container for the mood
+        const moodContainer = document.createElement('div');
+        moodContainer.className = 'mood-container';
+        
+        // Create a label for the mood
+        const moodLabel = document.createElement('label');
+        moodLabel.textContent = obj.mood;
+        moodContainer.appendChild(moodLabel);
+
+        // Add the mood container to the icon container
+        iconContainer.appendChild(moodContainer);
+
+        // Store the mood container
+        moodContainers[obj.mood] = moodContainer;
+    }
+
+    // Create the icon
     const img = document.createElement('img');
     img.src = obj.image;
     img.className = 'icon';
     img.dataset.type = type;
     img.draggable = true;
-    iconContainer.appendChild(img);
+
+    // Add the icon to the appropriate mood container
+    moodContainers[obj.mood].appendChild(img);
 }
 
 // Add drag-and-drop functionality
@@ -65,6 +88,8 @@ app.view.addEventListener("drop", (event) => {
         
         // Add the text as a child of the sprite
         sprite.addChild(moodText);
+
+        getArpFromSceneObj(type)
     }
 
     // Set initial position to the drop location
@@ -108,7 +133,8 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    playArp(0, 'happy')
+    // getArpFromSceneObj('cloud')
+    // TODO: get current obj and pass to getArpFromSceneObj
 }
 
 function onDragMove() {
@@ -155,3 +181,23 @@ window.addEventListener("keydown", (event) => {
         }
     }
 });
+
+//utils
+function getArpFromSceneObj(sceneObj) {
+    const chordName = sceneObjects[sceneObj].chordName;
+    const mood = sceneObjects[sceneObj].mood;
+    const moodNames = moods[mood];
+    
+
+    let rootNote;
+    let intervals;
+    moodNames.forEach((mood) => {
+        if(mood.chordName === chordName) {
+            rootNote = mood.rootNote;
+            intervals = mood.chordIntervals;
+            playArp(rootNote, intervals)
+        }
+    });
+
+    
+}
