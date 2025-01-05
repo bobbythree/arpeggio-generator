@@ -12,15 +12,10 @@ function calculateFrequency(rootNote) {
   }
 
 // Function to play an arpeggio based on moods-chords object
-export function playArp(sceneObj) {
+export function playArp(rootNote, intervals) {
     // console.info('Playing Arp from root note: ' + calculateFrequency(rootNote));
     const now = Tone.now();
     var timeOffset = .25;
-
-    const chordIndex = sceneObjects[sceneObj].chordIndex;
-    const mood = sceneObjects[sceneObj].mood;
-    const rootNote = sceneObjects[sceneObj].rootNote;
-    const intervals = moods[mood][chordIndex].chordIntervals; 
     
     intervals.forEach((interval, index) => {
         synth.triggerAttackRelease(calculateFrequency(rootNote + interval), "8n", now + timeOffset * index);       

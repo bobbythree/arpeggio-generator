@@ -7,6 +7,8 @@ export const sceneObjects = {
     },
     "tree": {
         "image": "./images/tree.png",
-        "mood": "serene"
+        "mood": "happy",
+        "chordIndex": 1,
+        "rootNote": 0
     }
 };

@@ -1,5 +1,6 @@
 import { sceneObjects } from "./data/scene.js";
 import { playArp } from "./audio/argeggiator.js";
+import { moods } from "./data/moods-chords.js";
 
 const app = new PIXI.Application({
     width: 1280,
@@ -130,8 +131,8 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    // playArp(0, 'happy')
-    playArp('cloud')
+    getArpFromSceneObj('cloud')
+    // TODO: get current obj and pass to getArpFromSceneObj
 }
 
 function onDragMove() {
@@ -178,3 +179,14 @@ window.addEventListener("keydown", (event) => {
         }
     }
 });
+
+//helper func for getting the correct arp. then call playArp
+function getArpFromSceneObj(sceneObj) {
+    const chordIndex = sceneObjects[sceneObj].chordIndex;
+    const mood = sceneObjects[sceneObj].mood;
+    const rootNote = sceneObjects[sceneObj].rootNote;
+    const intervals = moods[mood][chordIndex].chordIntervals;
+
+    playArp(rootNote, intervals)
+    
+}
