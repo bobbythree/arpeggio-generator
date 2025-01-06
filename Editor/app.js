@@ -192,12 +192,15 @@ function getArpFromSceneObj(sceneObj) {
     let rootNote;
     let intervals;
     moodNames.forEach((mood) => {
+        console.log(mood)
         if(mood.chordName === chordName) {
             rootNote = mood.rootNote;
             intervals = mood.chordIntervals;
+            rootNote = mood.rootNote;
             playArp(rootNote, intervals)
+            console.log(mood);
+            
         }
     });
 
-    
 }

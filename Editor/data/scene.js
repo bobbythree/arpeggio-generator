@@ -7,6 +7,6 @@ export const sceneObjects = {
     "tree": {
         "image": "./images/tree.png",
         "mood": "happy",
-        "ChordName": "Cmajor"
+        "chordName": "Cmajor"
     }
 };
