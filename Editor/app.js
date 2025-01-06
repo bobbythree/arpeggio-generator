@@ -1,5 +1,5 @@
 import { sceneObjects } from "./data/scene.js";
-import { playArp } from "./audio/argeggiator.js";
+import { start, addArp } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
 
 const app = new PIXI.Application({
@@ -51,6 +51,13 @@ for (const [type, obj] of Object.entries(sceneObjects)) {
 
     // Add the icon to the appropriate mood container
     moodContainers[obj.mood].appendChild(img);
+}
+
+//start the engine
+document.getElementById('start-button').addEventListener('click', startTone);
+
+function startTone() {
+    start();
 }
 
 // Add drag-and-drop functionality
