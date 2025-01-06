@@ -1,6 +1,3 @@
-import { moods } from "../data/moods-chords.js";
-import { sceneObjects } from "../data/scene.js";
-
 //setup music functionality
 //Tone.Transport.loop = true;
 Tone.Transport.bpm.value = 120;
