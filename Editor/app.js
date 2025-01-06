@@ -195,7 +195,7 @@ function getArpFromSceneObj(sceneObj) {
         if(mood.chordName === chordName) {
             rootNote = mood.rootNote;
             intervals = mood.chordIntervals;
-            playArp(rootNote, intervals)
+            addArp({rootNote, intervals})
         }
     });
 

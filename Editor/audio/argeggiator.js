@@ -25,5 +25,5 @@ export function playArp(rootNote, intervals) {
 const arpPatterns = [];
 
 function addArp() {
-  
+  arpPatterns.push(arp)
 }
