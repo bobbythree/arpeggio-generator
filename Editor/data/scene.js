@@ -1,10 +1,12 @@
 export const sceneObjects = {
     "cloud": {
         "image": "./images/cloud.png",
-        "mood": "happy"
+        "mood": "happy",
+        "chordName": "Cmajor9"
     },
     "tree": {
         "image": "./images/tree.png",
-        "mood": "serene"
+        "mood": "happy",
+        "chordName": "Cmajor"
     }
 };
