@@ -25,8 +25,6 @@ export function playArp(rootNote, intervals) {
       });
     }
 
-const arpPatterns = [];
-
 export function addArp(arp) {
   arps.push(arp)
 }
