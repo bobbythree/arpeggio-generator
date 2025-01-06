@@ -1,8 +1,8 @@
 ## Tone.js Apreggio Generator  
 
-### A test drive of the Tone.js library. This is a simple arpeggio generator. Click a button to play an arpeggio.  
+### This is a Tone.js application that allows users to create music by dragging and dropping objects into a scene. Each scene has a different mood associated with it. Each object plays an argpeggio on a loop. Dragging in multiple objects causes multiple harmonius arpeggios to play together.  
 
 ## Run:  
-### clone this repo to your local machine and run from the index.html file in a live server.
+### clone this repo to your local machine and run from the index.html file inside the Editor/ directory in a live server.
 
 
