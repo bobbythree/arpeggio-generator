@@ -9,6 +9,7 @@ Tone.Transport.start(2);
 const arps = [];
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 const c4_frequency = 261.626;   // To calculate frequency of notes, we need a datum
+const timeOffset = .25; //TODO: do better losers
 
 // helper function to calculate frequency of notes offset from C4
 function calculateFrequency(rootNote) {
@@ -20,7 +21,7 @@ function calculateFrequency(rootNote) {
 export function playArp(rootNote, intervals) {
     // console.info('Playing Arp from root note: ' + calculateFrequency(rootNote));
     const now = Tone.now();
-    var timeOffset = .25;
+    
     
     intervals.forEach((interval, index) => {
         synth.triggerAttackRelease(calculateFrequency(rootNote + interval), "8n", now + timeOffset * index);       
@@ -52,21 +53,12 @@ function loopCallback(time){
     console.log("Playing Arps");
     arps.forEach((arp) => {    
       arp.intervals.forEach((interval, index) => {
-        synth.triggerAttackRelease(calculateFrequency(arp.rootNote + interval), "8n", time); 
-        console.log("Playing note: " + arp.rootNote + interval);
+        if(index === 0){
+          synth.triggerAttackRelease(calculateFrequency(arp.rootNote + interval), "2n", time);
+        }
+        else {
+          synth.triggerAttackRelease(calculateFrequency(arp.rootNote + interval), "8n", time + timeOffset * index); 
+        }
       });
   });
 }
-// Tone.Transport.scheduleRepeat(PlayArps, "1m");
-
-// function PlayArps(){
-//   console.log("Playing Arps");
-//   // arps.forEach((arp) => {    
-//   //   arp.intervals.forEach((interval, index) => {
-//   //     synth.triggerAttackRelease(arp.rootNote + interval, "8n", Tone.now() + .25 * index); //TODO: offset this
-//   //     console.log("Playing note: " + arp.rootNote + interval);
-//   //   });
-//   // });
-
-//   playArp(0, [0, 4, 7]);
-// }
