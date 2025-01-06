@@ -195,15 +195,8 @@ function getArpFromSceneObj(sceneObj) {
     const mood = sceneObjects[sceneObj].mood;
     const moodNames = moods[mood];    
 
-    let rootNote;
-    let intervals;
+    let rootNote = moods[mood][chordName].rootNote;
+    let intervals = moods[mood][chordName].chordIntervals;
     
-    moodNames.forEach((mood) => {
-        if(mood.chordName === chordName) {
-            rootNote = mood.rootNote;
-            intervals = mood.chordIntervals;
-            addArp({rootNote, intervals})
-        }
-    });
-
+    addArp({rootNote, intervals});
 }
