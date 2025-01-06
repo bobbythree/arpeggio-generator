@@ -192,11 +192,9 @@ window.addEventListener("keydown", (event) => {
 //utils
 function getArpFromSceneObj(sceneObj) {
     const chordName = sceneObjects[sceneObj].chordName;
-    const mood = sceneObjects[sceneObj].mood;
-    const moodNames = moods[mood];    
-
+    const mood = sceneObjects[sceneObj].mood; 
     let rootNote = moods[mood][chordName].rootNote;
-    let intervals = moods[mood][chordName].chordIntervals;
+    let intervals = moods[mood][chordName].chordIntervalsSemiTones;
     
     addArp({rootNote, intervals});
 }

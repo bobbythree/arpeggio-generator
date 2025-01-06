@@ -1,29 +1,10 @@
 //setup music functionality
-//Tone.Transport.loop = true;
 Tone.Transport.bpm.value = 120;
-Tone.Transport.start(2);
+Tone.Transport.start(1); //wait 1 second before starting
 
 const arps = [];
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-const c4_frequency = 261.626;   // To calculate frequency of notes, we need a datum
 const timeOffset = .25; //TODO: do better losers
-
-// helper function to calculate frequency of notes offset from C4
-function calculateFrequency(rootNote) {
-    var noteFrequency = c4_frequency * Math.pow(2, rootNote / 12);
-    return noteFrequency;
-  }
-
-// Function to play an arpeggio based on moods-chords object
-export function playArp(rootNote, intervals) {
-    // console.info('Playing Arp from root note: ' + calculateFrequency(rootNote));
-    const now = Tone.now();
-    
-    
-    intervals.forEach((interval, index) => {
-        synth.triggerAttackRelease(calculateFrequency(rootNote + interval), "8n", now + timeOffset * index);       
-      });
-    }
 
 export function addArp(arp) {
   arps.push(arp)
@@ -49,10 +30,10 @@ function loopCallback(time){
     arps.forEach((arp) => {    
       arp.intervals.forEach((interval, index) => {
         if(index === 0){
-          synth.triggerAttackRelease(calculateFrequency(arp.rootNote + interval), "2n", time);
+          synth.triggerAttackRelease(Tone.Frequency(arp.rootNote), "2n", time);
         }
         else {
-          synth.triggerAttackRelease(calculateFrequency(arp.rootNote + interval), "8n", time + timeOffset * index); 
+          synth.triggerAttackRelease(Tone.Frequency(arp.rootNote).transpose(interval), "8n", time + timeOffset * index); 
         }
       });
   });
