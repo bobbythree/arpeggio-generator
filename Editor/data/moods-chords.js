@@ -38,12 +38,12 @@ export const moods = {
 		},
 	},
 	"spooky": {
-		"CWholetone": {
-			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12],
+		"CWholetoneArp": {
+			"chordIntervalsSemiTones": [0, 4, 8, 12, 10, 8, 6],
 			"rootNote": "C4"
 		},
-		"CWholetone" : {
-			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12],
+		"CWholetoneAscending" : {
+			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12, 14],
 			"rootNote": "C3"
 		},
 		"COctave" : {

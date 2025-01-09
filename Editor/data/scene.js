@@ -69,4 +69,19 @@ export const sceneObjects = {
         "mood": "nostalgic",
         "chordName": "C5"
     },
+    "spooky-baphomet": {
+        "image": "./images/spooky/spooky-baphomet.png",
+        "mood": "spooky",
+        "chordName": "COctave"
+    },
+    "spooky-skull": {
+        "image": "./images/spooky/spooky-skull.png",
+        "mood": "spooky",
+        "chordName": "CWholetoneArp"
+    },
+    "spooky-ouroboros": {
+        "image": "./images/spooky/spooky-ouroboros.png",
+        "mood": "spooky",
+        "chordName": "CWholetoneAscending"
+    },
 };
