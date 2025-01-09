@@ -39,5 +39,19 @@ export const sceneObjects = {
         "mood": "sad",
         "chordName": "Cminor9"
     },
-
+    "angry-man": {
+        "image": "./images/angry/angry-man.png",
+        "mood": "angry",
+        "chordName": "COctave"
+    },
+    "angry-face": {
+        "image": "./images/angry/angry-face.png",
+        "mood": "angry",
+        "chordName": "C5"
+    },
+    "angry-swear": {
+        "image": "./images/angry/angry-swear.png",
+        "mood": "angry",
+        "chordName": "CminorMajor7"
+    },
 };

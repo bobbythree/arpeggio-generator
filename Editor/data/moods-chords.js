@@ -86,11 +86,11 @@ export const moods = {
 	"angry": {
 		"CminorMajor7" : {
 			"chordIntervalsSemiTones": [0, 7, 11, 15, 19],
-			"rootNote": "C5"
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
-			"rootNote": "C3"
+			"rootNote": "C4"
 		},
 		"COctave" : {
 			"chordIntervalsSemiTones": [0, 12],
