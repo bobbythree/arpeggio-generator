@@ -84,4 +84,24 @@ export const sceneObjects = {
         "mood": "spooky",
         "chordName": "CWholetoneAscending"
     },
+    "serene-crystal": {
+        "image": "./images/serene/serene-crystal.png",
+        "mood": "serene",
+        "chordName": "C7sus4"
+    },
+    "serene-lotus": {
+        "image": "./images/serene/serene-lotus.png",
+        "mood": "serene",
+        "chordName": "Csus4"
+    },
+    "serene-buddha": {
+        "image": "./images/serene/serene-buddha.png",
+        "mood": "serene",
+        "chordName": "F5"
+    },
+    "serene-om": {
+        "image": "./images/serene/serene-om.png",
+        "mood": "serene",
+        "chordName": "COctave"
+    }
 };

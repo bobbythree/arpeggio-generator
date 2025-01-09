@@ -22,11 +22,11 @@ export const moods = {
 	"sad": {
 		"Cminor9" : {
 			"chordIntervalsSemiTones": [0, 7, 14, 15, 19],
-			"rootNote": "C5"
+			"rootNote": "C4"
 		},
 		"Cminor": {
 			"chordIntervalsSemiTones": [0, 3, 7, 12],
-			"rootNote": "C4"
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
