@@ -1,21 +1,21 @@
 export const sceneObjects = {
     "sun-01": {
-        "image": "./images/sun-01.png",
+        "image": "./images/happy/sun-01.png",
         "mood": "happy",
         "chordName": "Cmajor9"
     },
     "cloud-01": {
-        "image": "./images/cloud-01.png",
+        "image": "./images/happy/cloud-01.png",
         "mood": "happy",
         "chordName": "Gmajor"
     },
     "tree": {
-        "image": "./images/tree-01.png",
+        "image": "./images/happy/tree-01.png",
         "mood": "happy",
         "chordName": "Cmajor"
     },
     "rock-01": {
-        "image": "./images/rock-01.png",
+        "image": "./images/happy/rock-01.png",
         "mood": "happy",
         "chordName": "C5"
     },
