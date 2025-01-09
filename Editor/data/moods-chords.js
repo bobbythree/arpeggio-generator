@@ -6,13 +6,13 @@ export const moods = {
 			"chordIntervalsSemiTones": [0, 4, 7, 11, 14],
 			"rootNote": "C5"
 		},
-		"Cmajor": {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "C4"
-		},
 		"Gmajor" : {
 			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "G3"
+			"rootNote": "G4"
+		},
+		"Cmajor": {
+			"chordIntervalsSemiTones": [0, 4, 7, 12],
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
@@ -20,43 +20,43 @@ export const moods = {
 		},
 	},
 	"sad": {
-		"Cmajor9" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 11, 14],
+		"Cminor9" : {
+			"chordIntervalsSemiTones": [0, 7, 14, 15, 19],
 			"rootNote": "C5"
 		},
-		"Cmajor": {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
+		"Cminor": {
+			"chordIntervalsSemiTones": [0, 3, 7, 12],
 			"rootNote": "C4"
-		},
-		"Gmajor" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "G3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
+			"rootNote": "G3"
+		},
+		"COctave" : {
+			"chordIntervalsSemiTones": [0, 12],
 			"rootNote": "C2"
 		},
 	},
 	"spooky": {
-		"Cmajor9" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 11, 14],
-			"rootNote": "C5"
-		},
-		"Cmajor": {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
+		"CWholetone": {
+			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12],
 			"rootNote": "C4"
 		},
-		"Gmajor" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "G3"
+		"CWholetone" : {
+			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12],
+			"rootNote": "C3"
 		},
-		"C5" : {
-			"chordIntervalsSemiTones": [0, 7],
+		"COctave" : {
+			"chordIntervalsSemiTones": [0, 0, 0, 12],
 			"rootNote": "C2"
 		},
 	},
 	"serene": {
-		"Csus4" :{
+		"C7sus4" :{
+			"chordIntervalsSemiTones": [0, 7, 10, 17, 19],
+			"rootNote": "C5"
+		},
+		"Csus4": {
 			"chordIntervalsSemiTones": [0, 5, 7, 12],
 			"rootNote": "C5"
 		},
@@ -70,17 +70,13 @@ export const moods = {
 		},
 	},
 	"nostalgic": {
-		"Cmajor9" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 11, 14],
+		"Cmajor7" : {
+			"chordIntervalsSemiTones": [0, 7, 11, 16],
 			"rootNote": "C5"
 		},
-		"Cmajor": {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
+		"Csus2": {
+			"chordIntervalsSemiTones": [0, 7, 14],
 			"rootNote": "C4"
-		},
-		"Gmajor" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "G3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
@@ -88,20 +84,16 @@ export const moods = {
 		},
 	},
 	"angry": {
-		"Cmajor9" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 11, 14],
+		"CminorMajor7" : {
+			"chordIntervalsSemiTones": [0, 7, 11, 15, 19],
 			"rootNote": "C5"
-		},
-		"Cmajor": {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "C4"
-		},
-		"Gmajor" : {
-			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "G3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
+			"rootNote": "C3"
+		},
+		"COctave" : {
+			"chordIntervalsSemiTones": [0, 12],
 			"rootNote": "C2"
 		},
 	},
