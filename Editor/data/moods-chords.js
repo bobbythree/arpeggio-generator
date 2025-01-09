@@ -12,7 +12,7 @@ export const moods = {
 		},
 		"Cmajor": {
 			"chordIntervalsSemiTones": [0, 4, 7, 12],
-			"rootNote": "C4"
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
