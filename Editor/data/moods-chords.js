@@ -71,12 +71,12 @@ export const moods = {
 	},
 	"nostalgic": {
 		"Cmajor7" : {
-			"chordIntervalsSemiTones": [0, 7, 11, 16],
-			"rootNote": "C5"
+			"chordIntervalsSemiTones": [0, 7, 12, 11, 16],
+			"rootNote": "C3"
 		},
 		"Csus2": {
-			"chordIntervalsSemiTones": [0, 7, 14],
-			"rootNote": "C4"
+			"chordIntervalsSemiTones": [2, 7, 14, 19],
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],

@@ -54,4 +54,19 @@ export const sceneObjects = {
         "mood": "angry",
         "chordName": "CminorMajor7"
     },
+    "nostalgic-kid": {
+        "image": "./images/nostalgic/nostalgic-kid.png",
+        "mood": "nostalgic",
+        "chordName": "Cmajor7"
+    },
+    "nostalgic-swing": {
+        "image": "./images/nostalgic/nostalgic-swing.png",
+        "mood": "nostalgic",
+        "chordName": "Csus2"
+    },
+    "nostalgic-tree": {
+        "image": "./images/nostalgic/nostalgic-tree.png",
+        "mood": "nostalgic",
+        "chordName": "C5"
+    },
 };
