@@ -54,4 +54,54 @@ export const sceneObjects = {
         "mood": "angry",
         "chordName": "CminorMajor7"
     },
+    "nostalgic-kid": {
+        "image": "./images/nostalgic/nostalgic-kid.png",
+        "mood": "nostalgic",
+        "chordName": "Cmajor7"
+    },
+    "nostalgic-swing": {
+        "image": "./images/nostalgic/nostalgic-swing.png",
+        "mood": "nostalgic",
+        "chordName": "Csus2"
+    },
+    "nostalgic-tree": {
+        "image": "./images/nostalgic/nostalgic-tree.png",
+        "mood": "nostalgic",
+        "chordName": "C5"
+    },
+    "spooky-baphomet": {
+        "image": "./images/spooky/spooky-baphomet.png",
+        "mood": "spooky",
+        "chordName": "COctave"
+    },
+    "spooky-skull": {
+        "image": "./images/spooky/spooky-skull.png",
+        "mood": "spooky",
+        "chordName": "CWholetoneArp"
+    },
+    "spooky-ouroboros": {
+        "image": "./images/spooky/spooky-ouroboros.png",
+        "mood": "spooky",
+        "chordName": "CWholetoneAscending"
+    },
+    "serene-crystal": {
+        "image": "./images/serene/serene-crystal.png",
+        "mood": "serene",
+        "chordName": "C7sus4"
+    },
+    "serene-lotus": {
+        "image": "./images/serene/serene-lotus.png",
+        "mood": "serene",
+        "chordName": "Csus4"
+    },
+    "serene-buddha": {
+        "image": "./images/serene/serene-buddha.png",
+        "mood": "serene",
+        "chordName": "F5"
+    },
+    "serene-om": {
+        "image": "./images/serene/serene-om.png",
+        "mood": "serene",
+        "chordName": "COctave"
+    }
 };

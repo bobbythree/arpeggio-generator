@@ -22,11 +22,11 @@ export const moods = {
 	"sad": {
 		"Cminor9" : {
 			"chordIntervalsSemiTones": [0, 7, 14, 15, 19],
-			"rootNote": "C5"
+			"rootNote": "C4"
 		},
 		"Cminor": {
 			"chordIntervalsSemiTones": [0, 3, 7, 12],
-			"rootNote": "C4"
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],
@@ -38,12 +38,12 @@ export const moods = {
 		},
 	},
 	"spooky": {
-		"CWholetone": {
-			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12],
+		"CWholetoneArp": {
+			"chordIntervalsSemiTones": [0, 4, 8, 12, 10, 8, 6],
 			"rootNote": "C4"
 		},
-		"CWholetone" : {
-			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12],
+		"CWholetoneAscending" : {
+			"chordIntervalsSemiTones": [0, 2, 4, 6, 8, 10, 12, 14],
 			"rootNote": "C3"
 		},
 		"COctave" : {
@@ -71,12 +71,12 @@ export const moods = {
 	},
 	"nostalgic": {
 		"Cmajor7" : {
-			"chordIntervalsSemiTones": [0, 7, 11, 16],
-			"rootNote": "C5"
+			"chordIntervalsSemiTones": [0, 7, 12, 11, 16],
+			"rootNote": "C3"
 		},
 		"Csus2": {
-			"chordIntervalsSemiTones": [0, 7, 14],
-			"rootNote": "C4"
+			"chordIntervalsSemiTones": [2, 7, 14, 19],
+			"rootNote": "C3"
 		},
 		"C5" : {
 			"chordIntervalsSemiTones": [0, 7],

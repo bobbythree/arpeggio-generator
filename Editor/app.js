@@ -14,7 +14,7 @@ app.stage.hitArea = app.screen;
 document.getElementById("scene").appendChild(app.view);
 
 // Add background image
-const background = PIXI.Sprite.from("./images/angry/angry-bg.jpg");
+const background = PIXI.Sprite.from("./images/serene/serene-bg.jpg");
 background.width = app.screen.width;
 background.height = app.screen.height;
 app.stage.addChild(background);
