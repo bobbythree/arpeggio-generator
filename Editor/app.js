@@ -1,5 +1,5 @@
 import { sceneObjects } from "./data/scene.js";
-import { start, addArp, deleteArp } from "./audio/argeggiator.js";
+import { start, addArp, deleteArp, adjustVolume } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
 
 const app = new PIXI.Application({
@@ -195,9 +195,11 @@ window.addEventListener("keydown", (event) => {
         if (event.key === "+") {
             dragTarget.scale.x += 0.1;
             dragTarget.scale.y += 0.1;
+            adjustVolume(dragTarget.id, 5);
         } else if (event.key === "-") {
             dragTarget.scale.x -= 0.1;
             dragTarget.scale.y -= 0.1;
+            adjustVolume(dragTarget.id, -5);
         }
         else if(event.key === "Delete"){
             app.stage.removeChild(dragTarget);

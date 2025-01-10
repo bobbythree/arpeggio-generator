@@ -1,6 +1,6 @@
 //setup music functionality
 Tone.Transport.bpm.value = 120;
-Tone.Transport.start(); //wait 1 second before starting
+Tone.Transport.start();
 
 const arps = [];
 const synths = [];
@@ -32,6 +32,8 @@ export function deleteArp(arpId) {
       break;
     }
   }
+
+  deleteSynth(arpId);
 }
 
 function deleteSynth(arpId) {
@@ -82,4 +84,15 @@ function getCurrentBeat() {
   const position = Tone.Transport.position;
   const [bar, beat, sixteenth] = position.split(":");
   return parseFloat(beat) + 1; // Add 1 to start counting from 1 instead of 0
+}
+
+export function adjustVolume(arpId, volume) {
+  console.log("Adjusting Volume for Arp with id: " + arpId);
+  //loop through synth array and adjust the volume for the synth with the matching id
+  for (let i = 0; i < synths.length; i++) {
+    if (synths[i].id === arpId) {
+      synths[i].volume.value += volume;
+      break;
+    }
+  }
 }
