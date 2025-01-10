@@ -2,13 +2,16 @@
 Tone.Transport.bpm.value = 120;
 Tone.Transport.start(); //wait 1 second before starting
 
-
-
 const arps = [];
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 
 export function addArp(arp) {
-  arp.startBeat = getCurrentBeat();
+  if(getCurrentBeat() == 4) {
+    arp.startBeat = 1;
+  }
+  else {
+    arp.startBeat = getCurrentBeat() + 1;
+  }
   arps.push(arp);
 }
 
