@@ -3,9 +3,8 @@ Tone.Transport.bpm.value = 120;
 Tone.Transport.start(); //wait 1 second before starting
 
 const arps = [];
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+const synths = [];
 
-let arpIdIndex = 0;
 export function addArp(arp) {
   if(getCurrentBeat() == 4) {
     arp.startBeat = 1;
@@ -14,7 +13,14 @@ export function addArp(arp) {
     arp.startBeat = getCurrentBeat() + 1;
   }
 
+  addSynth(arp);
   arps.push(arp);
+}
+
+function addSynth(arp) {
+  const arpSynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  arpSynth.id = arp.id;
+  synths.push(arpSynth);
 }
 
 export function deleteArp(arpId) {
@@ -23,6 +29,17 @@ export function deleteArp(arpId) {
   for (let i = 0; i < arps.length; i++) {
     if (arps[i].id === arpId) {
       arps.splice(i, 1);
+      break;
+    }
+  }
+}
+
+function deleteSynth(arpId) {
+  console.log("Deleting Synth with id: " + arpId);
+  //loop through synth array and remove the synth with the matching id
+  for (let i = 0; i < synths.length; i++) {
+    if (synths[i].id === arpId) {
+      synths.splice(i, 1);
       break;
     }
   }
@@ -47,7 +64,9 @@ var loop = new Tone.Loop( (time) => {
     arps.forEach((arp) => {  
       if(arp.startBeat === getCurrentBeat()){
         arp.intervals.forEach((interval, index) => {
+          const synth = synths.find(s => s.id === arp.id);
           if(index === 0){
+            
             synth.triggerAttackRelease(Tone.Frequency(arp.rootNote), "2n", time);
           }
           else {
