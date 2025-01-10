@@ -204,6 +204,8 @@ window.addEventListener("keydown", (event) => {
             
             deleteSprite(dragTarget.id);
             deleteArp(dragTarget.id);
+
+            dragging = false;
         }
     }
 });
@@ -215,6 +217,5 @@ function getArpFromSceneObj(sceneObj, id) {
     let rootNote = moods[mood][chordName].rootNote;
     let intervals = moods[mood][chordName].chordIntervalsSemiTones;
     
-    //TODO: this id needs to go to the sprite
     addArp({id, rootNote, intervals});
 }
