@@ -5,6 +5,7 @@ Tone.Transport.start(); //wait 1 second before starting
 const arps = [];
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 
+let arpIdIndex = 0;
 export function addArp(arp) {
   if(getCurrentBeat() == 4) {
     arp.startBeat = 1;
@@ -12,7 +13,19 @@ export function addArp(arp) {
   else {
     arp.startBeat = getCurrentBeat() + 1;
   }
+
   arps.push(arp);
+}
+
+export function deleteArp(arpId) {
+  console.log("Deleting Arp with id: " + arpId);
+  //loop through arp array and remove the arp with the matching id
+  for (let i = 0; i < arps.length; i++) {
+    if (arps[i].id === arpId) {
+      arps.splice(i, 1);
+      break;
+    }
+  }
 }
 
 export function start(){
