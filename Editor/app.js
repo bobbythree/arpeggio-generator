@@ -1,5 +1,5 @@
 import { sceneObjects } from "./data/scene.js";
-import { start, addArp } from "./audio/argeggiator.js";
+import { start, addArp, deleteArp } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
 
 const app = new PIXI.Application({
@@ -7,6 +7,9 @@ const app = new PIXI.Application({
     height: 720,
     backgroundColor: 0x1099bb,
 });
+
+const sprites = [];
+let spriteIndex = 0;
 
 app.stage.hitArea = app.screen;
 
@@ -92,11 +95,8 @@ app.view.addEventListener("drop", (event) => {
         moodText.anchor.set(0.5);
         moodText.x = 0;
         moodText.y = 0;
-        
-        // Add the text as a child of the sprite
-        sprite.addChild(moodText);
-
-        getArpFromSceneObj(type)
+          
+        sprite.addChild(moodText);// Add the text as a child of the sprite
     }
 
     // Set initial position to the drop location
@@ -119,9 +119,25 @@ app.view.addEventListener("drop", (event) => {
 
     sprite.scale.set(.5); // Scale down the sprite
     
-    // Add the sprite to the stage
-    app.stage.addChild(sprite);
+    
+    sprite.id = spriteIndex; // Assign an ID to the sprite
+    spriteIndex++;
+    getArpFromSceneObj(type, sprite.id); // Add the sprite to the array
+    sprites.push(sprite); // Add the sprite to the array 
+
+    app.stage.addChild(sprite); // Add the sprite to the stage
 });
+
+function deleteSprite(spriteId) {
+  console.log("Deleting Sprite with id: " + spriteId);
+  //loop through arp array and remove the arp with the matching id
+  for (let i = 0; i < sprites.length; i++) {
+    if (sprites[i].id === spriteId) {
+      sprites.splice(i, 1);
+      break;
+    }
+  }
+}
 
 // Variables for drag state
 let dragging = false;
@@ -185,16 +201,20 @@ window.addEventListener("keydown", (event) => {
         }
         else if(event.key === "Delete"){
             app.stage.removeChild(dragTarget);
+            
+            deleteSprite(dragTarget.id);
+            deleteArp(dragTarget.id);
         }
     }
 });
 
 //utils
-function getArpFromSceneObj(sceneObj) {
+function getArpFromSceneObj(sceneObj, id) {
     const chordName = sceneObjects[sceneObj].chordName;
     const mood = sceneObjects[sceneObj].mood; 
     let rootNote = moods[mood][chordName].rootNote;
     let intervals = moods[mood][chordName].chordIntervalsSemiTones;
     
-    addArp({rootNote, intervals});
+    //TODO: this id needs to go to the sprite
+    addArp({id, rootNote, intervals});
 }
