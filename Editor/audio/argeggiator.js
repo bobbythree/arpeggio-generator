@@ -4,7 +4,7 @@ Tone.Transport.bpm.value = 120;
 const arps = [];
 
 export function addArp(arp) {
-  if(getCurrentEighthNote() == 8) {
+  if(getCurrentEighthNote() >= 7) {
     arp.startBeat = 1;
   }
   else {
