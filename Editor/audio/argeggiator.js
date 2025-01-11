@@ -1,16 +1,15 @@
 //setup music functionality
 Tone.Transport.bpm.value = 120;
-Tone.Transport.start();
 
 const arps = [];
 const synths = [];
 
 export function addArp(arp) {
-  if(getCurrentBeat() == 4) {
+  if(getCurrentEighthNote() == 8) {
     arp.startBeat = 1;
   }
   else {
-    arp.startBeat = getCurrentBeat() + 1;
+    arp.startBeat = getCurrentEighthNote() + 1;
   }
 
   addSynth(arp);
@@ -58,13 +57,14 @@ export function stop(){
 } 
 
 
-//This is the loop fires on a 1m interval
-var loop = new Tone.Loop( (time) => {
-  document.getElementById("start-button").innerHTML = getCurrentBeat();
+//This is the loop fires on a 8n interval
 
-    console.log("Playing Arps at beat: " + getCurrentBeat());
+var loop = new Tone.Loop( (time) => {
+  document.getElementById("start-button").innerHTML = getCurrentEighthNote();
+
+    console.log("Playing Arps at 8th: " + getCurrentEighthNote());
     arps.forEach((arp) => {  
-      if(arp.startBeat === getCurrentBeat()){
+      if(arp.startBeat === getCurrentEighthNote()){
         arp.intervals.forEach((interval, index) => {
           const synth = synths.find(s => s.id === arp.id);
           if(index === 0){
@@ -77,13 +77,17 @@ var loop = new Tone.Loop( (time) => {
         });
       }
   });
-}, "4n");
+  //wrap the loop
+  if(loopIndex < 7){
+    loopIndex++;
+  } else {
+    loopIndex = 0;
+  }
+}, "8n").start(0);
 
-
-function getCurrentBeat() {
-  const position = Tone.Transport.position;
-  const [bar, beat, sixteenth] = position.split(":");
-  return parseFloat(beat) + 1; // Add 1 to start counting from 1 instead of 0
+var loopIndex = 0;
+function getCurrentEighthNote() {
+  return loopIndex;
 }
 
 export function adjustVolume(arpId, volume) {
