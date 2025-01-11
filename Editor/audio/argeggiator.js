@@ -2,7 +2,6 @@
 Tone.Transport.bpm.value = 120;
 
 const arps = [];
-const synths = [];
 
 export function addArp(arp) {
   if(getCurrentEighthNote() == 8) {
@@ -12,14 +11,8 @@ export function addArp(arp) {
     arp.startBeat = getCurrentEighthNote() + 1;
   }
 
-  addSynth(arp);
+  arp.synth = new Tone.PolySynth(Tone.Synth).toDestination(); //TODO: create a synth from the json?
   arps.push(arp);
-}
-
-function addSynth(arp) {
-  const arpSynth = new Tone.PolySynth(Tone.Synth).toDestination();
-  arpSynth.id = arp.id;
-  synths.push(arpSynth);
 }
 
 export function deleteArp(arpId) {
@@ -28,19 +21,6 @@ export function deleteArp(arpId) {
   for (let i = 0; i < arps.length; i++) {
     if (arps[i].id === arpId) {
       arps.splice(i, 1);
-      break;
-    }
-  }
-
-  deleteSynth(arpId);
-}
-
-function deleteSynth(arpId) {
-  console.log("Deleting Synth with id: " + arpId);
-  //loop through synth array and remove the synth with the matching id
-  for (let i = 0; i < synths.length; i++) {
-    if (synths[i].id === arpId) {
-      synths.splice(i, 1);
       break;
     }
   }
@@ -56,23 +36,18 @@ export function stop(){
   Tone.Transport.stop();
 } 
 
-
 //This is the loop fires on a 8n interval
-
 var loop = new Tone.Loop( (time) => {
   document.getElementById("start-button").innerHTML = getCurrentEighthNote();
 
-    console.log("Playing Arps at 8th: " + getCurrentEighthNote());
     arps.forEach((arp) => {  
       if(arp.startBeat === getCurrentEighthNote()){
         arp.intervals.forEach((interval, index) => {
-          const synth = synths.find(s => s.id === arp.id);
           if(index === 0){
-            
-            synth.triggerAttackRelease(Tone.Frequency(arp.rootNote), "2n", time);
+            arp.synth.triggerAttackRelease(Tone.Frequency(arp.rootNote), "2n", time);
           }
           else {
-            synth.triggerAttackRelease(Tone.Frequency(arp.rootNote).transpose(interval), "8n", time + Tone.Time("8n") * index); 
+            arp.synth.triggerAttackRelease(Tone.Frequency(arp.rootNote).transpose(interval), "8n", time + Tone.Time("8n") * index); 
           }
         });
       }
@@ -91,11 +66,10 @@ function getCurrentEighthNote() {
 }
 
 export function adjustVolume(arpId, volume) {
-  console.log("Adjusting Volume for Arp with id: " + arpId);
-  //loop through synth array and adjust the volume for the synth with the matching id
-  for (let i = 0; i < synths.length; i++) {
-    if (synths[i].id === arpId) {
-      synths[i].volume.value += volume;
+  //get the arp with the matching id
+  for (let i = 0; i < arps.length; i++) {
+    if (arps[i].id === arpId) {
+      arps[i].synth.volume.value += volume;
       break;
     }
   }
