@@ -75,7 +75,6 @@ export function adjustVolume(arpId, volume) {
   }
 }
 
-
 const synthNames = ["polySynth", "monoSynth", "amsynth", "fmsynth", "membraneSynth", "metalSynth", "duoSynth", "noiseSynth", "pluckSynth"]; 
 function getSynthByName(synthName) {
   //switch based on name, returning a tone.js instrument (excluding sampler).  Default is a PolySynth.
@@ -102,4 +101,14 @@ function getSynthByName(synthName) {
       return new Tone.PolySynth(Tone.Synth).toDestination();
   }
 
+}
+
+function getNextSynth(synthName) {
+  //get the name of the next synth in the synthNames array, wrapping around if needed
+  let index = synthNames.indexOf(synthName);
+  if(index === synthNames.length - 1){
+    return synthNames[0];
+  } else {
+    return synthNames[index + 1];
+  }
 }
