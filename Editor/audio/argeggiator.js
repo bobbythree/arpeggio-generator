@@ -75,6 +75,8 @@ export function adjustVolume(arpId, volume) {
   }
 }
 
+
+const synthNames = ["polySynth", "monoSynth", "amsynth", "fmsynth", "membraneSynth", "metalSynth", "duoSynth", "noiseSynth", "pluckSynth"]; 
 function getSynthByName(synthName) {
   //switch based on name, returning a tone.js instrument (excluding sampler).  Default is a PolySynth.
   switch(synthName) {
