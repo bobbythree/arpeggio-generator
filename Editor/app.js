@@ -1,5 +1,5 @@
 import { sceneObjects } from "./data/scene.js";
-import { start, addArp, deleteArp, adjustVolume } from "./audio/argeggiator.js";
+import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
 
 const app = new PIXI.Application({
@@ -209,6 +209,9 @@ window.addEventListener("keydown", (event) => {
 
             dragging = false;
         }
+        else if(event.key === "s"){
+            nextSynth(dragTarget.id);
+        }
     }
 });
 
@@ -216,8 +219,9 @@ window.addEventListener("keydown", (event) => {
 function getArpFromSceneObj(sceneObj, id) {
     const chordName = sceneObjects[sceneObj].chordName;
     const mood = sceneObjects[sceneObj].mood; 
-    let rootNote = moods[mood][chordName].rootNote;
-    let intervals = moods[mood][chordName].chordIntervalsSemiTones;
+    const synthName = sceneObjects[sceneObj].synthName;
+    const rootNote = moods[mood][chordName].rootNote;
+    const intervals = moods[mood][chordName].chordIntervalsSemiTones;    
     
-    addArp({id, rootNote, intervals});
+    addArp({id, rootNote, intervals, synthName});
 }
