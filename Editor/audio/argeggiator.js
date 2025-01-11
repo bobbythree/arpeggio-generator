@@ -88,7 +88,7 @@ export function nextSynth(arpId) {
   }
 }
 
-const synthNames = ["polySynth", "monoSynth", "amsynth", "fmsynth", "membraneSynth", "metalSynth", "duoSynth", "noiseSynth", "pluckSynth"]; 
+const synthNames = ["polySynth", "monoSynth", "amsynth", "fmsynth", "membraneSynth", "metalSynth", "duoSynth", "pluckSynth"]; 
 function getSynthByName(synthName) {
   //switch based on name, returning a tone.js instrument (excluding sampler).  Default is a PolySynth.
   switch(synthName) {
@@ -106,8 +106,6 @@ function getSynthByName(synthName) {
       return new Tone.MetalSynth().toDestination();
     case "duoSynth":
       return new Tone.DuoSynth().toDestination();
-    case "noiseSynth":
-      return new Tone.NoiseSynth().toDestination();
     case "pluckSynth":
       return new Tone.PluckSynth().toDestination();
     default:
