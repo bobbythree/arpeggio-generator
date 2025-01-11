@@ -75,6 +75,19 @@ export function adjustVolume(arpId, volume) {
   }
 }
 
+export function nextSynth(arpId) {
+  //get the arp with the matching id
+  for (let i = 0; i < arps.length; i++) {
+    if (arps[i].id === arpId) {
+      arps[i].synth.dispose();
+      console.log("Switching synth to: " + getNextSynthName(arps[i].synthName) + " from " + arps[i].synthName);
+      arps[i].synth = getSynthByName(getNextSynthName(arps[i].synthName));
+      arps[i].synthName = getNextSynthName(arps[i].synthName);
+      break;
+    }
+  }
+}
+
 const synthNames = ["polySynth", "monoSynth", "amsynth", "fmsynth", "membraneSynth", "metalSynth", "duoSynth", "noiseSynth", "pluckSynth"]; 
 function getSynthByName(synthName) {
   //switch based on name, returning a tone.js instrument (excluding sampler).  Default is a PolySynth.
@@ -100,10 +113,9 @@ function getSynthByName(synthName) {
     default:
       return new Tone.PolySynth(Tone.Synth).toDestination();
   }
-
 }
 
-function getNextSynth(synthName) {
+function getNextSynthName(synthName) {
   //get the name of the next synth in the synthNames array, wrapping around if needed
   let index = synthNames.indexOf(synthName);
   if(index === synthNames.length - 1){
