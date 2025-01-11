@@ -11,7 +11,7 @@ export function addArp(arp) {
     arp.startBeat = getCurrentEighthNote() + 1;
   }
 
-  arp.synth = new Tone.PolySynth(Tone.Synth).toDestination(); //TODO: create a synth from the json?
+  arp.synth = getSynthByName(arp.synthName);
   arps.push(arp);
 }
 
