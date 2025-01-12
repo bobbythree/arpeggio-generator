@@ -2,11 +2,13 @@ import { sceneObjects } from "./data/scene.js";
 import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
 
-const app = new PIXI.Application({
+export const app = new PIXI.Application({
     width: 1280,
     height: 720,
     backgroundColor: 0x1099bb,
 });
+
+app=app; //pass app to modulator
 
 const sprites = [];
 let spriteIndex = 0;
