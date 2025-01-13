@@ -17,7 +17,7 @@ const app = new PIXI.Application({
 });
 
 const sprites = [];
-let spriteIndex = 0;
+let spriteIdIndex = 0;
 
 app.stage.hitArea = app.screen;
 
@@ -128,8 +128,8 @@ app.view.addEventListener("drop", (event) => {
     sprite.scale.set(.5); // Scale down the sprite
     
     
-    sprite.id = spriteIndex; // Assign an ID to the sprite
-    spriteIndex++;
+    sprite.id = spriteIdIndex; // Assign an ID to the sprite
+    spriteIdIndex++;
     getArpFromSceneObj(type, sprite.id); // Add the sprite to the array
     sprites.push(sprite); // Add the sprite to the array 
 
