@@ -20,13 +20,19 @@ export function startModulator() {
 export function init(app) {
     const waterTexture = PIXI.Texture.from('./images/water/water.png'); 
 const waterSprite = new PIXI.Sprite(waterTexture);
+waterSprite.anchor.set(0.5);
+waterSprite.x = app.screen.width / 2;
+waterSprite.y = app.screen.height / 2;
 app.stage.addChild(waterSprite);
 
 // Create a displacement map
 const displacementTexture = PIXI.Texture.from('./images/water/waveDisplacement.png'); 
 const displacementSprite = new PIXI.Sprite(displacementTexture);
+displacementSprite.anchor.set(0.5);
+displacementSprite.x = app.screen.width / 2;
+displacementSprite.y = app.screen.height / 2;
 displacementSprite.texture.baseTexture.wrapMode = PIXI.WRAP_MODES.REPEAT;
-displacementSprite.scale.set(2, 2);
+//displacementSprite.scale.set(2, 2);
 app.stage.addChild(displacementSprite);
 
 // Create a Displacement Filter
