@@ -193,12 +193,24 @@ window.addEventListener("keydown", (event) => {
     if (dragTarget) {
         // Scale with keyboard keys
         if (event.key === "+") {
-            dragTarget.scale.x >= 1 ? dragTarget.scale.x = 1 : dragTarget.scale.x += 0.1;
-            dragTarget.scale.y >= 1 ? dragTarget.scale.y = 1 : dragTarget.scale.y += 0.1;
+            if(dragTarget.scale.x + 0.1 > 1){
+                dragTarget.scale.x = 1;
+                dragTarget.scale.y = 1;
+            }
+            else {
+                dragTarget.scale.x += 0.1;
+                dragTarget.scale.y += 0.1;
+            }
             adjustVolume(dragTarget.id, 1);
         } else if (event.key === "-") {
-            dragTarget.scale.x <= 0.15 ? dragTarget.scale.x = 0.15 : dragTarget.scale.x -= 0.1;
-            dragTarget.scale.y <= 0.15 ? dragTarget.scale.y = 0.15 : dragTarget.scale.y -= 0.1;
+            if(dragTarget.scale.x - 0.1 < .15){
+                dragTarget.scale.x = .15;
+                dragTarget.scale.y = .15;
+            }
+            else {
+                dragTarget.scale.x -= 0.1;
+                dragTarget.scale.y -= 0.1;
+            }
             adjustVolume(dragTarget.id, -1);
         }
         else if(event.key === "Delete"){
