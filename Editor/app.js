@@ -1,14 +1,13 @@
 import { sceneObjects } from "./data/scene.js";
-import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/argeggiator.js";
+import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { init, startModulator } from "./audio/modulator.js";
+import { init, addModulator } from "./audio/modulator.js";
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
     console.log("page is fully loaded");
     //Modulator testing
     init(app);
-    startModulator();
 });
 
 const app = new PIXI.Application({
@@ -233,4 +232,5 @@ function getArpFromSceneObj(sceneObj, id) {
     const intervals = moods[mood][chordName].chordIntervalsSemiTones;    
     
     addArp({id, rootNote, intervals, synthName});
+    addModulator(id);
 }
