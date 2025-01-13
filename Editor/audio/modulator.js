@@ -1,16 +1,24 @@
+//import { app } from '../app.js'; // Import the PixiJS app from app.js
+//TODO: Turn this into a module, exporting functions and controlled from app.js
 
 //Include PixiJS and Tone.js
-const app = new PIXI.Application({
-    width: 800,
-    height: 600,
-    backgroundColor: 0x1099bb,
-});
-document.body.appendChild(app.view);
+//document.body.appendChild(app.view);
 
 // Add a background water sprite 
-//export const app = undefined;
+let modApp = undefined;
+const modulators = [];
 
-const waterTexture = PIXI.Texture.from('./images/water/water.png'); 
+export function addModulator(id) {
+    console.log("Modulator added with id: " + id);
+    modulators.push(id);
+}
+
+export function startModulator() {
+    console.log("Modulator started");
+}
+
+export function init(app) {
+    const waterTexture = PIXI.Texture.from('./images/water/water.png'); 
 const waterSprite = new PIXI.Sprite(waterTexture);
 app.stage.addChild(waterSprite);
 
@@ -111,5 +119,6 @@ app.ticker.add((delta) => {
         particle.alpha += Math.sin(app.ticker.lastTime / 1000) * 0.01;
     });
 });
+}
 
 export function draw() {}

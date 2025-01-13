@@ -1,14 +1,21 @@
 import { sceneObjects } from "./data/scene.js";
 import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
+import { init, startModulator } from "./audio/modulator.js";
 
-export const app = new PIXI.Application({
+//event lisener for page load
+window.addEventListener("load", (event) => {
+    console.log("page is fully loaded");
+    //Modulator testing
+    init(app);
+    startModulator();
+});
+
+const app = new PIXI.Application({
     width: 1280,
     height: 720,
     backgroundColor: 0x1099bb,
 });
-
-app=app; //pass app to modulator
 
 const sprites = [];
 let spriteIndex = 0;
@@ -23,6 +30,8 @@ const background = PIXI.Sprite.from("./images/serene/serene-bg.jpg");
 background.width = app.screen.width;
 background.height = app.screen.height;
 app.stage.addChild(background);
+
+
 
 const iconContainer = document.getElementById("icon-container");
 
