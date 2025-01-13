@@ -41,18 +41,25 @@ app.ticker.add((delta) => {
 });
 
 // Tone.js LFO for displacement control
+const meter = new Tone.DCMeter();
 const lfo = new Tone.LFO({
     frequency: 0.5,
     min: 0,
     max: 100,
 });
+lfo.connect(meter);
 lfo.start();
 
-// lfo.connect({
-//     receive: (value) => {
-//         displacementFilter.scale.set(value, value / 2);
-//     },
-// });
+//lfo.connect({
+    // receive: (value) => {
+    //     console.log("Received value:", value);
+    //     if (value !== undefined && value !== null) {
+    //         displacementFilter.scale.set(value, value / 2);
+    //     } else {
+    //         console.error("Invalid value received:", value);
+    //     }
+    // },
+//});
 //TODO: route this effect to a parameter of an arp synth that, controlling the wet value from distance to the center of the LFO
 //TODO: control frequency and amplitude of the LFO from interacting with it on screen (rotate and scale)
 
@@ -105,6 +112,9 @@ for (let i = 0; i < 100; i++) {
 
 // Animate particles
 app.ticker.add((delta) => {
+    const currentValue = meter.getValue();
+        displacementFilter.scale.set(currentValue, currentValue / 2);
+        
     particles.forEach((particle) => {
         particle.x += particle.vx * delta;
         particle.y += particle.vy * delta;
@@ -120,5 +130,3 @@ app.ticker.add((delta) => {
     });
 });
 }
-
-export function draw() {}
