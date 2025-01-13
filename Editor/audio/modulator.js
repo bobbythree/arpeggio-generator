@@ -35,9 +35,19 @@ waterSprite.filters = [displacementFilter];
 
 //TODO: control this from tone.js draw function to sync to LFO
 // Animate the displacement map
+let scaleDirectionX = 1;
+let scaleDirectionY = 1;
+
 app.ticker.add((delta) => {
-    displacementSprite.x += 1 * delta; // Adjust speed of horizontal movement
-    displacementSprite.y += 0.5 * delta; // Adjust speed of vertical movement
+    displacementSprite.scale.x += scaleDirectionX * delta;
+    displacementSprite.scale.y += scaleDirectionY * delta;
+
+    if (displacementSprite.scale.x >= 10 || displacementSprite.scale.x <= 1) {
+        scaleDirectionX *= -1;
+    }
+    if (displacementSprite.scale.y >= 10 || displacementSprite.scale.y <= 1) {
+        scaleDirectionY *= -1;
+    }
 });
 
 // Tone.js LFO for displacement control
@@ -50,19 +60,9 @@ const lfo = new Tone.LFO({
 lfo.connect(meter);
 lfo.start();
 
-//lfo.connect({
-    // receive: (value) => {
-    //     console.log("Received value:", value);
-    //     if (value !== undefined && value !== null) {
-    //         displacementFilter.scale.set(value, value / 2);
-    //     } else {
-    //         console.error("Invalid value received:", value);
-    //     }
-    // },
-//});
 //TODO: route this effect to a parameter of an arp synth that, controlling the wet value from distance to the center of the LFO
-//TODO: control frequency and amplitude of the LFO from interacting with it on screen (rotate and scale)
 
+//TODO: control frequency and amplitude of the LFO from interacting with it on screen (rotate and scale)
 // UI to control LFO frequency
 const frequencySlider = document.createElement('input');
 frequencySlider.type = 'range';
@@ -92,8 +92,9 @@ const particleContainer = new PIXI.ParticleContainer(500, {
 });
 app.stage.addChild(particleContainer);
 
-// Particle texture (e.g., small circle or bubble image)
-const particleTexture = PIXI.Texture.from('./images/particles/particle.png'); // Replace with a particle image path
+//TODO: move this into its own module?
+// Particle texture 
+const particleTexture = PIXI.Texture.from('./images/particles/particle.png'); 
 
 // Particle array
 const particles = [];
