@@ -67,8 +67,7 @@ function getCurrentEighthNote() {
 
 export function adjustVolume(arpId, volume) {
   //get the arp with the matching id
-  for (let i = 0; i < arps.length; i++) {
-    
+  for (let i = 0; i < arps.length; i++) {    
     if (arps[i].id === arpId) {
       arps[i].synth.volume.value <= -5 ? arps[i].synth.volume.value = -5 : arps[i].synth.volume.value += volume;
       arps[i].synth.volume.value >= 5 ? arps[i].synth.volume.value = 5 : arps[i].synth.volume.value += volume;
