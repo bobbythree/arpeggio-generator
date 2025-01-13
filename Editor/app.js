@@ -195,11 +195,11 @@ window.addEventListener("keydown", (event) => {
         if (event.key === "+") {
             dragTarget.scale.x += 0.1;
             dragTarget.scale.y += 0.1;
-            adjustVolume(dragTarget.id, 5);
+            adjustVolume(dragTarget.id, 1);
         } else if (event.key === "-") {
             dragTarget.scale.x -= 0.1;
             dragTarget.scale.y -= 0.1;
-            adjustVolume(dragTarget.id, -5);
+            adjustVolume(dragTarget.id, -1);
         }
         else if(event.key === "Delete"){
             app.stage.removeChild(dragTarget);
