@@ -1,11 +1,3 @@
-//import { app } from '../app.js'; // Import the PixiJS app from app.js
-//TODO: Turn this into a module, exporting functions and controlled from app.js
-
-//Include PixiJS and Tone.js
-//document.body.appendChild(app.view);
-
-// Add a background water sprite 
-let modApp = undefined;
 const modulators = [];
 
 export function addModulator(id) {
@@ -46,8 +38,8 @@ export function init(app) {
     let scaleDirectionY = 1;
 
     app.ticker.add((delta) => {
-        displacementSprite.scale.x += scaleDirectionX * delta;
-        displacementSprite.scale.y += scaleDirectionY * delta;
+        displacementSprite.scale.x += scaleDirectionX * lfo.frequency.value * delta;
+        displacementSprite.scale.y += scaleDirectionY * lfo.frequency.value * delta;
 
         if (displacementSprite.scale.x >= 10 || displacementSprite.scale.x <= 1) {
             scaleDirectionX *= -1;

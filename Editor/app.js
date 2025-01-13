@@ -31,8 +31,6 @@ background.width = app.screen.width;
 background.height = app.screen.height;
 app.stage.addChild(background);
 
-
-
 const iconContainer = document.getElementById("icon-container");
 
 // Create a container for each mood
