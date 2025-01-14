@@ -1,7 +1,7 @@
 import { sceneObjects } from "./data/scene.js";
 import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { init, addEffect } from "./audio/effector.js";
+import { init, setEffect } from "./audio/effector.js";
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
@@ -136,7 +136,7 @@ app.view.addEventListener("drop", (event) => {
 
     app.stage.addChild(sprite); // Add the sprite to the stage
 
-    addEffect(sprite.id);
+    setEffect(sprite.id);
 });
 
 function deleteSprite(spriteId) {
@@ -161,6 +161,11 @@ export function getSprite(spriteId) {
     }
 }
 
+export function getSprites() {
+  //return the sprites array
+  return sprites;
+}
+
 // Variables for drag state
 let dragging = false;
 let dragTarget = null;
@@ -178,8 +183,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    // getArpFromSceneObj('cloud')
-    // TODO: get current obj and pass to getArpFromSceneObj
+    setEffect(dragTarget.id);
 }
 
 function onDragMove() {
