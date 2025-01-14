@@ -57,7 +57,7 @@ export function startModulator() {
 export function init(app) {
     const bitCrusherTexture = PIXI.Texture.from('./images/effects/bitCrusher.png'); 
     const bitCrusherSprite = new PIXI.Sprite(bitCrusherTexture);
-    bitCrusherSprite.scale.set(.5);
+    bitCrusherSprite.scale.set(.25);
     bitCrusherSprite.anchor.set(0.5);
     bitCrusherSprite.x = app.screen.width / 2;
     bitCrusherSprite.y = app.screen.height / 2;
