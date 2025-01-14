@@ -1,7 +1,7 @@
 import { getArp } from "./arpeggiator.js";
 
 const crusher = new Tone.BitCrusher(4).toDestination();
-let effectWetness = 0.01;
+let effectWetness = 0.0;
 
 const vertexShader = `
     attribute vec2 aVertexPosition;
@@ -36,19 +36,19 @@ const fragmentShader = `
     // Output the color for the entire block
     gl_FragColor = color;
 }
-
 `;
 
 let bitCrusherFilter = new PIXI.Filter(null, fragmentShader, {
-    pixelSize: effectWetness, // Initial pixel size
+    pixelSize: .01, // Initial pixel size
 });
 
 export function addModulator(id) {
     console.log("Modulator added with id: " + id);
-    effects.push(id);
+    //effects.push(id);
 
-    var testArp = getArp(id);
-    lfo.connect(testArp.synth.volume);
+    var arp = getArp(id);
+    arp.synth.connect(crusher);
+    //lfo.connect(testArp.synth.volume);
 }
 
 export function startModulator() {
@@ -75,7 +75,7 @@ export function init(app) {
     // UI to control LFO frequency
     const effectSlider = document.createElement('input');
     effectSlider.type = 'range';
-    effectSlider.min = '.01';
+    effectSlider.min = '0';
     effectSlider.max = '1';
     effectSlider.step = '0.01';
     effectSlider.value = effectWetness;
@@ -88,13 +88,8 @@ export function init(app) {
     effectSlider.addEventListener('input', (e) => {
         const wetness = parseFloat(e.target.value);
         effectWetness = wetness;
-        //bitCrusherFilter.pixelSize = 10 * wetness;
-
-        // bitCrusherFilter = new PIXI.Filter(null, fragmentShader, {
-        //     pixelSize: wetness, // Initial pixel size
-        // });
-
-        bitCrusherFilter.uniforms.pixelSize = effectWetness / 10; // Animate effect
+        crusher.wetness = wetness;
+        bitCrusherFilter.uniforms.pixelSize = (effectWetness + .025) / 10; // Animate effect, preventing it from going to zero
 
         wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
     });
