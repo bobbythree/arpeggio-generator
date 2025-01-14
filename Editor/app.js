@@ -1,7 +1,7 @@
 import { sceneObjects } from "./data/scene.js";
 import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { init, addModulator } from "./audio/modulator.js";
+import { init, addModulator } from "./audio/effector.js";
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
