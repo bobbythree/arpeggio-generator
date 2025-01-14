@@ -1,7 +1,7 @@
 import { getArp } from "./arpeggiator.js";
 
-const crusher = new Tone.BitCrusher(4).toDestination();
-let effectWetness = 0.0;
+const crusher = new Tone.BitCrusher(2).toDestination();
+var arp = undefined;
 
 const vertexShader = `
     attribute vec2 aVertexPosition;
@@ -46,9 +46,8 @@ export function addModulator(id) {
     console.log("Modulator added with id: " + id);
     //effects.push(id);
 
-    var arp = getArp(id);
+    arp = getArp(id);
     arp.synth.connect(crusher);
-    //lfo.connect(testArp.synth.volume);
 }
 
 export function startModulator() {
@@ -69,28 +68,24 @@ export function init(app) {
         
     });
 
-    //TODO: route this effect to a parameter of an arp synth that, controlling the wet value from distance to the center of the LFO
-
-    //TODO: control frequency and amplitude of the LFO from interacting with it on screen (rotate and scale)
-    // UI to control LFO frequency
+    // TEST UI - NO SLIDERS!!
     const effectSlider = document.createElement('input');
     effectSlider.type = 'range';
     effectSlider.min = '0';
     effectSlider.max = '1';
     effectSlider.step = '0.01';
-    effectSlider.value = effectWetness;
+    effectSlider.value = '0';
     document.body.appendChild(effectSlider);
 
     const wetnessLabel = document.createElement('label');
-    wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
+    wetnessLabel.innerText = `Effect Wetness: ${effectSlider.value}`;
     document.body.appendChild(wetnessLabel);
 
     effectSlider.addEventListener('input', (e) => {
         const wetness = parseFloat(e.target.value);
-        effectWetness = wetness;
-        crusher.wetness = wetness;
-        bitCrusherFilter.uniforms.pixelSize = (effectWetness + .025) / 10; // Animate effect, preventing it from going to zero
+        crusher.wet.value = wetness; //affect the sound
+        bitCrusherFilter.uniforms.pixelSize = (wetness + .01) / 10; // Animate effect, preventing it from going to zero
 
-        wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
+        wetnessLabel.innerText = `Effect Wetness: ${wetness}`;
     });
 }
