@@ -28,7 +28,7 @@ const bitCrusherFragmentShader = `
 `;
 
 let bitCrusherFilter = new PIXI.Filter(null, bitCrusherFragmentShader, {
-    pixelSize: .01, // Initial pixel size
+    pixelSize: .001, // Initial pixel size
 });
 
 export function addEffect(id) {
