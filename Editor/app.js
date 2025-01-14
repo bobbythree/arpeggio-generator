@@ -1,7 +1,7 @@
 import { sceneObjects } from "./data/scene.js";
 import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { init, addModulator } from "./audio/effector.js";
+import { init, addEffect } from "./audio/effector.js";
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
@@ -131,9 +131,12 @@ app.view.addEventListener("drop", (event) => {
     sprite.id = spriteIdIndex; // Assign an ID to the sprite
     spriteIdIndex++;
     getArpFromSceneObj(type, sprite.id); // Add the sprite to the array
+    console.log("Adding Sprite with id: " + sprite.id);
     sprites.push(sprite); // Add the sprite to the array 
 
     app.stage.addChild(sprite); // Add the sprite to the stage
+
+    addEffect(sprite.id);
 });
 
 function deleteSprite(spriteId) {
@@ -145,6 +148,17 @@ function deleteSprite(spriteId) {
       break;
     }
   }
+}
+
+export function getSprite(spriteId) {
+  //get the sprite from the stage with the matching id
+  console.log("Getting Sprite with id: " + spriteId);
+    for (let i = 0; i < sprites.length; i++) {
+        if (sprites[i].id === spriteId) {
+            console.log("Found Sprite with id: " + spriteId);
+        return sprites[i];
+        }
+    }
 }
 
 // Variables for drag state
@@ -232,5 +246,4 @@ function getArpFromSceneObj(sceneObj, id) {
     const intervals = moods[mood][chordName].chordIntervalsSemiTones;    
     
     addArp({id, rootNote, intervals, synthName});
-    addModulator(id);
 }

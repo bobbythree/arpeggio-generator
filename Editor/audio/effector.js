@@ -1,7 +1,9 @@
+import { getSprite } from "../app.js";
 import { getArp } from "./arpeggiator.js";
 
+
 const crusher = new Tone.BitCrusher(2).toDestination();
-var arp = undefined;
+crusher.wet.value = 0;
 
 const bitCrusherFragmentShader = `
     precision mediump float;
@@ -29,12 +31,15 @@ let bitCrusherFilter = new PIXI.Filter(null, bitCrusherFragmentShader, {
     pixelSize: .01, // Initial pixel size
 });
 
-export function addModulator(id) {
-    console.log("Modulator added with id: " + id);
+export function addEffect(id) {
+    console.log("Effect added to id: " + id);
     //effects.push(id);
 
-    arp = getArp(id);
+    let arp = getArp(id);
     arp.synth.connect(crusher);
+
+    let sprite = getSprite(id);
+    sprite.filters = [bitCrusherFilter];
 }
 
 export function startModulator() {
