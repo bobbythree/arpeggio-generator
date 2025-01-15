@@ -1,4 +1,4 @@
-export const backgrounds = {
+export const scenes = {
     "happy": {
         "backgroundImage": "./images/happy/happy-bg.jpg",
         "effectors" : [
@@ -16,7 +16,7 @@ export const backgrounds = {
         } //TODO: add other particle properties
     },
     "sad": {
-        "backgroundImage": "./images/happy/sad-bg.jpg",
+        "backgroundImage": "./images/sad/sad-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "./shaders/bloom.glsl", "position": [0, 0], "size: " : [100, 100] }, 
             {"effect": "bitCrusher", "shader": "./shaders/pixelate.glsl", "position": [200, 0], "size: " : [100, 100]  },
@@ -32,7 +32,7 @@ export const backgrounds = {
         } //TODO: add other particle properties
     },
     "angry": {
-        "backgroundImage": "./images/happy/angry-bg.jpg",
+        "backgroundImage": "./images/angry/angry-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "./shaders/bloom.glsl", "position": [0, 0], "size: " : [100, 100] }, 
             {"effect": "bitCrusher", "shader": "./shaders/pixelate.glsl", "position": [200, 0], "size: " : [100, 100]  },
@@ -48,7 +48,7 @@ export const backgrounds = {
         } //TODO: add other particle properties
     },
     "nostalgic": {
-        "backgroundImage": "./images/happy/nostalgic-bg.jpg",
+        "backgroundImage": "./images/nostalgic/nostalgic-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "./shaders/bloom.glsl", "position": [0, 0], "size: " : [100, 100] }, 
             {"effect": "bitCrusher", "shader": "./shaders/pixelate.glsl", "position": [200, 0], "size: " : [100, 100]  },
@@ -64,7 +64,7 @@ export const backgrounds = {
         } //TODO: add other particle properties
     },
     "serene": {
-        "backgroundImage": "./images/happy/serene-bg.jpg",
+        "backgroundImage": "./images/serene/serene-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "./shaders/bloom.glsl", "position": [0, 0], "size: " : [100, 100] }, 
             {"effect": "bitCrusher", "shader": "./shaders/pixelate.glsl", "position": [200, 0], "size: " : [100, 100]  },
@@ -80,7 +80,7 @@ export const backgrounds = {
         } //TODO: add other particle properties
     },
     "spooky": {
-        "backgroundImage": "./images/happy/spooky-bg.jpg",
+        "backgroundImage": "./images/spooky/spooky-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "./shaders/bloom.glsl", "position": [0, 0], "size: " : [100, 100] }, 
             {"effect": "bitCrusher", "shader": "./shaders/pixelate.glsl", "position": [200, 0], "size: " : [100, 100]  },

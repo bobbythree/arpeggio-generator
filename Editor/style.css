@@ -44,6 +44,7 @@ body {
     margin-top: 20px;
 }
 
+#control-panel select,
 #control-panel button {
     display: block;
     width: 100%;

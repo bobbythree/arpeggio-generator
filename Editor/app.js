@@ -1,3 +1,4 @@
+import { scenes } from './data/scenes.js';
 import { arpObjects } from "./data/arpObjects.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
@@ -8,6 +9,8 @@ window.addEventListener("load", (event) => {
     console.log("page is fully loaded");
     //Modulator testing
     init(app);
+    populateSceneSelector();
+    loadScene('happy');
 });
 
 const app = new PIXI.Application({
@@ -23,13 +26,6 @@ app.stage.hitArea = app.screen;
 
 // Add the PIXI app to the UI
 document.getElementById("scene").appendChild(app.view);
-
-//TODO: load the background for the selected scene
-// Add background image
-const background = PIXI.Sprite.from("./images/serene/serene-bg.jpg");
-background.width = app.screen.width;
-background.height = app.screen.height;
-app.stage.addChild(background);
 
 const iconContainer = document.getElementById("icon-container");
 
@@ -63,6 +59,40 @@ for (const [type, obj] of Object.entries(arpObjects)) {
 
     // Add the icon to the appropriate mood container
     moodContainers[obj.mood].appendChild(img);
+}
+
+// Populate the scene selector dropdown
+function populateSceneSelector() {
+    const sceneSelector = document.getElementById('scene-selector');
+    for (const scene in scenes) {
+        const option = document.createElement('option');
+        option.value = scene;
+        option.textContent = scene.charAt(0).toUpperCase() + scene.slice(1);
+        sceneSelector.appendChild(option);
+    }
+    sceneSelector.value = 'happy'; // Default to happy
+    sceneSelector.addEventListener('change', (event) => {
+        loadScene(event.target.value);
+    });
+}
+
+// Load the selected scene
+function loadScene(sceneName) {
+    const scene = scenes[sceneName];
+    if (!scene) return;
+
+    // Set the background image
+    const background = PIXI.Sprite.from(scene.backgroundImage);
+    background.width = app.screen.width;
+    background.height = app.screen.height;
+    app.stage.addChild(background);
+
+    // Show only the icons for the selected mood
+    for (const mood in moodContainers) {
+        moodContainers[mood].style.display = mood === sceneName ? 'block' : 'none';
+    }
+
+    outputDebugInfo(`Loaded scene: ${sceneName}`);
 }
 
 //start the engine
