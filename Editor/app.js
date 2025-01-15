@@ -1,4 +1,4 @@
-import { sceneObjects } from "./data/scene.js";
+import { arpObjects } from "./data/scene.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
 import { init, setEffect } from "./audio/effector.js";
@@ -24,6 +24,7 @@ app.stage.hitArea = app.screen;
 // Add the PIXI app to the UI
 document.getElementById("scene").appendChild(app.view);
 
+//TODO: load the background for the selected scene
 // Add background image
 const background = PIXI.Sprite.from("./images/serene/serene-bg.jpg");
 background.width = app.screen.width;
@@ -35,7 +36,7 @@ const iconContainer = document.getElementById("icon-container");
 // Create a container for each mood
 const moodContainers = {};
 
-for (const [type, obj] of Object.entries(sceneObjects)) {
+for (const [type, obj] of Object.entries(arpObjects)) {
     if (!moodContainers[obj.mood]) {
         // Create a new container for the mood
         const moodContainer = document.createElement('div');
@@ -113,11 +114,11 @@ app.view.addEventListener("drop", (event) => {
 
     // Create a sprite based on the type
     let sprite;
-    if (sceneObjects[type]) {
-        sprite = PIXI.Sprite.from(sceneObjects[type].image);
+    if (arpObjects[type]) {
+        sprite = PIXI.Sprite.from(arpObjects[type].image);
         
         // Create text for the mood
-        const moodText = new PIXI.Text(sceneObjects[type].mood, {
+        const moodText = new PIXI.Text(arpObjects[type].mood, {
             fontFamily: 'Arial',
             fontSize: 24,
             fill: 0xffffff,
@@ -268,9 +269,9 @@ window.addEventListener("keydown", (event) => {
 
 //utils
 function getArpFromSceneObj(sceneObj, id) {
-    const chordName = sceneObjects[sceneObj].chordName;
-    const mood = sceneObjects[sceneObj].mood; 
-    const synthName = sceneObjects[sceneObj].synthName;
+    const chordName = arpObjects[sceneObj].chordName;
+    const mood = arpObjects[sceneObj].mood; 
+    const synthName = arpObjects[sceneObj].synthName;
     const rootNote = moods[mood][chordName].rootNote;
     const intervals = moods[mood][chordName].chordIntervalsSemiTones;    
     

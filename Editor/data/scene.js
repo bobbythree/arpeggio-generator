@@ -1,4 +1,4 @@
-export const sceneObjects = {
+export const arpObjects = {
     "happy-sun": {
         "image": "./images/happy/happy-sun.png",
         "mood": "happy",
