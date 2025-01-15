@@ -1,6 +1,15 @@
-import { sceneObjects } from "./data/scene-objects.js";
-import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/argeggiator.js";
+import { scenes } from './data/scenes.js';
+import { arpObjects } from "./data/arpObjects.js";
+import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
+import { init, setEffect } from "./audio/effector.js";
+
+//event lisener for page load
+window.addEventListener("load", (event) => {
+    console.log("page is fully loaded");
+    populateSceneSelector();
+    loadScene('happy');
+});
 
 const app = new PIXI.Application({
     width: 1280,
@@ -9,25 +18,20 @@ const app = new PIXI.Application({
 });
 
 const sprites = [];
-let spriteIndex = 0;
+let spriteIdIndex = 0;
 
 app.stage.hitArea = app.screen;
 
 // Add the PIXI app to the UI
 document.getElementById("scene").appendChild(app.view);
 
-// Add background image
-const background = PIXI.Sprite.from("./images/serene/serene-bg.jpg");
-background.width = app.screen.width;
-background.height = app.screen.height;
-app.stage.addChild(background);
-
+//icons
 const iconContainer = document.getElementById("icon-container");
 
 // Create a container for each mood
 const moodContainers = {};
 
-for (const [type, obj] of Object.entries(sceneObjects)) {
+for (const [type, obj] of Object.entries(arpObjects)) {
     if (!moodContainers[obj.mood]) {
         // Create a new container for the mood
         const moodContainer = document.createElement('div');
@@ -56,11 +60,78 @@ for (const [type, obj] of Object.entries(sceneObjects)) {
     moodContainers[obj.mood].appendChild(img);
 }
 
+// Populate the scene selector dropdown
+function populateSceneSelector() {
+    const sceneSelector = document.getElementById('scene-selector');
+    for (const scene in scenes) {
+        const option = document.createElement('option');
+        option.value = scene;
+        option.textContent = scene.charAt(0).toUpperCase() + scene.slice(1);
+        sceneSelector.appendChild(option);
+    }
+    sceneSelector.value = 'happy'; // Default to happy
+    sceneSelector.addEventListener('change', (event) => {
+        loadScene(event.target.value);
+    });
+}
+
+// Load the selected scene
+function loadScene(sceneName) {
+    const scene = scenes[sceneName];
+    if (!scene) return;
+
+    // Set the background image
+    const background = PIXI.Sprite.from(scene.backgroundImage);
+    background.width = app.screen.width;
+    background.height = app.screen.height;
+    app.stage.addChild(background);
+
+    // Show only the icons for the selected mood
+    for (const mood in moodContainers) {
+        moodContainers[mood].style.display = mood === sceneName ? 'block' : 'none';
+    }
+
+    outputDebugInfo(`Loaded scene: ${sceneName}`);
+}
+
+// Update mouse coordinates display
+app.view.addEventListener('mousemove', (event) => {
+    const rect = app.view.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    document.getElementById('mouse-coordinates').textContent = `X: ${x.toFixed(0)}, Y: ${y.toFixed(0)}`;
+});
+
 //start the engine
 document.getElementById('start-button').addEventListener('click', startTone);
+document.getElementById('pause-button').addEventListener('click', pauseTone);
+document.getElementById('clear-button').addEventListener('click', clearScene);
 
 function startTone() {
     start();
+    outputDebugInfo("Tone started");
+}
+
+function pauseTone() {
+    stop();
+    outputDebugInfo("Tone paused");
+}
+
+function clearScene() {
+    sprites.forEach(sprite => {
+        app.stage.removeChild(sprite);
+        deleteArp(sprite.id);
+    });
+    sprites.length = 0;
+    outputDebugInfo("Scene cleared");
+}
+
+function outputDebugInfo(message) {
+    const debugInfo = document.getElementById('debug-info');
+    const newMessage = document.createElement('div');
+    newMessage.textContent = message;
+    debugInfo.appendChild(newMessage);
+    debugInfo.scrollTop = debugInfo.scrollHeight;
 }
 
 // Add drag-and-drop functionality
@@ -80,11 +151,11 @@ app.view.addEventListener("drop", (event) => {
 
     // Create a sprite based on the type
     let sprite;
-    if (sceneObjects[type]) {
-        sprite = PIXI.Sprite.from(sceneObjects[type].image);
+    if (arpObjects[type]) {
+        sprite = PIXI.Sprite.from(arpObjects[type].image);
         
         // Create text for the mood
-        const moodText = new PIXI.Text(sceneObjects[type].mood, {
+        const moodText = new PIXI.Text(arpObjects[type].mood, {
             fontFamily: 'Arial',
             fontSize: 24,
             fill: 0xffffff,
@@ -120,9 +191,10 @@ app.view.addEventListener("drop", (event) => {
     sprite.scale.set(.5); // Scale down the sprite
     
     
-    sprite.id = spriteIndex; // Assign an ID to the sprite
-    spriteIndex++;
+    sprite.id = spriteIdIndex; // Assign an ID to the sprite
+    spriteIdIndex++;
     getArpFromSceneObj(type, sprite.id); // Add the sprite to the array
+    console.log("Adding Sprite with id: " + sprite.id);
     sprites.push(sprite); // Add the sprite to the array 
 
     app.stage.addChild(sprite); // Add the sprite to the stage
@@ -137,6 +209,22 @@ function deleteSprite(spriteId) {
       break;
     }
   }
+}
+
+export function getSprite(spriteId) {
+  //get the sprite from the stage with the matching id
+  console.log("Getting Sprite with id: " + spriteId);
+    for (let i = 0; i < sprites.length; i++) {
+        if (sprites[i].id === spriteId) {
+            console.log("Found Sprite with id: " + spriteId);
+        return sprites[i];
+        }
+    }
+}
+
+export function getSprites() {
+  //return the sprites array
+  return sprites;
 }
 
 // Variables for drag state
@@ -156,8 +244,6 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    // getArpFromSceneObj('cloud')
-    // TODO: get current obj and pass to getArpFromSceneObj
 }
 
 function onDragMove() {
@@ -229,9 +315,9 @@ window.addEventListener("keydown", (event) => {
 
 //utils
 function getArpFromSceneObj(sceneObj, id) {
-    const chordName = sceneObjects[sceneObj].chordName;
-    const mood = sceneObjects[sceneObj].mood; 
-    const synthName = sceneObjects[sceneObj].synthName;
+    const chordName = arpObjects[sceneObj].chordName;
+    const mood = arpObjects[sceneObj].mood; 
+    const synthName = arpObjects[sceneObj].synthName;
     const rootNote = moods[mood][chordName].rootNote;
     const intervals = moods[mood][chordName].chordIntervalsSemiTones;    
     

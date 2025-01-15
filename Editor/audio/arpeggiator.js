@@ -26,6 +26,15 @@ export function deleteArp(arpId) {
   }
 }
 
+export function getArp(arpId) {
+  //get the arp with the matching id
+  for (let i = 0; i < arps.length; i++) {
+    if (arps[i].id === arpId) {
+      return arps[i];
+    }
+  }
+}
+
 export function start(){
   console.log("Starting Tone");
   Tone.Transport.start();
