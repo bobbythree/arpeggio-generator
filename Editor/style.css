@@ -18,6 +18,7 @@ body {
     height: 600px;
     border: 1px solid #ccc;
     margin-top: 20px;
+    float: left;
 }
 .mood-container {
     display: flex;
@@ -29,19 +30,33 @@ body {
     border: 2px solid darkgray;
     min-width: 250px;
 }
-#start-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 #start-button:hover {
     background-color: #45a049;
 }
 
+#control-panel {
+    width: 200px;
+    float: right;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+#control-panel button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#debug-info {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    height: 200px;
+    overflow-y: auto;
+}

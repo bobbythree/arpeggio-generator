@@ -1,5 +1,5 @@
 import { sceneObjects } from "./data/scene.js";
-import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
+import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
 import { init, setEffect } from "./audio/effector.js";
 
@@ -66,9 +66,34 @@ for (const [type, obj] of Object.entries(sceneObjects)) {
 
 //start the engine
 document.getElementById('start-button').addEventListener('click', startTone);
+document.getElementById('pause-button').addEventListener('click', pauseTone);
+document.getElementById('clear-button').addEventListener('click', clearScene);
 
 function startTone() {
     start();
+    outputDebugInfo("Tone started");
+}
+
+function pauseTone() {
+    stop();
+    outputDebugInfo("Tone paused");
+}
+
+function clearScene() {
+    sprites.forEach(sprite => {
+        app.stage.removeChild(sprite);
+        deleteArp(sprite.id);
+    });
+    sprites.length = 0;
+    outputDebugInfo("Scene cleared");
+}
+
+function outputDebugInfo(message) {
+    const debugInfo = document.getElementById('debug-info');
+    const newMessage = document.createElement('div');
+    newMessage.textContent = message;
+    debugInfo.appendChild(newMessage);
+    debugInfo.scrollTop = debugInfo.scrollHeight;
 }
 
 // Add drag-and-drop functionality
