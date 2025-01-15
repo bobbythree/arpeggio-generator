@@ -25,6 +25,7 @@ app.stage.hitArea = app.screen;
 // Add the PIXI app to the UI
 document.getElementById("scene").appendChild(app.view);
 
+//icons
 const iconContainer = document.getElementById("icon-container");
 
 // Create a container for each mood
