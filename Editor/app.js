@@ -93,6 +93,14 @@ function loadScene(sceneName) {
     outputDebugInfo(`Loaded scene: ${sceneName}`);
 }
 
+// Update mouse coordinates display
+app.view.addEventListener('mousemove', (event) => {
+    const rect = app.view.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    document.getElementById('mouse-coordinates').textContent = `X: ${x.toFixed(0)}, Y: ${y.toFixed(0)}`;
+});
+
 //start the engine
 document.getElementById('start-button').addEventListener('click', startTone);
 document.getElementById('pause-button').addEventListener('click', pauseTone);

@@ -61,3 +61,10 @@ body {
     height: 200px;
     overflow-y: auto;
 }
+
+#mouse-coordinates {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
