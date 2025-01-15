@@ -1,4 +1,4 @@
-import { sceneObjects } from "./data/scene.js";
+import { sceneObjects } from "./data/scene-objects.js";
 import { start, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/argeggiator.js";
 import { moods } from "./data/moods-chords.js";
 
