@@ -1,4 +1,4 @@
-import { arpObjects } from "./data/scene.js";
+import { arpObjects } from "./data/arpObjects.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
 import { init, setEffect } from "./audio/effector.js";
