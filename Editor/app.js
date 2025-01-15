@@ -7,8 +7,6 @@ import { init, setEffect } from "./audio/effector.js";
 //event lisener for page load
 window.addEventListener("load", (event) => {
     console.log("page is fully loaded");
-    //Modulator testing
-    init(app);
     populateSceneSelector();
     loadScene('happy');
 });
@@ -191,8 +189,6 @@ app.view.addEventListener("drop", (event) => {
     sprites.push(sprite); // Add the sprite to the array 
 
     app.stage.addChild(sprite); // Add the sprite to the stage
-
-    setEffect(sprite.id);
 });
 
 function deleteSprite(spriteId) {
@@ -239,7 +235,6 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    setEffect(dragTarget.id);
 }
 
 function onDragMove() {
