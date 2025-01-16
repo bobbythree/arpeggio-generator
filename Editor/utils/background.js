@@ -34,6 +34,7 @@ function initParticles(app, sceneName) {
     for (let i = 0; i < 100; i++) {
         const particle = new PIXI.Sprite(particleTexture);
         particle.anchor.set(0.5);
+        particle.color = scenes[sceneName].particles.color;
         particle.scale.set(Math.random() * 0.5 + 0.5); // Random size
         particle.x = Math.random() * app.screen.width;
         particle.y = Math.random() * app.screen.height;
