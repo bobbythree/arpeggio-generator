@@ -76,6 +76,7 @@ function initEffectors(app, transport, sceneName) {
         const rectangle = new PIXI.Graphics();
         rectangle.beginFill(0x66CCFF);
         rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
+        rectangle.alpha = 0.5;
         app.stage.addChild(rectangle);
     });
  }
