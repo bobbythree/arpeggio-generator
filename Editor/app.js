@@ -3,6 +3,7 @@ import { arpObjects } from "./data/arpObjects.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
 import { init, setEffect } from "./audio/effector.js";
+import { setBackround } from './utils/background.js';
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
@@ -77,14 +78,7 @@ function populateSceneSelector() {
 
 // Load the selected scene
 function loadScene(sceneName) {
-    const scene = scenes[sceneName];
-    if (!scene) return;
-
-    // Set the background image
-    const background = PIXI.Sprite.from(scene.backgroundImage);
-    background.width = app.screen.width;
-    background.height = app.screen.height;
-    app.stage.addChild(background);
+    setBackround(app, Tone.getTransport(), sceneName);
 
     // Show only the icons for the selected mood
     for (const mood in moodContainers) {
