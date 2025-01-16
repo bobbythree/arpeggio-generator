@@ -1,4 +1,7 @@
 import { scenes } from '../data/scenes.js';
+import { settings } from '../settings.js';
+
+let effectorRectangles = [];
 
 export function setBackround(app, transport, sceneName) {
     const scene = scenes[sceneName];
@@ -69,15 +72,23 @@ function initParticles(app, sceneName) {
 //#region Effectors
 
 function initEffectors(app, transport, sceneName) {
-    
     const effectors = scenes[sceneName].effectors;
+    effectorRectangles.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
+    effectorRectangles = [];
+
     effectors.forEach((effector) => {
-        //draw a rectangle
         const rectangle = new PIXI.Graphics();
         rectangle.beginFill(0x66CCFF);
         rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
-        rectangle.alpha = 0.5;
+        rectangle.alpha = settings.debugMode ? 0.5 : 0;
         app.stage.addChild(rectangle);
+        effectorRectangles.push(rectangle);
     });
- }
+}
+
+export function updateEffectorVisibility() {
+    effectorRectangles.forEach(rect => {
+        rect.alpha = settings.debugMode ? 0.5 : 0;
+    });
+}
 //#endregion

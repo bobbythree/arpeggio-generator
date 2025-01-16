@@ -1,3 +1,7 @@
 export const settings = {
-    debugMode: true
-  };
+    debugMode: false
+};
+
+export function toggleDebugMode(value) {
+    settings.debugMode = value;
+}
