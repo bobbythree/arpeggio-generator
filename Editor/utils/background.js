@@ -11,8 +11,10 @@ export function setBackround(app, transport, sceneName) {
     app.stage.addChild(background);
 
     initParticles(app, sceneName);
+    initEffectors(app, transport, sceneName);
 }
 
+//#region Particles
 function initParticles(app, sceneName) {
     // Particle Effect
     const particleContainer = new PIXI.ParticleContainer(500, {
@@ -47,8 +49,6 @@ function initParticles(app, sceneName) {
 
     // Animate particles
     app.ticker.add((delta) => {
-        
-            
         particles.forEach((particle) => {
             particle.x += particle.vx * delta;
             particle.y += particle.vy * delta;
@@ -64,3 +64,19 @@ function initParticles(app, sceneName) {
         });
     });
 }
+//#endregion
+
+//#region Effectors
+
+function initEffectors(app, transport, sceneName) {
+    
+    const effectors = scenes[sceneName].effectors;
+    effectors.forEach((effector) => {
+        //draw a rectangle
+        const rectangle = new PIXI.Graphics();
+        rectangle.beginFill(0x66CCFF);
+        rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
+        app.stage.addChild(rectangle);
+    });
+ }
+//#endregion
