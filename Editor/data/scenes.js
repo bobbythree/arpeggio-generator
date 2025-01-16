@@ -12,7 +12,7 @@ export const scenes = {
         ],
         "particles": {
             "texture": "./images/particles/happy-particle.png",
-            "color": 0x00ff00
+            "color": 0xFFC0CB
         } //TODO: add other particle properties
     },
     "sad": {
@@ -44,7 +44,7 @@ export const scenes = {
         ],
         "particles": {
             "texture": "./images/particles/angry-particle.png",
-            "color": 0x00ff00
+            "color": 0xff0000
         } //TODO: add other particle properties
     },
     "nostalgic": {
@@ -60,7 +60,7 @@ export const scenes = {
         ],
         "particles": {
             "texture": "./images/particles/nostalgic-particle.png",
-            "color": 0x00ff00
+            "color": 0x000000
         } //TODO: add other particle properties
     },
     "serene": {
