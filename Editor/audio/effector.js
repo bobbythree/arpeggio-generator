@@ -4,9 +4,12 @@ import { getArp } from "./arpeggiator.js";
 let effectWetness = 0;
 let bitCrusherSprite = undefined;
 let sprite = undefined;
+
+//TODO: get the effect name from the scene data and load it here
 const crusher = new Tone.BitCrusher(2).toDestination();
 crusher.wet.value = 0;
 
+//TODO: get the shader name from the scene data and load it here
 const bitCrusherFragmentShader = `
     precision mediump float;
 
@@ -29,14 +32,16 @@ const bitCrusherFragmentShader = `
 }
 `;
 
+//TODO: this needs to be generic
 let bitCrusherFilter = new PIXI.Filter(null, bitCrusherFragmentShader, {
     pixelSize: .001, // Initial pixel size
 });
 
 export function setEffect(id) {
-    let arp = getArp(id);
-    sprite = getSprite(id);
+    let arp = getArp(id);   //affect the audio
+    sprite = getSprite(id); //affect the visual
 
+    //TODO: provide an option for simple overlap or distance based activation
     if(distance(sprite.x, sprite.y, bitCrusherSprite.x, bitCrusherSprite.y) < 200) { 
         crusher.wet.value = effectWetness;
         arp.synth.connect(crusher);
@@ -54,47 +59,35 @@ export function startModulator() {
     console.log("Modulator started");
 }
 
-export function init(app) {
-    const bitCrusherTexture = PIXI.Texture.from('./images/effects/bitCrusher.png'); 
-    bitCrusherSprite = new PIXI.Sprite(bitCrusherTexture);
-    bitCrusherSprite.scale.set(.25);
-    bitCrusherSprite.anchor.set(0.5);
-    bitCrusherSprite.x = app.screen.width / 2;
-    bitCrusherSprite.y = app.screen.height / 2;
-    bitCrusherSprite.filters = [bitCrusherFilter];
-    app.stage.addChild(bitCrusherSprite);
+export function initEffector(app) {
+    //TODO: show a static image or animation for the effect
 
-    app.ticker.add((delta) => {
-        
-    });
+    // const bitCrusherTexture = PIXI.Texture.from('./images/effects/bitCrusher.png'); 
+    // bitCrusherSprite = new PIXI.Sprite(bitCrusherTexture);
+    // bitCrusherSprite.scale.set(.25);
+    // bitCrusherSprite.anchor.set(0.5);
+    // bitCrusherSprite.x = app.screen.width / 2;
+    // bitCrusherSprite.y = app.screen.height / 2;
+    // bitCrusherSprite.filters = [bitCrusherFilter];
+    // app.stage.addChild(bitCrusherSprite);
 
-    // TEST UI - NO SLIDERS!!
-    const effectSlider = document.createElement('input');
-    effectSlider.type = 'range';
-    effectSlider.min = '0';
-    effectSlider.max = '1';
-    effectSlider.step = '0.01';
-    effectSlider.value = '0';
-    document.body.appendChild(effectSlider);
+    // effectSlider.addEventListener('input', (e) => {
+    //     effectWetness = parseFloat(e.target.value);
+    //     if(sprite) {
+    //         if(sprite.effectActive) {
+    //             crusher.wet.value = effectWetness; //affect the sound
+    //         } else{
+    //             crusher.wet.value = 0;
+    //         }
+    //     }
+    //     bitCrusherFilter.uniforms.pixelSize = (effectWetness + .01) / 10; // Animate effect, preventing it from going to zero
 
-    const wetnessLabel = document.createElement('label');
-    wetnessLabel.innerText = `Effect Wetness: ${effectSlider.value}`;
-    document.body.appendChild(wetnessLabel);
+    //     wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
+    // });
+}
 
-    effectSlider.addEventListener('input', (e) => {
-        effectWetness = parseFloat(e.target.value);
-        if(sprite) {
-            if(sprite.effectActive) {
-                crusher.wet.value = effectWetness; //affect the sound
-            }
-            else{
-                crusher.wet.value = 0;
-            }
-        }
-        bitCrusherFilter.uniforms.pixelSize = (effectWetness + .01) / 10; // Animate effect, preventing it from going to zero
+export function update() {
 
-        wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
-    });
 }
 
 function distance(x1, y1, x2, y2) {

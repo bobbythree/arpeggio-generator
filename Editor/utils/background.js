@@ -1,5 +1,6 @@
 import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
+import { initEffector } from '../audio/effector.js';
 
 let effectorRectangles = [];
 
@@ -83,7 +84,16 @@ function initEffectors(app, transport, sceneName) {
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
         app.stage.addChild(rectangle);
         effectorRectangles.push(rectangle);
+
+        initEffector(app);
     });
+
+    //PIXI update loop
+    app.ticker.add((delta) => {
+        //effectors.update(delta);
+    });
+
+
 }
 
 export function updateEffectorVisibility() {
@@ -91,4 +101,5 @@ export function updateEffectorVisibility() {
         rect.alpha = settings.debugMode ? 0.5 : 0;
     });
 }
+
 //#endregion
