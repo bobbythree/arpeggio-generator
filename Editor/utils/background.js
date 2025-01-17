@@ -1,6 +1,6 @@
 import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
-import { initEffector } from '../audio/effector.js';
+import { initEffector, updateEffector } from '../audio/effector.js';
 
 let effectorRectangles = [];
 
@@ -30,7 +30,6 @@ function initParticles(app, sceneName) {
     });
     app.stage.addChild(particleContainer);
 
-    //TODO: move this into its own module?
     // Particle texture 
     const textPath = scenes[sceneName].particles.texture;
     const particleTexture = PIXI.Texture.from(textPath); 
@@ -92,7 +91,7 @@ function initEffectors(app, transport, sceneName) {
 
     //PIXI update loop
     app.ticker.add((delta) => {
-        //effectors.update(delta);
+        //effectors.updateEffector(delta);
     });
 
 

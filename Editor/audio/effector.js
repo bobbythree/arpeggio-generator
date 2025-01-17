@@ -59,7 +59,7 @@ export function startModulator() {
     console.log("Modulator started");
 }
 
-export function initEffector(app) {
+export function initEffector(app, effect, shader, position, size) {
     //TODO: show a static image or animation for the effect
 
     // const bitCrusherTexture = PIXI.Texture.from('./images/effects/bitCrusher.png'); 
@@ -86,8 +86,8 @@ export function initEffector(app) {
     // });
 }
 
-export function update() {
-
+export function updateEffector(delta) {
+    console.log("Updating effector");
 }
 
 function distance(x1, y1, x2, y2) {
