@@ -73,6 +73,7 @@ function populateSceneSelector() {
     }
     sceneSelector.value = 'happy'; // Default to happy
     sceneSelector.addEventListener('change', (event) => {
+        clearScene();
         loadScene(event.target.value);
     });
 }
@@ -121,8 +122,9 @@ function pauseTone() {
 
 function clearScene() {
     sprites.forEach(sprite => {
-        app.stage.removeChild(sprite);
         deleteArp(sprite.id);
+        app.stage.removeChild(sprite);
+        
     });
     sprites.length = 0;
     outputDebugInfo("Scene cleared");
