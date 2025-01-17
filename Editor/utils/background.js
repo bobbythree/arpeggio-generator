@@ -88,6 +88,8 @@ function initEffectors(app, transport, sceneName) {
         initEffector(app);
     });
 
+    //TODO: load the effects, shaders and image or animation for the effectors
+
     //PIXI update loop
     app.ticker.add((delta) => {
         //effectors.update(delta);
