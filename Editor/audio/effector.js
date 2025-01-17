@@ -10,7 +10,7 @@ const crusher = new Tone.BitCrusher(2).toDestination();
 crusher.wet.value = 0;
 
 //TODO: get the shader name from the scene data and load it here
-const bitCrusherFragmentShader = `
+const fragmentShader = `
     precision mediump float;
 
     varying vec2 vTextureCoord;
@@ -33,7 +33,7 @@ const bitCrusherFragmentShader = `
 `;
 
 //TODO: this needs to be generic
-let bitCrusherFilter = new PIXI.Filter(null, bitCrusherFragmentShader, {
+let bitCrusherFilter = new PIXI.Filter(null, fragmentShader, {
     pixelSize: .001, // Initial pixel size
 });
 
