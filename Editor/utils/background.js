@@ -78,18 +78,18 @@ function initParticles(app, sceneName) {
 
 //#region Effectors
 function initEffectors(app, transport, sceneName) {
-    const effectorData = scenes[sceneName].effectors;
+    const effectorDefinitions = scenes[sceneName].effectors;
     effectors.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
     effectors = [];
 
     //Load the effects, shaders and rectangle
-    effectorData.forEach((effector) => {
+    effectorDefinitions.forEach((effectorDefinition) => {
         const rectangle = new PIXI.Graphics();
         rectangle.beginFill(0x66CCFF);
-        rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
+        rectangle.drawRect(effectorDefinition.position[0], effectorDefinition.position[1], effectorDefinition.size[0], effectorDefinition.size[1]);
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
 
-        const effectText = new PIXI.Text(effector.effect, {
+        const effectText = new PIXI.Text(effectorDefinition.effect, {
             fontFamily: 'Arial',
             fontSize: 14,
             fill: 0xffffff,
@@ -98,27 +98,28 @@ function initEffectors(app, transport, sceneName) {
         
         // Center the text on the sprite
         effectText.anchor.set(0.5);
-        effectText.x = effector.position[0] + effector.size[0] / 2;
-        effectText.y = effector.position[1] + effector.size[1] / 2;
+        effectText.x = effectorDefinition.position[0] + effectorDefinition.size[0] / 2;
+        effectText.y = effectorDefinition.position[1] + effectorDefinition.size[1] / 2;
             
         rectangle.addChild(effectText);
 
         app.stage.addChild(rectangle);
 
-        var effect = lookUpEffect(effector.effect);
+        var effect = lookUpEffect(effectorDefinition.effect);
 
         //load the shader file
-        let shaderFile = lookUpShader(effector.shader);
+        let shaderFile = lookUpShader(effectorDefinition.shader);
         let effectFilter = new PIXI.Filter(null, shaderFile, {
-            pixelSize: .001, // Initial pixel size
+            pixelSize: .001, // TODO: use a common parameter for all shaders
         });
-            
+
         effectors.push({rectangle, effect, effectFilter});
     });
 
     //PIXI update loop
     app.ticker.add((delta) => {
-        //effectors.updateEffector(delta);
+        //If a sprite overlaps a rectangle, apply the effect
+
     });
 }
 
