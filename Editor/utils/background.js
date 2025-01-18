@@ -70,13 +70,12 @@ function initParticles(app, sceneName) {
 //#endregion
 
 //#region Effectors
-
 function initEffectors(app, transport, sceneName) {
-    const effectors = scenes[sceneName].effectors;
+    const effectorData = scenes[sceneName].effectors;
     effectorRectangles.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
     effectorRectangles = [];
 
-    effectors.forEach((effector) => {
+    effectorData.forEach((effector) => {
         const rectangle = new PIXI.Graphics();
         rectangle.beginFill(0x66CCFF);
         rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
@@ -84,7 +83,7 @@ function initEffectors(app, transport, sceneName) {
         app.stage.addChild(rectangle);
         effectorRectangles.push(rectangle);
 
-        initEffector(app);
+        initEffector(app, effector.effect);
     });
 
     //TODO: load the effects, shaders and image or animation for the effectors
@@ -93,8 +92,6 @@ function initEffectors(app, transport, sceneName) {
     app.ticker.add((delta) => {
         //effectors.updateEffector(delta);
     });
-
-
 }
 
 export function updateEffectorVisibility() {
@@ -102,5 +99,4 @@ export function updateEffectorVisibility() {
         rect.alpha = settings.debugMode ? 0.5 : 0;
     });
 }
-
 //#endregion

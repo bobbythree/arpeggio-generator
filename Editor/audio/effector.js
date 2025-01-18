@@ -1,51 +1,28 @@
 import { getSprite, getSprites } from "../app.js";
 import { getArp } from "./arpeggiator.js";
 
+//TODO: A map (or other data structure) containing the effect and wetness for the target sprites
 let effectWetness = 0;
 let bitCrusherSprite = undefined;
 let sprite = undefined;
-
-//TODO: get the effect name from the scene data and load it here
-const crusher = new Tone.BitCrusher(2).toDestination();
-crusher.wet.value = 0;
-
-//TODO: get the shader name from the scene data and load it here
-const fragmentShader = `
-    precision mediump float;
-
-    varying vec2 vTextureCoord;
-    uniform sampler2D uSampler;
-    uniform float pixelSize; // The size of each pixel block
-
-    void main() {
-        // Calculate the block position by snapping the texture coordinates to the nearest "pixelSize"
-        vec2 blockCoord = vec2(
-            floor(vTextureCoord.x / pixelSize) * pixelSize,
-            floor(vTextureCoord.y / pixelSize) * pixelSize
-        );
-
-    // Sample the texture color at the block position
-    vec4 color = texture2D(uSampler, blockCoord);
-
-    // Output the color for the entire block
-    gl_FragColor = color;
-}
-`;
+let effect = undefined;
+let fragmentShader = undefined;
 
 //TODO: this needs to be generic
-let bitCrusherFilter = new PIXI.Filter(null, fragmentShader, {
+let effectFilter = new PIXI.Filter(null, fragmentShader, {
     pixelSize: .001, // Initial pixel size
 });
 
-export function setEffect(id) {
-    let arp = getArp(id);   //affect the audio
-    sprite = getSprite(id); //affect the visual
+//TODO: review...
+export function setEffect(spriteId) {
+    let arp = getArp(spriteId);   //affect the audio
+    sprite = getSprite(spriteId); //affect the visual
 
     //TODO: provide an option for simple overlap or distance based activation
     if(distance(sprite.x, sprite.y, bitCrusherSprite.x, bitCrusherSprite.y) < 200) { 
         crusher.wet.value = effectWetness;
         arp.synth.connect(crusher);
-        sprite.filters = [bitCrusherFilter];
+        sprite.filters = [effectFilter];
         sprite.effectActive = true;
     }
     else {
@@ -55,35 +32,10 @@ export function setEffect(id) {
     }
 }
 
-export function startModulator() {
-    console.log("Modulator started");
-}
-
 export function initEffector(app, effect, shader, position, size) {
-    //TODO: show a static image or animation for the effect
+    //load the shader from the shader file
+    
 
-    // const bitCrusherTexture = PIXI.Texture.from('./images/effects/bitCrusher.png'); 
-    // bitCrusherSprite = new PIXI.Sprite(bitCrusherTexture);
-    // bitCrusherSprite.scale.set(.25);
-    // bitCrusherSprite.anchor.set(0.5);
-    // bitCrusherSprite.x = app.screen.width / 2;
-    // bitCrusherSprite.y = app.screen.height / 2;
-    // bitCrusherSprite.filters = [bitCrusherFilter];
-    // app.stage.addChild(bitCrusherSprite);
-
-    // effectSlider.addEventListener('input', (e) => {
-    //     effectWetness = parseFloat(e.target.value);
-    //     if(sprite) {
-    //         if(sprite.effectActive) {
-    //             crusher.wet.value = effectWetness; //affect the sound
-    //         } else{
-    //             crusher.wet.value = 0;
-    //         }
-    //     }
-    //     bitCrusherFilter.uniforms.pixelSize = (effectWetness + .01) / 10; // Animate effect, preventing it from going to zero
-
-    //     wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
-    // });
 }
 
 export function updateEffector(delta) {
