@@ -2,7 +2,7 @@ import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
 import { initEffector, updateEffector } from '../audio/effector.js';
 
-let effectorRectangles = [];
+let effectors = [];
 
 export function setBackround(app, transport, sceneName) {
     const scene = scenes[sceneName];
@@ -72,8 +72,8 @@ function initParticles(app, sceneName) {
 //#region Effectors
 function initEffectors(app, transport, sceneName) {
     const effectorData = scenes[sceneName].effectors;
-    effectorRectangles.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
-    effectorRectangles = [];
+    effectors.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
+    effectors = [];
 
     effectorData.forEach((effector) => {
         const rectangle = new PIXI.Graphics();
@@ -81,12 +81,18 @@ function initEffectors(app, transport, sceneName) {
         rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
         app.stage.addChild(rectangle);
-        effectorRectangles.push(rectangle);
 
-        initEffector(app, effector.effect);
+        let effect = loadEffect(effector.effect);
+
+        effectors.push({rectangle, effect});
+
+        //initEffector(app, effector.effect);
     });
 
     //TODO: load the effects, shaders and image or animation for the effectors
+
+    //Load the effects into an array for this effector
+
 
     //PIXI update loop
     app.ticker.add((delta) => {
@@ -95,8 +101,29 @@ function initEffectors(app, transport, sceneName) {
 }
 
 export function updateEffectorVisibility() {
-    effectorRectangles.forEach(rect => {
-        rect.alpha = settings.debugMode ? 0.5 : 0;
+    effectors.forEach(eff => {
+        eff.rectangle.alpha = settings.debugMode ? 0.5 : 0;
     });
 }
 //#endregion
+
+//TODO: Do we need to control the initial parameters
+function loadEffect(effectName) {
+    switch (effectName) {
+        
+        case "chorus":
+            return new Tone.Chorus(4, 2.5, 0.5); 
+        case "bitCrusher":
+            return new Tone.BitCrusher(4);
+        case "reverb":
+            return new Tone.Reverb(1.5);
+        case "delay":
+            return new Tone.FeedbackDelay("8n", 0.5);
+        case "distortion":
+            return new Tone.Distortion(0.4);
+        case "phaser":
+            return new Tone.Phaser(15, 5, 1000);
+        case "tremolo":
+            return new Tone.Tremolo(9, 0.75);
+    }
+}
