@@ -1,5 +1,6 @@
 import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
+import { getArp } from '../audio/arpeggiator.js';
 import { initEffector, updateEffector } from '../audio/effector.js';
 import { bloomShader } from '../shaders/bloom.js';
 import { glitchShader } from '../shaders/glitch.js';
@@ -118,6 +119,29 @@ function initEffectors(app, transport, sceneName) {
 
     //PIXI update loop
     app.ticker.add((delta) => {
+        effectors.forEach(eff => {
+            //eff.rectangle.alpha = settings.debugMode ? 0.5 : 0;
+            const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
+            sprites.forEach(sprite => {
+                
+                //If the sprite is within the rectangle - TODO: distance based falloff
+                if (sprite.x > eff.rectangle.x && sprite.x < eff.rectangle.x + eff.rectangle.width &&
+                    sprite.y > eff.rectangle.y && sprite.y < eff.rectangle.y + eff.rectangle.height) {
+                    // Apply the effect
+                    console.log("Setting effect");
+                    eff.rectangle.tint = 0x66CCFF;
+                    const arp = getArp(sprite.id);
+                    arp.synth.connect(eff.effect);
+                    sprite.filters = [eff.effectFilter];
+                } else {
+                    // Remove the effect
+                    const arp = getArp(sprite.id);
+                    //arp.synth.disconnect(eff.effect);
+                    sprite.filters = [];
+                }
+            });
+        });
+
         //If a sprite overlaps a rectangle, apply the effect
 
     });
