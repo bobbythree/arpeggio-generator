@@ -121,10 +121,11 @@ function initEffectors(app, transport, sceneName) {
         effectors.push({rectangle, effect, effectFilter});
     });
 
+    //TODO: Upon adding a sprite to the scene, add all shaders and effects.  Then control intensity based on distance from affector rectangle
+
     //PIXI update loop
     app.ticker.add((delta) => {
         effectors.forEach(eff => {
-            //eff.rectangle.alpha = settings.debugMode ? 0.5 : 0;
             const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
             sprites.forEach(sprite => {
                 
@@ -132,7 +133,7 @@ function initEffectors(app, transport, sceneName) {
                 if (sprite.x > eff.rectangle.x && sprite.x < eff.rectangle.x + eff.rectangle.width &&
                     sprite.y > eff.rectangle.y && sprite.y < eff.rectangle.y + eff.rectangle.height) {
                     // Apply the effect
-                    console.log("Setting effect");
+                    console.log("Setting " + eff.effect + " on " + sprite.id);
                     eff.rectangle.tint = 0xFF0000;
                     const arp = getArp(sprite.id);
                     arp.synth.connect(eff.effect);
