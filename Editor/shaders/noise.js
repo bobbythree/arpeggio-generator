@@ -1,4 +1,4 @@
-// Noise Fragment Shader for PIXI.js
+export const noiseShader = `
 
 precision mediump float;
 
@@ -34,4 +34,4 @@ void main() {
 
     // Output the final color
     gl_FragColor = vec4(noisyColor, sceneColor.a);
-}
+}`;

@@ -1,4 +1,4 @@
-// Ripple Fragment Shader for PIXI.js
+export const rippleShader = `
 
 precision mediump float;
 
@@ -30,4 +30,4 @@ void main() {
 
     // Output the final color
     gl_FragColor = sceneColor;
-}
+}`;

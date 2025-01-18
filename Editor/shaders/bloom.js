@@ -1,4 +1,4 @@
-// Bloom Fragment Shader for PIXI.js
+export const bloomShader = `
 
 precision mediump float;
 
@@ -35,4 +35,4 @@ void main() {
 
     // Output the final color
     gl_FragColor = vec4(finalColor, sceneColor.a);
-}
+}`;

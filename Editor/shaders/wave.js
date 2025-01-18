@@ -1,4 +1,4 @@
-// Wave Fragment Shader for PIXI.js
+export const waveShader = `
 
 precision mediump float;
 
@@ -26,4 +26,4 @@ void main() {
 
     // Output the final color
     gl_FragColor = sceneColor;
-}
+}`;

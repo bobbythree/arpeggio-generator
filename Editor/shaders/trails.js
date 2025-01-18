@@ -1,4 +1,4 @@
-// Visual Echo Fragment Shader for PIXI.js
+export const trailsShader = `
 
 precision mediump float;
 
@@ -35,4 +35,4 @@ void main() {
     // Combine echoes with the original color
     vec4 sceneColor = texture2D(uSampler, uv);
     gl_FragColor = mix(sceneColor, finalColor, uIntensity);
-}
+}`;

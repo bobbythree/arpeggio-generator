@@ -1,3 +1,5 @@
+export const pixelateShader = `
+
 precision mediump float;
 
     varying vec2 vTextureCoord;
@@ -16,4 +18,4 @@ precision mediump float;
 
     // Output the color for the entire block
     gl_FragColor = color;
-}
+}`;

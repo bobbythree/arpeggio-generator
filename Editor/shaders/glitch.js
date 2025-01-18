@@ -1,4 +1,4 @@
-// Glitch Fragment Shader for PIXI.js
+export const glitchShader = `
 
 precision mediump float;
 
@@ -41,4 +41,4 @@ void main() {
 
     // Combine original and glitched color
     gl_FragColor = mix(sceneColor, shiftedColor, uIntensity);
-}
+}`;

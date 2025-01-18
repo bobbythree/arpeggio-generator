@@ -1,6 +1,13 @@
 import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
 import { initEffector, updateEffector } from '../audio/effector.js';
+import { bloomShader } from '../shaders/bloom.js';
+import { glitchShader } from '../shaders/glitch.js';
+import { noiseShader } from '../shaders/noise.js';
+import { pixelateShader }   from '../shaders/pixelate.js';
+import { rippleShader } from '../shaders/ripple.js';
+import { trailsShader } from '../shaders/trails.js';
+import { waveShader } from '../shaders/wave.js';
 
 let effectors = [];
 
@@ -75,6 +82,7 @@ function initEffectors(app, transport, sceneName) {
     effectors.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
     effectors = [];
 
+    //Load the effects, shaders and rectangle
     effectorData.forEach((effector) => {
         const rectangle = new PIXI.Graphics();
         rectangle.beginFill(0x66CCFF);
@@ -82,17 +90,16 @@ function initEffectors(app, transport, sceneName) {
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
         app.stage.addChild(rectangle);
 
-        let effect = loadEffect(effector.effect);
+        var effect = lookUpEffect(effector.effect);
 
-        effectors.push({rectangle, effect});
-
-        //initEffector(app, effector.effect);
+        //load the shader file
+        let shaderFile = lookUpShader(effector.shader);
+        let effectFilter = new PIXI.Filter(null, shaderFile, {
+            pixelSize: .001, // Initial pixel size
+        });
+            
+        effectors.push({rectangle, effect, effectFilter});
     });
-
-    //TODO: load the effects, shaders and image or animation for the effectors
-
-    //Load the effects into an array for this effector
-
 
     //PIXI update loop
     app.ticker.add((delta) => {
@@ -107,8 +114,9 @@ export function updateEffectorVisibility() {
 }
 //#endregion
 
+//#region Utilities
 //TODO: Do we need to control the initial parameters
-function loadEffect(effectName) {
+function lookUpEffect(effectName) {
     switch (effectName) {
         
         case "chorus":
@@ -127,3 +135,23 @@ function loadEffect(effectName) {
             return new Tone.Tremolo(9, 0.75);
     }
 }
+
+function lookUpShader(effectorName) {
+    switch (effectorName) {
+        case "bloomShader":
+            return bloomShader;
+        case "glitchShader":
+            return glitchShader;
+        case "noiseShader":
+            return noiseShader;
+        case "pixelateShader":
+            return pixelateShader;
+        case "rippleShader":
+            return rippleShader;
+        case "trailsShader":
+            return trailsShader;
+        case "waveShader":
+            return waveShader;
+    }
+}
+//#endregion
