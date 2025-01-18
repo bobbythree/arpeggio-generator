@@ -88,6 +88,21 @@ function initEffectors(app, transport, sceneName) {
         rectangle.beginFill(0x66CCFF);
         rectangle.drawRect(effector.position[0], effector.position[1], effector.size[0], effector.size[1]);
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
+
+        const effectText = new PIXI.Text(effector.effect, {
+            fontFamily: 'Arial',
+            fontSize: 14,
+            fill: 0xffffff,
+            align: 'center'
+        });
+        
+        // Center the text on the sprite
+        effectText.anchor.set(0.5);
+        effectText.x = effector.position[0] + effector.size[0] / 2;
+        effectText.y = effector.position[1] + effector.size[1] / 2;
+            
+        rectangle.addChild(effectText);
+
         app.stage.addChild(rectangle);
 
         var effect = lookUpEffect(effector.effect);
