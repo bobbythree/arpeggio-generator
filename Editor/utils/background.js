@@ -87,7 +87,11 @@ function initEffectors(app, transport, sceneName) {
     effectorDefinitions.forEach((effectorDefinition) => {
         const rectangle = new PIXI.Graphics();
         rectangle.beginFill(0x66CCFF);
-        rectangle.drawRect(effectorDefinition.position[0], effectorDefinition.position[1], effectorDefinition.size[0], effectorDefinition.size[1]);
+        rectangle.x = effectorDefinition.position[0];
+        rectangle.y = effectorDefinition.position[1];
+        rectangle.width = effectorDefinition.size[0];
+        rectangle.height = effectorDefinition.size[1];
+        rectangle.drawRect(0, 0, effectorDefinition.size[0], effectorDefinition.size[1]);
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
 
         const effectText = new PIXI.Text(effectorDefinition.effect, {
@@ -99,8 +103,8 @@ function initEffectors(app, transport, sceneName) {
         
         // Center the text on the sprite
         effectText.anchor.set(0.5);
-        effectText.x = effectorDefinition.position[0] + effectorDefinition.size[0] / 2;
-        effectText.y = effectorDefinition.position[1] + effectorDefinition.size[1] / 2;
+        effectText.x = rectangle.width / 2;
+        effectText.y = rectangle.height / 2;
             
         rectangle.addChild(effectText);
 
@@ -129,21 +133,19 @@ function initEffectors(app, transport, sceneName) {
                     sprite.y > eff.rectangle.y && sprite.y < eff.rectangle.y + eff.rectangle.height) {
                     // Apply the effect
                     console.log("Setting effect");
-                    eff.rectangle.tint = 0x66CCFF;
+                    eff.rectangle.tint = 0xFF0000;
                     const arp = getArp(sprite.id);
                     arp.synth.connect(eff.effect);
                     sprite.filters = [eff.effectFilter];
                 } else {
                     // Remove the effect
+                    eff.rectangle.tint = 0xFFFFFF;
                     const arp = getArp(sprite.id);
                     //arp.synth.disconnect(eff.effect);
-                    sprite.filters = [];
+                    //sprite.filters = [];
                 }
             });
         });
-
-        //If a sprite overlaps a rectangle, apply the effect
-
     });
 }
 
