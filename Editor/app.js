@@ -2,8 +2,9 @@ import { scenes } from './data/scenes.js';
 import { arpObjects } from "./data/arpObjects.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { init, setEffect } from "./audio/effector.js";
-import { setBackround } from './utils/background.js';
+import { initEffectors, updateEffectorVisibility } from "./audio/effector.js";
+import { setBackround,  } from './utils/background.js';
+import { toggleDebugMode } from './settings.js';
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
@@ -72,6 +73,7 @@ function populateSceneSelector() {
     }
     sceneSelector.value = 'happy'; // Default to happy
     sceneSelector.addEventListener('change', (event) => {
+        clearScene();
         loadScene(event.target.value);
     });
 }
@@ -101,6 +103,13 @@ document.getElementById('start-button').addEventListener('click', startTone);
 document.getElementById('pause-button').addEventListener('click', pauseTone);
 document.getElementById('clear-button').addEventListener('click', clearScene);
 
+// Handle debug checkbox change
+document.getElementById('debug-checkbox').addEventListener('change', function() {
+    toggleDebugMode(this.checked);
+    updateEffectorVisibility();
+    console.log('Debug Mode:', this.checked);
+});
+
 function startTone() {
     start();
     outputDebugInfo("Tone started");
@@ -113,8 +122,9 @@ function pauseTone() {
 
 function clearScene() {
     sprites.forEach(sprite => {
-        app.stage.removeChild(sprite);
         deleteArp(sprite.id);
+        app.stage.removeChild(sprite);
+        
     });
     sprites.length = 0;
     outputDebugInfo("Scene cleared");

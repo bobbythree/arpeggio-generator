@@ -13,6 +13,7 @@ export function setBackround(app, transport, sceneName) {
     initParticles(app, sceneName);
 }
 
+//#region Particles
 function initParticles(app, sceneName) {
     // Particle Effect
     const particleContainer = new PIXI.ParticleContainer(500, {
@@ -24,7 +25,6 @@ function initParticles(app, sceneName) {
     });
     app.stage.addChild(particleContainer);
 
-    //TODO: move this into its own module?
     // Particle texture 
     const textPath = scenes[sceneName].particles.texture;
     const particleTexture = PIXI.Texture.from(textPath); 
@@ -47,8 +47,6 @@ function initParticles(app, sceneName) {
 
     // Animate particles
     app.ticker.add((delta) => {
-        
-            
         particles.forEach((particle) => {
             particle.x += particle.vx * delta;
             particle.y += particle.vy * delta;
@@ -64,3 +62,4 @@ function initParticles(app, sceneName) {
         });
     });
 }
+//#endregion
