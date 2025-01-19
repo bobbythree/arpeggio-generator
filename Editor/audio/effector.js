@@ -21,7 +21,7 @@ export function setEffects(sprite) {
         //add the effect to the synth
         var arp = getArp(sprite.id);
         arp.synth.connect(eff.effect).toDestination();
-        
+        eff.effectFilter.name = eff.effect.name; // Assign a name to the effect for debugging
         effFilters.push(eff.effectFilter);
     });
 
@@ -78,24 +78,27 @@ export function initEffectors(app, transport, sceneName) {
         });
     });
 
-    //PIXI update loop
+    // PIXI update loop
     app.ticker.add((delta) => {
         const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
         sprites.forEach(sprite => {
-            //scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
+            // Scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
             effectors.forEach(eff => {
                 var dist = Math.sqrt(Math.pow(sprite.x - eff.rectangle.x, 2) + Math.pow(sprite.y - eff.rectangle.y, 2));
                 var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
-                //apply to shader
+                // Apply to shader
                 if (sprite.filters) {
                     sprite.filters.forEach(filter => {
-                        filter.uniforms.uIntensity = intensity;
-                        filter.uniforms.iTime += delta / 1000;
+                        if (filter === eff.effectFilter) {
+                            console.log("Updating filter intensity for filter: " + filter.name);
+                            filter.uniforms.uIntensity = intensity;
+                            filter.uniforms.iTime += delta / 1000;
+                        }
                     });
                 }
 
-                //apply to audio effect - TEST
+                // Apply to audio effect - TEST
                 var currentArp = getArp(sprite.id);
                 if (currentArp) {
                     currentArp.synth.volume.value = intensity * -12; // Example: scale volume based on intensity
