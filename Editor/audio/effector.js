@@ -11,7 +11,7 @@ import { waveShader } from '../shaders/wave.js';
 
 //#region Effectors
 let effectors = [];
-const maxEffectDistance = 300; 
+const maxEffectDistance = 200; 
 
 export function setEffects(sprite) {
     var effFilters = [];
@@ -84,7 +84,11 @@ export function initEffectors(app, transport, sceneName) {
         sprites.forEach(sprite => {
             // Scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
             effectors.forEach(eff => {
-                var dist = Math.sqrt(Math.pow(sprite.x - eff.rectangle.x, 2) + Math.pow(sprite.y - eff.rectangle.y, 2));
+                var rectCenterX = eff.rectangle.x + eff.rectangle.width / 2;
+                var rectCenterY = eff.rectangle.y + eff.rectangle.height / 2;
+                var spriteCenterX = sprite.x + sprite.width / 2;
+                var spriteCenterY = sprite.y + sprite.height / 2;
+                var dist = Math.sqrt(Math.pow(spriteCenterX - rectCenterX, 2) + Math.pow(spriteCenterY - rectCenterY, 2));
                 var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
                 // Apply to shader
@@ -98,10 +102,11 @@ export function initEffectors(app, transport, sceneName) {
                     });
                 }
 
-                // Apply to audio effect - TEST
+                // Apply to audio effect
                 var currentArp = getArp(sprite.id);
                 if (currentArp) {
-                    currentArp.synth.volume.value = intensity * -12; // Example: scale volume based on intensity
+                    //currentArp.synth.volume.value = intensity * -120; 
+                    eff.effect.wet.value = intensity; // Adjust the wetness based on intensity
                 }
             });
         });
@@ -121,19 +126,19 @@ function lookUpEffect(effectName) {
     switch (effectName) {
         
         case "chorus":
-            return new Tone.Chorus(4, 2.5, 0.5); 
+            return new Tone.Chorus(4, 2.5, 0.5).toDestination(); 
         case "bitCrusher":
-            return new Tone.BitCrusher(4);
+            return new Tone.BitCrusher(4).toDestination();
         case "reverb":
-            return new Tone.Reverb(1.5);
+            return new Tone.Reverb(1.5).toDestination();
         case "delay":
-            return new Tone.FeedbackDelay("8n", 1);
+            return new Tone.FeedbackDelay("8n", 1).toDestination();
         case "distortion":
-            return new Tone.Distortion(0.4);
+            return new Tone.Distortion(0.4).toDestination();
         case "phaser":
-            return new Tone.Phaser(15, 5, 1000);
+            return new Tone.Phaser(15, 5, 1000).toDestination();
         case "tremolo":
-            return new Tone.Tremolo(9, 0.75);
+            return new Tone.Tremolo(9, 0.75).toDestination();
     }
 }
 
