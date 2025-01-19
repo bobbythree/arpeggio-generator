@@ -126,17 +126,17 @@ function lookUpEffect(effectName) {
     switch (effectName) {
         
         case "chorus":
-            return new Tone.Chorus(4, 2.5, 0.5).toDestination(); 
+            return new Tone.Chorus(1000, 200, 1).toDestination(); 
         case "bitCrusher":
-            return new Tone.BitCrusher(4).toDestination();
+            return new Tone.BitCrusher(8).toDestination();
         case "reverb":
-            return new Tone.Reverb(1.5).toDestination();
+            return new Tone.Reverb(5).toDestination();
         case "delay":
             return new Tone.FeedbackDelay("8n", 1).toDestination();
         case "distortion":
-            return new Tone.Distortion(0.4).toDestination();
+            return new Tone.Distortion(1).toDestination();
         case "phaser":
-            return new Tone.Phaser(15, 5, 1000).toDestination();
+            return new Tone.Phaser(15, 5, 4000).toDestination();
         case "tremolo":
             return new Tone.Tremolo(9, 0.75).toDestination();
     }
