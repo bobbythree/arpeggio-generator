@@ -1,102 +1,134 @@
-import { getSprite, getSprites } from "../app.js";
-import { getArp } from "./arpeggiator.js";
 
-let effectWetness = 0;
-let bitCrusherSprite = undefined;
-let sprite = undefined;
-const crusher = new Tone.BitCrusher(2).toDestination();
-crusher.wet.value = 0;
+import { settings } from '../settings.js';
+import { getArp } from '../audio/arpeggiator.js';
+import { bloomShader } from '../shaders/bloom.js';
+import { glitchShader } from '../shaders/glitch.js';
+import { noiseShader } from '../shaders/noise.js';
+import { pixelateShader }   from '../shaders/pixelate.js';
+import { rippleShader } from '../shaders/ripple.js';
+import { trailsShader } from '../shaders/trails.js';
+import { waveShader } from '../shaders/wave.js';
 
-const bitCrusherFragmentShader = `
-    precision mediump float;
+//#region Effectors
+let effectors = [];
 
-    varying vec2 vTextureCoord;
-    uniform sampler2D uSampler;
-    uniform float pixelSize; // The size of each pixel block
+export function initEffectors(app, transport, sceneName) {
+    const effectorDefinitions = scenes[sceneName].effectors;
+    effectors.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
+    effectors = [];
 
-    void main() {
-        // Calculate the block position by snapping the texture coordinates to the nearest "pixelSize"
-        vec2 blockCoord = vec2(
-            floor(vTextureCoord.x / pixelSize) * pixelSize,
-            floor(vTextureCoord.y / pixelSize) * pixelSize
-        );
+    //Load the effects, shaders and rectangle
+    effectorDefinitions.forEach((effectorDefinition) => {
+        const rectangle = new PIXI.Graphics();
+        rectangle.beginFill(0x66CCFF);
+        rectangle.x = effectorDefinition.position[0];
+        rectangle.y = effectorDefinition.position[1];
+        rectangle.width = effectorDefinition.size[0];
+        rectangle.height = effectorDefinition.size[1];
+        rectangle.drawRect(0, 0, effectorDefinition.size[0], effectorDefinition.size[1]);
+        rectangle.alpha = settings.debugMode ? 0.5 : 0;
 
-    // Sample the texture color at the block position
-    vec4 color = texture2D(uSampler, blockCoord);
-
-    // Output the color for the entire block
-    gl_FragColor = color;
-}
-`;
-
-let bitCrusherFilter = new PIXI.Filter(null, bitCrusherFragmentShader, {
-    pixelSize: .001, // Initial pixel size
-});
-
-export function setEffect(id) {
-    let arp = getArp(id);
-    sprite = getSprite(id);
-
-    if(distance(sprite.x, sprite.y, bitCrusherSprite.x, bitCrusherSprite.y) < 200) { 
-        crusher.wet.value = effectWetness;
-        arp.synth.connect(crusher);
-        sprite.filters = [bitCrusherFilter];
-        sprite.effectActive = true;
-    }
-    else {
-        arp.synth.disconnect(crusher);
-        sprite.filters = [];
-        sprite.effectActive = false;
-    }
-}
-
-export function startModulator() {
-    console.log("Modulator started");
-}
-
-export function init(app) {
-    const bitCrusherTexture = PIXI.Texture.from('./images/effects/bitCrusher.png'); 
-    bitCrusherSprite = new PIXI.Sprite(bitCrusherTexture);
-    bitCrusherSprite.scale.set(.25);
-    bitCrusherSprite.anchor.set(0.5);
-    bitCrusherSprite.x = app.screen.width / 2;
-    bitCrusherSprite.y = app.screen.height / 2;
-    bitCrusherSprite.filters = [bitCrusherFilter];
-    app.stage.addChild(bitCrusherSprite);
-
-    app.ticker.add((delta) => {
+        const effectText = new PIXI.Text(effectorDefinition.effect, {
+            fontFamily: 'Arial',
+            fontSize: 14,
+            fill: 0xffffff,
+            align: 'center'
+        });
         
+        // Center the text on the sprite
+        effectText.anchor.set(0.5);
+        effectText.x = rectangle.width / 2;
+        effectText.y = rectangle.height / 2;
+            
+        rectangle.addChild(effectText);
+
+        app.stage.addChild(rectangle);
+
+        var effect = lookUpEffect(effectorDefinition.effect);
+
+        //load the shader file
+        let shaderFile = lookUpShader(effectorDefinition.shader);
+        let effectFilter = new PIXI.Filter(null, shaderFile, {
+            pixelSize: .001, // TODO: use a common parameter for all shaders
+        });
+
+        effectors.push({rectangle, effect, effectFilter});
     });
 
-    // TEST UI - NO SLIDERS!!
-    const effectSlider = document.createElement('input');
-    effectSlider.type = 'range';
-    effectSlider.min = '0';
-    effectSlider.max = '1';
-    effectSlider.step = '0.01';
-    effectSlider.value = '0';
-    document.body.appendChild(effectSlider);
+    //TODO: Upon adding a sprite to the scene, add all shaders and effects.  Then control intensity based on distance from affector rectangle
 
-    const wetnessLabel = document.createElement('label');
-    wetnessLabel.innerText = `Effect Wetness: ${effectSlider.value}`;
-    document.body.appendChild(wetnessLabel);
-
-    effectSlider.addEventListener('input', (e) => {
-        effectWetness = parseFloat(e.target.value);
-        if(sprite) {
-            if(sprite.effectActive) {
-                crusher.wet.value = effectWetness; //affect the sound
-            }
-            else{
-                crusher.wet.value = 0;
-            }
-        }
-        bitCrusherFilter.uniforms.pixelSize = (effectWetness + .01) / 10; // Animate effect, preventing it from going to zero
-
-        wetnessLabel.innerText = `Effect Wetness: ${effectWetness}`;
+    //PIXI update loop
+    app.ticker.add((delta) => {
+        effectors.forEach(eff => {
+            const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
+            sprites.forEach(sprite => {
+                
+                //If the sprite is within the rectangle - TODO: distance based falloff
+                if (sprite.x > eff.rectangle.x && sprite.x < eff.rectangle.x + eff.rectangle.width &&
+                    sprite.y > eff.rectangle.y && sprite.y < eff.rectangle.y + eff.rectangle.height) {
+                    // Apply the effect
+                    console.log("Setting " + eff.effect + " on " + sprite.id);
+                    eff.rectangle.tint = 0xFF0000;
+                    const arp = getArp(sprite.id);
+                    arp.synth.connect(eff.effect);
+                    sprite.filters = [eff.effectFilter];
+                } else {
+                    // Remove the effect
+                    eff.rectangle.tint = 0xFFFFFF;
+                    const arp = getArp(sprite.id);
+                    //arp.synth.disconnect(eff.effect);
+                    //sprite.filters = [];
+                }
+            });
+        });
     });
 }
 
-function distance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-  }
+export function updateEffectorVisibility() {
+    effectors.forEach(eff => {
+        eff.rectangle.alpha = settings.debugMode ? 0.5 : 0;
+    });
+}
+//#endregion
+
+//#region Utilities
+//TODO: Do we need to control the initial parameters
+function lookUpEffect(effectName) {
+    switch (effectName) {
+        
+        case "chorus":
+            return new Tone.Chorus(4, 2.5, 0.5); 
+        case "bitCrusher":
+            return new Tone.BitCrusher(4);
+        case "reverb":
+            return new Tone.Reverb(1.5);
+        case "delay":
+            return new Tone.FeedbackDelay("8n", 0.5);
+        case "distortion":
+            return new Tone.Distortion(0.4);
+        case "phaser":
+            return new Tone.Phaser(15, 5, 1000);
+        case "tremolo":
+            return new Tone.Tremolo(9, 0.75);
+    }
+}
+
+function lookUpShader(effectorName) {
+    switch (effectorName) {
+        case "bloomShader":
+            return bloomShader;
+        case "glitchShader":
+            return glitchShader;
+        case "noiseShader":
+            return noiseShader;
+        case "pixelateShader":
+            return pixelateShader;
+        case "rippleShader":
+            return rippleShader;
+        case "trailsShader":
+            return trailsShader;
+        case "waveShader":
+            return waveShader;
+    }
+}
+//#endregion
