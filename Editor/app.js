@@ -81,6 +81,7 @@ function populateSceneSelector() {
 // Load the selected scene
 function loadScene(sceneName) {
     setBackround(app, Tone.getTransport(), sceneName);
+    initEffectors(app, Tone.getTransport(), sceneName);
 
     // Show only the icons for the selected mood
     for (const mood in moodContainers) {

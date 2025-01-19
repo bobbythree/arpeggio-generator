@@ -1,4 +1,4 @@
-
+import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
 import { getArp } from '../audio/arpeggiator.js';
 import { bloomShader } from '../shaders/bloom.js';
@@ -68,7 +68,14 @@ export function initEffectors(app, transport, sceneName) {
             const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
             sprites.forEach(sprite => {
                 //scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
+                var dist = Math.sqrt(Math.pow(sprite.x - eff.rectangle.x, 2) + Math.pow(sprite.y - eff.rectangle.y, 2));
+                var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
+                //apply to shader
+                eff.effectFilter.uniforms.intensity = intensity;
+
+                //apply to audio effect
+                
                 
             });
         });
