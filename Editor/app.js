@@ -2,7 +2,7 @@ import { scenes } from './data/scenes.js';
 import { arpObjects } from "./data/arpObjects.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { initEffectors, updateEffectorVisibility } from "./audio/effector.js";
+import { initEffectors, setEffects, updateEffectorVisibility } from "./audio/effector.js";
 import { setBackround,  } from './utils/background.js';
 import { toggleDebugMode } from './settings.js';
 
@@ -203,6 +203,9 @@ app.view.addEventListener("drop", (event) => {
     sprites.push(sprite); // Add the sprite to the array 
 
     app.stage.addChild(sprite); // Add the sprite to the stage
+
+    //Add the shader and audio effect to the sprite
+    setEffects(sprite);
 });
 
 function deleteSprite(spriteId) {

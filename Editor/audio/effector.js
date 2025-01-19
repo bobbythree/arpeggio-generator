@@ -4,7 +4,7 @@ import { getArp } from '../audio/arpeggiator.js';
 import { bloomShader } from '../shaders/bloom.js';
 import { glitchShader } from '../shaders/glitch.js';
 import { noiseShader } from '../shaders/noise.js';
-import { pixelateShader }   from '../shaders/pixelate.js';
+import { pixelateShader } from '../shaders/pixelate.js';
 import { rippleShader } from '../shaders/ripple.js';
 import { trailsShader } from '../shaders/trails.js';
 import { waveShader } from '../shaders/wave.js';
@@ -13,10 +13,22 @@ import { waveShader } from '../shaders/wave.js';
 let effectors = [];
 const maxEffectDistance = 300; 
 
-export function setEffects(spriteId) {
+export function setEffects(sprite) {
     //add the effect to the synth and the shader to the sprite
-
-
+    effectors.forEach(eff => {
+        //add the effect to the synth
+        var arp = getArp(sprite.id);
+        arp.synth.connect(eff.effect).toDestination();
+        
+        // Ensure eff.effectFilter is a valid PIXI filter
+        if (eff.effectFilter instanceof PIXI.Filter) {
+            //add the shader to the sprite
+            sprite.filters = [eff.effectFilter];
+            console.log("Setting effect " + eff.effectFilter + " for sprite", sprite.id);
+        } else {
+            console.error("Invalid effect filter for sprite", sprite.id);
+        }
+    });
 }
 
 export function initEffectors(app, transport, sceneName) {
@@ -53,13 +65,16 @@ export function initEffectors(app, transport, sceneName) {
 
         var effect = lookUpEffect(effectorDefinition.effect);
 
-        //load the shader file
+        // Load the shader file and create a PIXI filter
         let shaderFile = lookUpShader(effectorDefinition.shader);
-        let effectFilter = new PIXI.Filter(null, shaderFile, {
-            pixelSize: .001, // TODO: use a common parameter for all shaders
-        });
+        let effectFilter = new PIXI.Filter(null, shaderFile);
 
-        effectors.push({rectangle, effect, effectFilter});
+        // Add the effector to the list
+        effectors.push({
+            effect: effect,
+            effectFilter: effectFilter,
+            rectangle: rectangle
+        });
     });
 
     //PIXI update loop
@@ -73,9 +88,9 @@ export function initEffectors(app, transport, sceneName) {
 
                 //apply to shader
                 eff.effectFilter.uniforms.intensity = intensity;
-
+                eff.effectFilter.uniforms.iTime += app.ticker.elapsedMS / 1000;
                 //apply to audio effect
-                
+     
                 
             });
         });
