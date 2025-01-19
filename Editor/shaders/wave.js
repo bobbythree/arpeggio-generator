@@ -10,13 +10,13 @@ varying vec2 vTextureCoord;
 // Uniforms for controlling wave effect
 uniform float uTime;          // Time uniform for animation
 uniform float uWaveFrequency; // Frequency of the waves
-uniform float uWaveAmplitude; // Amplitude of the waves
+uniform float uIntensity; // Amplitude of the waves
 
 void main() {
     vec2 uv = vTextureCoord;
 
     // Calculate wave offset along the y-axis based on sine wave
-    float wave = sin(uv.x * uWaveFrequency + uTime) * uWaveAmplitude;
+    float wave = sin(uv.x * uWaveFrequency + uTime) * uIntensity;
 
     // Apply wave effect to the texture coordinates
     vec2 waveUV = vec2(uv.x, uv.y + wave);

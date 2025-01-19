@@ -14,21 +14,19 @@ let effectors = [];
 const maxEffectDistance = 300; 
 
 export function setEffects(sprite) {
+    var effFilters = [];
+
     //add the effect to the synth and the shader to the sprite
     effectors.forEach(eff => {
         //add the effect to the synth
         var arp = getArp(sprite.id);
         arp.synth.connect(eff.effect).toDestination();
         
-        // Ensure eff.effectFilter is a valid PIXI filter
-        if (eff.effectFilter instanceof PIXI.Filter) {
-            //add the shader to the sprite
-            sprite.filters = [eff.effectFilter];
-            console.log("Setting effect " + eff.effectFilter + " for sprite", sprite.id);
-        } else {
-            console.error("Invalid effect filter for sprite", sprite.id);
-        }
+        effFilters.push(eff.effectFilter);
     });
+
+    sprite.filters = effFilters;
+    console.log(sprite.filters);
 }
 
 export function initEffectors(app, transport, sceneName) {
@@ -67,7 +65,10 @@ export function initEffectors(app, transport, sceneName) {
 
         // Load the shader file and create a PIXI filter
         let shaderFile = lookUpShader(effectorDefinition.shader);
-        let effectFilter = new PIXI.Filter(null, shaderFile);
+        let effectFilter = new PIXI.Filter(null, shaderFile, {
+            uIntensity: 1.0,
+            iTime: 0.0
+        });
 
         // Add the effector to the list
         effectors.push({
@@ -79,19 +80,26 @@ export function initEffectors(app, transport, sceneName) {
 
     //PIXI update loop
     app.ticker.add((delta) => {
-        effectors.forEach(eff => {
-            const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
-            sprites.forEach(sprite => {
-                //scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
+        const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
+        sprites.forEach(sprite => {
+            //scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
+            effectors.forEach(eff => {
                 var dist = Math.sqrt(Math.pow(sprite.x - eff.rectangle.x, 2) + Math.pow(sprite.y - eff.rectangle.y, 2));
                 var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
                 //apply to shader
-                eff.effectFilter.uniforms.intensity = intensity;
-                eff.effectFilter.uniforms.iTime += app.ticker.elapsedMS / 1000;
-                //apply to audio effect
-     
-                
+                if (sprite.filters) {
+                    sprite.filters.forEach(filter => {
+                        filter.uniforms.uIntensity = intensity;
+                        filter.uniforms.iTime += delta / 1000;
+                    });
+                }
+
+                //apply to audio effect - TEST
+                var currentArp = getArp(sprite.id);
+                if (currentArp) {
+                    currentArp.synth.volume.value = intensity * -12; // Example: scale volume based on intensity
+                }
             });
         });
     });
@@ -116,7 +124,7 @@ function lookUpEffect(effectName) {
         case "reverb":
             return new Tone.Reverb(1.5);
         case "delay":
-            return new Tone.FeedbackDelay("8n", 0.5);
+            return new Tone.FeedbackDelay("8n", 1);
         case "distortion":
             return new Tone.Distortion(0.4);
         case "phaser":
