@@ -11,6 +11,13 @@ import { waveShader } from '../shaders/wave.js';
 
 //#region Effectors
 let effectors = [];
+const maxEffectDistance = 300; 
+
+export function setEffects(spriteId) {
+    //add the effect to the synth and the shader to the sprite
+
+
+}
 
 export function initEffectors(app, transport, sceneName) {
     const effectorDefinitions = scenes[sceneName].effectors;
@@ -55,30 +62,14 @@ export function initEffectors(app, transport, sceneName) {
         effectors.push({rectangle, effect, effectFilter});
     });
 
-    //TODO: Upon adding a sprite to the scene, add all shaders and effects.  Then control intensity based on distance from affector rectangle
-
     //PIXI update loop
     app.ticker.add((delta) => {
         effectors.forEach(eff => {
             const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
             sprites.forEach(sprite => {
+                //scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
+
                 
-                //If the sprite is within the rectangle - TODO: distance based falloff
-                if (sprite.x > eff.rectangle.x && sprite.x < eff.rectangle.x + eff.rectangle.width &&
-                    sprite.y > eff.rectangle.y && sprite.y < eff.rectangle.y + eff.rectangle.height) {
-                    // Apply the effect
-                    console.log("Setting " + eff.effect + " on " + sprite.id);
-                    eff.rectangle.tint = 0xFF0000;
-                    const arp = getArp(sprite.id);
-                    arp.synth.connect(eff.effect);
-                    sprite.filters = [eff.effectFilter];
-                } else {
-                    // Remove the effect
-                    eff.rectangle.tint = 0xFFFFFF;
-                    const arp = getArp(sprite.id);
-                    //arp.synth.disconnect(eff.effect);
-                    //sprite.filters = [];
-                }
             });
         });
     });
