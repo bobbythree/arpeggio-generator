@@ -33,7 +33,7 @@ const iconContainer = document.getElementById("icon-container");
 // Create a container for each mood
 const moodContainers = {};
 
-for (const [type, obj] of Object.entries(arpObjects)) {
+for (const [name, obj] of Object.entries(arpObjects)) {
     if (!moodContainers[obj.mood]) {
         // Create a new container for the mood
         const moodContainer = document.createElement('div');
@@ -55,7 +55,7 @@ for (const [type, obj] of Object.entries(arpObjects)) {
     const img = document.createElement('img');
     img.src = obj.image;
     img.className = 'icon';
-    img.dataset.type = type;
+    img.dataset.name = name;
     img.draggable = true;
 
     // Add the icon to the appropriate mood container
@@ -140,7 +140,7 @@ function outputDebugInfo(message) {
 
 // Add drag-and-drop functionality
 iconContainer.addEventListener("dragstart", (event) => {
-    event.dataTransfer.setData("type", event.target.dataset.type);
+    event.dataTransfer.setData("name", event.target.dataset.name);
 });
 
 app.view.addEventListener("dragover", (event) => {
@@ -150,16 +150,16 @@ app.view.addEventListener("dragover", (event) => {
 app.view.addEventListener("drop", (event) => {
     event.preventDefault();
 
-    // Get the type of the dropped icon
-    const type = event.dataTransfer.getData("type");
+    // Get the name of the dropped icon
+    const name = event.dataTransfer.getData("name");
 
-    // Create a sprite based on the type
+    // Create a sprite based on the name
     let sprite;
-    if (arpObjects[type]) {
-        sprite = PIXI.Sprite.from(arpObjects[type].image);
+    if (arpObjects[name]) {
+        sprite = PIXI.Sprite.from(arpObjects[name].image);
         
         // Create text for the mood
-        const moodText = new PIXI.Text(arpObjects[type].mood, {
+        const moodText = new PIXI.Text(arpObjects[name].mood, {
             fontFamily: 'Arial',
             fontSize: 24,
             fill: 0xffffff,
@@ -193,11 +193,11 @@ app.view.addEventListener("drop", (event) => {
         .on("pointerout", onPointerOut);  
 
     sprite.scale.set(.5); // Scale down the sprite
-    sprite.type = type;
+    sprite.name = name;
     
     sprite.id = spriteIdIndex; // Assign an ID to the sprite
     spriteIdIndex++;
-    getArpFromSceneObj(type, sprite.id); // Add the sprite to the array
+    getArpFromSceneObj(name, sprite.id); // Add the sprite to the array
     console.log("Adding Sprite with id: " + sprite.id);
     sprites.push(sprite); // Add the sprite to the array 
 
@@ -253,7 +253,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
-    getArpFromSceneObj(dragTarget.type, dragTarget.id);
+    getArpFromSceneObj(dragTarget.name, dragTarget.id);
     let arp = getArp(dragTarget.id);
     arp.synth.volume.value = tempVolume;
 }
