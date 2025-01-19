@@ -1,6 +1,6 @@
 import { scenes } from './data/scenes.js';
 import { arpObjects } from "./data/arpObjects.js";
-import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
+import { start, stop, getArp, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
 import { initEffectors, updateEffectorVisibility } from "./audio/effector.js";
 import { setBackround,  } from './utils/background.js';
@@ -20,7 +20,7 @@ const app = new PIXI.Application({
 });
 
 const sprites = [];
-let spriteIdIndex = 0;
+let spriteIdIndex = 0; // pixi has a uid
 
 app.stage.hitArea = app.screen;
 
@@ -126,7 +126,7 @@ function clearScene() {
         app.stage.removeChild(sprite);
         
     });
-    sprites.length = 0;
+    sprites.length = 0; //sprites = [];
     outputDebugInfo("Scene cleared");
 }
 
@@ -193,7 +193,7 @@ app.view.addEventListener("drop", (event) => {
         .on("pointerout", onPointerOut);  
 
     sprite.scale.set(.5); // Scale down the sprite
-    
+    sprite.type = type;
     
     sprite.id = spriteIdIndex; // Assign an ID to the sprite
     spriteIdIndex++;
@@ -235,19 +235,27 @@ export function getSprites() {
 let dragging = false;
 let dragTarget = null;
 let dragData = null;
+let tempVolume = 0;
 
 // Drag event handlers
 function onDragStart(event) {
     dragging = true;
-    dragTarget = this;
+    dragTarget = this; // this == sprite
     dragData = event.data;
     this.alpha = 0.5; // Add visual feedback
+    let arp = getArp(dragTarget.id);
+    tempVolume = arp.synth.volume.value;
+    arp.synth.volume.value = -120;
+    deleteArp(dragTarget.id);
 }
 
 function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
+    getArpFromSceneObj(dragTarget.type, dragTarget.id);
+    let arp = getArp(dragTarget.id);
+    arp.synth.volume.value = tempVolume;
 }
 
 function onDragMove() {
