@@ -25,7 +25,7 @@ export function setEffects(sprite) {
         effFilters.push(eff.effectFilter);
     });
 
-    sprite.filters = effFilters;
+    //sprite.filters = effFilters;
     console.log(sprite.filters);
 }
 
@@ -91,7 +91,7 @@ export function initEffectors(app, transport, sceneName) {
                 if (sprite.filters) {
                     sprite.filters.forEach(filter => {
                         if (filter === eff.effectFilter) {
-                            console.log("Updating filter intensity for filter: " + filter.name);
+                            console.log("Updating filter intensity for filter: " + filter.name + " with intensity: " + intensity);
                             filter.uniforms.uIntensity = intensity;
                             filter.uniforms.iTime += delta / 1000;
                         }
