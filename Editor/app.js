@@ -1,6 +1,6 @@
 import { scenes } from './data/scenes.js';
 import { arpObjects } from "./data/arpObjects.js";
-import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
+import { start, stop, getArp, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
 import { initEffectors, updateEffectorVisibility } from "./audio/effector.js";
 import { setBackround,  } from './utils/background.js';
@@ -20,7 +20,7 @@ const app = new PIXI.Application({
 });
 
 const sprites = [];
-let spriteIdIndex = 0;
+let spriteIdIndex = 0; // pixi has a uid
 
 app.stage.hitArea = app.screen;
 
@@ -33,7 +33,7 @@ const iconContainer = document.getElementById("icon-container");
 // Create a container for each mood
 const moodContainers = {};
 
-for (const [type, obj] of Object.entries(arpObjects)) {
+for (const [name, obj] of Object.entries(arpObjects)) {
     if (!moodContainers[obj.mood]) {
         // Create a new container for the mood
         const moodContainer = document.createElement('div');
@@ -55,7 +55,7 @@ for (const [type, obj] of Object.entries(arpObjects)) {
     const img = document.createElement('img');
     img.src = obj.image;
     img.className = 'icon';
-    img.dataset.type = type;
+    img.dataset.name = name;
     img.draggable = true;
 
     // Add the icon to the appropriate mood container
@@ -126,7 +126,7 @@ function clearScene() {
         app.stage.removeChild(sprite);
         
     });
-    sprites.length = 0;
+    sprites.length = 0; //sprites = [];
     outputDebugInfo("Scene cleared");
 }
 
@@ -140,7 +140,7 @@ function outputDebugInfo(message) {
 
 // Add drag-and-drop functionality
 iconContainer.addEventListener("dragstart", (event) => {
-    event.dataTransfer.setData("type", event.target.dataset.type);
+    event.dataTransfer.setData("name", event.target.dataset.name);
 });
 
 app.view.addEventListener("dragover", (event) => {
@@ -150,16 +150,16 @@ app.view.addEventListener("dragover", (event) => {
 app.view.addEventListener("drop", (event) => {
     event.preventDefault();
 
-    // Get the type of the dropped icon
-    const type = event.dataTransfer.getData("type");
+    // Get the name of the dropped icon
+    const name = event.dataTransfer.getData("name");
 
-    // Create a sprite based on the type
+    // Create a sprite based on the name
     let sprite;
-    if (arpObjects[type]) {
-        sprite = PIXI.Sprite.from(arpObjects[type].image);
+    if (arpObjects[name]) {
+        sprite = PIXI.Sprite.from(arpObjects[name].image);
         
         // Create text for the mood
-        const moodText = new PIXI.Text(arpObjects[type].mood, {
+        const moodText = new PIXI.Text(arpObjects[name].mood, {
             fontFamily: 'Arial',
             fontSize: 24,
             fill: 0xffffff,
@@ -193,11 +193,11 @@ app.view.addEventListener("drop", (event) => {
         .on("pointerout", onPointerOut);  
 
     sprite.scale.set(.5); // Scale down the sprite
-    
+    sprite.name = name;
     
     sprite.id = spriteIdIndex; // Assign an ID to the sprite
     spriteIdIndex++;
-    getArpFromSceneObj(type, sprite.id); // Add the sprite to the array
+    getArpFromSceneObj(name, sprite.id); // Add the sprite to the array
     console.log("Adding Sprite with id: " + sprite.id);
     sprites.push(sprite); // Add the sprite to the array 
 
@@ -235,19 +235,27 @@ export function getSprites() {
 let dragging = false;
 let dragTarget = null;
 let dragData = null;
+let tempVolume = 0;
 
 // Drag event handlers
 function onDragStart(event) {
     dragging = true;
-    dragTarget = this;
+    dragTarget = this; // this == sprite
     dragData = event.data;
     this.alpha = 0.5; // Add visual feedback
+    let arp = getArp(dragTarget.id);
+    tempVolume = arp.synth.volume.value;
+    arp.synth.volume.value = -120;
+    deleteArp(dragTarget.id);
 }
 
 function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
+    getArpFromSceneObj(dragTarget.name, dragTarget.id);
+    let arp = getArp(dragTarget.id);
+    arp.synth.volume.value = tempVolume;
 }
 
 function onDragMove() {
