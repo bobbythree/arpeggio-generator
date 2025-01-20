@@ -13,26 +13,11 @@ import { waveShader } from '../shaders/wave.js';
 let effectors = [];
 const maxEffectDistance = 200; 
 
-export function setEffects(sprite) {
-    var effFilters = [];
-
-    //add the effect to the synth and the shader to the sprite
-    effectors.forEach(eff => {
-        //add the effect to the synth
-        var arp = getArp(sprite.id);
-        arp.synth.connect(eff.effect).toDestination();
-        eff.effectFilter.name = eff.effect.name; // Assign a name to the effect for debugging
-        effFilters.push(eff.effectFilter);
-    });
-
-    //sprite.filters = effFilters;
-    console.log(sprite.filters);
-}
-
+//Setup the effectors based on the scene
 export function initEffectors(app, transport, sceneName) {
     const effectorDefinitions = scenes[sceneName].effectors;
     effectors.forEach(rect => app.stage.removeChild(rect)); // Clear existing rectangles
-    effectors = [];
+    effectors = []; //reset
 
     //Load the effects, shaders and rectangle
     effectorDefinitions.forEach((effectorDefinition) => {
@@ -86,8 +71,8 @@ export function initEffectors(app, transport, sceneName) {
             effectors.forEach(eff => {
                 var rectCenterX = eff.rectangle.x + eff.rectangle.width / 2;
                 var rectCenterY = eff.rectangle.y + eff.rectangle.height / 2;
-                var spriteCenterX = sprite.x + sprite.width / 2;
-                var spriteCenterY = sprite.y + sprite.height / 2;
+                var spriteCenterX = sprite.x;
+                var spriteCenterY = sprite.y;
                 var dist = Math.sqrt(Math.pow(spriteCenterX - rectCenterX, 2) + Math.pow(spriteCenterY - rectCenterY, 2));
                 var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
@@ -106,11 +91,32 @@ export function initEffectors(app, transport, sceneName) {
                 var currentArp = getArp(sprite.id);
                 if (currentArp) {
                     //currentArp.synth.volume.value = intensity * -120; 
+                    console.log(`Adjusting wetness for effect: ${eff.effect.name} with intensity: ${intensity}`);
                     eff.effect.wet.value = intensity; // Adjust the wetness based on intensity
+                    //eff.effect.volume.value = intensity * -120; // Adjust the volume based on intensity
                 }
             });
         });
     });
+}
+
+
+//called when a sprite is added to the stage
+export function setEffects(sprite) {
+    var effFilters = [];
+
+    //add the effect to the synth and the shader to the sprite
+    effectors.forEach(eff => {
+        //add the effect to the synth
+        var arp = getArp(sprite.id);
+        arp.synth.connect(eff.effect).toDestination();
+        eff.effectFilter.name = eff.effect.name; // Assign a name to the effect for debugging
+        effFilters.push(eff.effectFilter);
+    });
+
+    //TODO: uncomment to work on shaders again
+    //sprite.filters = effFilters;
+    console.log(sprite.filters);
 }
 
 export function updateEffectorVisibility() {
@@ -120,26 +126,21 @@ export function updateEffectorVisibility() {
 }
 //#endregion
 
+
+
 //#region Utilities
+let map = new Map();
+map.set("chorus", new Tone.Chorus(1000, 200, 1).toDestination());
+map.set("bitCrusher", new Tone.BitCrusher(8).toDestination());
+map.set("reverb", new Tone.Reverb().toDestination());
+map.set("delay", new Tone.FeedbackDelay("8n", 1).toDestination());  
+map.set("distortion", new Tone.Distortion(1).toDestination());
+map.set("phaser", new Tone.Phaser(15, 3, 4000).toDestination());
+map.set("tremolo", new Tone.Tremolo(9, 0.75).toDestination());
+
 //TODO: Do we need to control the initial parameters
 function lookUpEffect(effectName) {
-    switch (effectName) {
-        
-        case "chorus":
-            return new Tone.Chorus(1000, 200, 1).toDestination(); 
-        case "bitCrusher":
-            return new Tone.BitCrusher(8).toDestination();
-        case "reverb":
-            return new Tone.Reverb(5).toDestination();
-        case "delay":
-            return new Tone.FeedbackDelay("8n", 1).toDestination();
-        case "distortion":
-            return new Tone.Distortion(1).toDestination();
-        case "phaser":
-            return new Tone.Phaser(15, 5, 4000).toDestination();
-        case "tremolo":
-            return new Tone.Tremolo(9, 0.75).toDestination();
-    }
+    return map.get(effectName);
 }
 
 function lookUpShader(effectorName) {
