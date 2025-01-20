@@ -130,8 +130,8 @@ export function updateEffectorVisibility() {
 
 //#region Utilities
 let map = new Map();
-map.set("chorus", new Tone.Chorus(1000, 200, 1).toDestination());
-map.set("bitCrusher", new Tone.BitCrusher(8).toDestination());
+map.set("chorus", new Tone.Chorus(1000, 200, 1).toDestination().start());
+map.set("bitCrusher", new Tone.BitCrusher(4).toDestination());
 map.set("reverb", new Tone.Reverb().toDestination());
 map.set("delay", new Tone.FeedbackDelay("8n", 1).toDestination());  
 map.set("distortion", new Tone.Distortion(1).toDestination());

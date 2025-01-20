@@ -294,8 +294,9 @@ window.addEventListener("keydown", (event) => {
             else {
                 dragTarget.scale.x += 0.1;
                 dragTarget.scale.y += 0.1;
+                adjustVolume(dragTarget.id, 10);
             }
-            adjustVolume(dragTarget.id, 1);
+            
         } else if (event.key === "-") {
             if(dragTarget.scale.x - 0.1 < .15){
                 dragTarget.scale.x = .15;
@@ -304,8 +305,8 @@ window.addEventListener("keydown", (event) => {
             else {
                 dragTarget.scale.x -= 0.1;
                 dragTarget.scale.y -= 0.1;
+                adjustVolume(dragTarget.id, -10);
             }
-            adjustVolume(dragTarget.id, -1);
         }
         else if(event.key === "Delete"){
             app.stage.removeChild(dragTarget);

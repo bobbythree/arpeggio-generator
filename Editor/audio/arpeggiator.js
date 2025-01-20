@@ -78,10 +78,10 @@ export function adjustVolume(arpId, volume) {
   //get the arp with the matching id
   for (let i = 0; i < arps.length; i++) {    
     if (arps[i].id === arpId) {
-      if (arps[i].synth.volume.value + volume > 5) {
-        arps[i].synth.volume.value = 5;
-      } else if (arps[i].synth.volume.value + volume < -5) {
-        arps[i].synth.volume.value = -5
+      if (arps[i].synth.volume.value + volume > 0) {
+        arps[i].synth.volume.value = 0;
+      } else if (arps[i].synth.volume.value + volume < -120) {
+        arps[i].synth.volume.value = -120
       } else {
         arps[i].synth.volume.value += volume;
       }
