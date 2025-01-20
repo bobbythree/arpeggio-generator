@@ -136,7 +136,7 @@ map.set("reverb", new Tone.Reverb().toDestination());
 map.set("delay", new Tone.FeedbackDelay("8n", 1).toDestination());  
 map.set("distortion", new Tone.Distortion(1).toDestination());
 map.set("phaser", new Tone.Phaser(15, 3, 4000).toDestination());
-map.set("tremolo", new Tone.Tremolo(9, 0.75).toDestination());
+map.set("vibrato", new Tone.Vibrato(400, 0.75).toDestination());
 
 //TODO: Do we need to control the initial parameters
 function lookUpEffect(effectName) {
