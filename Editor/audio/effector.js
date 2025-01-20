@@ -1,13 +1,6 @@
 import { scenes } from '../data/scenes.js';
 import { settings } from '../settings.js';
 import { getArp } from '../audio/arpeggiator.js';
-import { bloomShader } from '../shaders/bloom.js';
-import { glitchShader } from '../shaders/glitch.js';
-import { noiseShader } from '../shaders/noise.js';
-import { pixelateShader } from '../shaders/pixelate.js';
-import { rippleShader } from '../shaders/ripple.js';
-import { trailsShader } from '../shaders/trails.js';
-import { waveShader } from '../shaders/wave.js';
 
 //#region Effectors
 let effectors = [];
@@ -49,12 +42,14 @@ export function initEffectors(app, transport, sceneName) {
         var effect = lookUpEffect(effectorDefinition.effect);
 
         // Load the shader file and create a PIXI filter
-        let shaderFile = lookUpShader(effectorDefinition.shader);
-        let effectFilter = new PIXI.Filter(null, shaderFile, {
-            uIntensity: 1.0,
-            iTime: 0.0
-        });
+        // let shaderFile = lookUpShader(effectorDefinition.shader);
+        // let effectFilter = new PIXI.Filter(null, shaderFile, {
+        //     uIntensity: 1.0,
+        //     iTime: 0.0
+        // });
 
+        let effectFilter = new PIXI.BlurFilter();
+        effectFilter.strength = .001;
         // Add the effector to the list
         effectors.push({
             effect: effect,
@@ -90,10 +85,8 @@ export function initEffectors(app, transport, sceneName) {
                 // Apply to audio effect
                 var currentArp = getArp(sprite.id);
                 if (currentArp) {
-                    //currentArp.synth.volume.value = intensity * -120; 
                     console.log(`Adjusting wetness for effect: ${eff.effect.name} with intensity: ${intensity}`);
                     eff.effect.wet.value = intensity; // Adjust the wetness based on intensity
-                    //eff.effect.volume.value = intensity * -120; // Adjust the volume based on intensity
                 }
             });
         });
@@ -115,7 +108,7 @@ export function setEffects(sprite) {
     });
 
     //TODO: uncomment to work on shaders again
-    //sprite.filters = effFilters;
+    sprite.filters = effFilters;
     console.log(sprite.filters);
 }
 
@@ -129,36 +122,31 @@ export function updateEffectorVisibility() {
 
 
 //#region Utilities
-let map = new Map();
-map.set("chorus", new Tone.Chorus(1000, 200, 1).toDestination().start());
-map.set("bitCrusher", new Tone.BitCrusher(4).toDestination());
-map.set("reverb", new Tone.Reverb().toDestination());
-map.set("delay", new Tone.FeedbackDelay("8n", 1).toDestination());  
-map.set("distortion", new Tone.Distortion(1).toDestination());
-map.set("phaser", new Tone.Phaser(15, 3, 4000).toDestination());
-map.set("vibrato", new Tone.Vibrato(400, 0.75).toDestination());
 
 //TODO: Do we need to control the initial parameters
+let effectMap = new Map();
+effectMap.set("chorus", new Tone.Chorus(1000, 200, 1).toDestination().start());
+effectMap.set("bitCrusher", new Tone.BitCrusher(4).toDestination());
+effectMap.set("reverb", new Tone.Reverb().toDestination());
+effectMap.set("delay", new Tone.FeedbackDelay("8n", 1).toDestination());  
+effectMap.set("distortion", new Tone.Distortion(1).toDestination());
+effectMap.set("phaser", new Tone.Phaser(15, 3, 4000).toDestination());
+effectMap.set("vibrato", new Tone.Vibrato(400, 0.75).toDestination());
+
 function lookUpEffect(effectName) {
-    return map.get(effectName);
+    return effectMap.get(effectName);
 }
 
+let filterMap = new Map();
+filterMap.set("bloomShader", new PIXI.BloomFilter());
+filterMap.set("glitchShader", new PIXI.GlitchFilter());
+filterMap.set("noiseShader", new PIXI.NoiseFilter());
+filterMap.set("pixelateShader", new PIXI.PixelateFilter());
+filterMap.set("rippleShader", new PIXI.ShockwaveFilter());
+filterMap.set("trailsShader", new PIXI.RGBSplitFilter());
+filterMap.set("waveShader", new PIXI.TwistFilter());
+
 function lookUpShader(effectorName) {
-    switch (effectorName) {
-        case "bloomShader":
-            return bloomShader;
-        case "glitchShader":
-            return glitchShader;
-        case "noiseShader":
-            return noiseShader;
-        case "pixelateShader":
-            return pixelateShader;
-        case "rippleShader":
-            return rippleShader;
-        case "trailsShader":
-            return trailsShader;
-        case "waveShader":
-            return waveShader;
-    }
+    return filterMap.get(effectorName);
 }
 //#endregion
