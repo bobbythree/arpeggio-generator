@@ -12,6 +12,7 @@ export function addArp(arp) {
   }
 
   arp.synth = getSynthByName(arp.synthName);
+  arp.synth.volume.value = -30; // Set initial volume
   arps.push(arp);
 }
 
