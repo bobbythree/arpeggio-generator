@@ -42,18 +42,12 @@ export function initEffectors(app, transport, sceneName) {
         var effect = lookUpEffect(effectorDefinition.effect);
 
         // Load the shader file and create a PIXI filter
-        // let shaderFile = lookUpShader(effectorDefinition.shader);
-        // let effectFilter = new PIXI.Filter(null, shaderFile, {
-        //     uIntensity: 1.0,
-        //     iTime: 0.0
-        // });
-
-        let effectFilter = new PIXI.BlurFilter();
-        effectFilter.strength = .001;
+        let pixiFilter = lookUpFilter(effectorDefinition.shader);
+        
         // Add the effector to the list
         effectors.push({
             effect: effect,
-            effectFilter: effectFilter,
+            effectFilter: pixiFilter,
             rectangle: rectangle
         });
     });
@@ -138,15 +132,15 @@ function lookUpEffect(effectName) {
 }
 
 let filterMap = new Map();
-filterMap.set("bloomShader", new PIXI.BloomFilter());
-filterMap.set("glitchShader", new PIXI.GlitchFilter());
+filterMap.set("bloomShader", new PIXI.filters.BloomFilter());
+filterMap.set("glitchShader", new PIXI.filters.GlitchFilter());
 filterMap.set("noiseShader", new PIXI.NoiseFilter());
-filterMap.set("pixelateShader", new PIXI.PixelateFilter());
-filterMap.set("rippleShader", new PIXI.ShockwaveFilter());
-filterMap.set("trailsShader", new PIXI.RGBSplitFilter());
-filterMap.set("waveShader", new PIXI.TwistFilter());
+filterMap.set("pixelateShader", new PIXI.filters.PixelateFilter());
+filterMap.set("rippleShader", new PIXI.filters.ShockwaveFilter());
+filterMap.set("trailsShader", new PIXI.filters.RGBSplitFilter());
+filterMap.set("waveShader", new PIXI.filters.TwistFilter());
 
-function lookUpShader(effectorName) {
+function lookUpFilter(effectorName) {
     return filterMap.get(effectorName);
 }
 //#endregion
