@@ -9,7 +9,7 @@ varying vec2 vTextureCoord;
 
 // Uniforms for controlling noise
 uniform float uTime;          // Time uniform for animation
-uniform float uNoiseIntensity; // Intensity of the noise effect
+uniform float uIntensity; // Intensity of the noise effect
 
 // Random noise function
 float random(vec2 uv) {
@@ -27,7 +27,7 @@ void main() {
 
     // Adjust noise intensity
     noise = noise * 2.0 - 1.0; // Convert to range [-1, 1]
-    noise *= uNoiseIntensity;
+    noise *= uIntensity;
 
     // Apply noise to the color
     vec3 noisyColor = sceneColor.rgb + vec3(noise);

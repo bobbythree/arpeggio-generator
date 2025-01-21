@@ -8,7 +8,7 @@ uniform sampler2D uSampler;
 varying vec2 vTextureCoord;
 
 // Uniforms for controlling bloom
-uniform float uBloomIntensity; // Scalar to control bloom intensity
+uniform float uIntensity; // Scalar to control bloom intensity
 uniform float uThreshold;      // Brightness threshold for bloom
 
 // Helper function to extract brightness
@@ -25,7 +25,7 @@ void main() {
     float bloomFactor = max(sceneBrightness - uThreshold, 0.0);
 
     // Scale the bloom factor with intensity
-    bloomFactor *= uBloomIntensity;
+    bloomFactor *= uIntensity;
 
     // Apply bloom effect
     vec3 bloomColor = sceneColor.rgb * bloomFactor;

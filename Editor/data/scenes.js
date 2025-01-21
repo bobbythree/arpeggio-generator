@@ -3,12 +3,12 @@ export const scenes = {
         "backgroundImage": "./images/happy/happy-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "bloomShader", "position": [0, 0], "size" : [100, 100] }, 
-            {"effect": "bitCrusher", "shader": "pixelateShader", "position": [200, 0], "size" : [100, 100]  },
-            {"effect": "reverb", "shader": "glitchShader", "position": [400, 0], "size" : [100, 100]  },
-            {"effect": "delay", "shader": "trailsShader", "position": [600, 0], "size" : [100, 100]  },
+            {"effect": "bitCrusher", "shader": "pixelateShader", "position": [300, 0], "size" : [100, 100]  },
+            {"effect": "reverb", "shader": "glitchShader", "position": [600, 0], "size" : [100, 100]  },
+            {"effect": "delay", "shader": "trailsShader", "position": [900, 0], "size" : [100, 100]  },
             {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
-            {"effect": "phaser", "shader": "rippleShader", "position": [200, 300], "size" : [100, 100]  },
-            {"effect": "tremolo", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
+            {"effect": "phaser", "shader": "rippleShader", "position": [300, 300], "size" : [100, 100]  },
+            {"effect": "vibrato", "shader": "waveShader", "position": [600, 300], "size" : [100, 100]  }
         ],
         "particles": {
             "texture": "./images/particles/happy-particle.png",
@@ -24,7 +24,7 @@ export const scenes = {
             {"effect": "delay", "shader": "trailsShader", "position": [600, 0], "size" : [100, 100]  },
             {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
             {"effect": "phaser", "shader": "rippleShader", "position": [200, 300], "size" : [100, 100]  },
-            {"effect": "tremolo", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
+            {"effect": "vibrato", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
         ],
         "particles": {
             "texture": "./images/particles/sad-particle.png",
@@ -40,7 +40,7 @@ export const scenes = {
             {"effect": "delay", "shader": "trailsShader", "position": [600, 0], "size" : [100, 100]  },
             {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
             {"effect": "phaser", "shader": "rippleShader", "position": [200, 300], "size" : [100, 100]  },
-            {"effect": "tremolo", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
+            {"effect": "vibrato", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
         ],
         "particles": {
             "texture": "./images/particles/angry-particle.png",
@@ -56,7 +56,7 @@ export const scenes = {
             {"effect": "delay", "shader": "trailsShader", "position": [600, 0], "size" : [100, 100]  },
             {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
             {"effect": "phaser", "shader": "rippleShader", "position": [200, 300], "size" : [100, 100]  },
-            {"effect": "tremolo", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
+            {"effect": "vibrato", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
         ],
         "particles": {
             "texture": "./images/particles/nostalgic-particle.png",
@@ -72,7 +72,7 @@ export const scenes = {
             {"effect": "delay", "shader": "trailsShader", "position": [600, 0], "size" : [100, 100]  },
             {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
             {"effect": "phaser", "shader": "rippleShader", "position": [200, 300], "size" : [100, 100]  },
-            {"effect": "tremolo", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
+            {"effect": "vibrato", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
         ],
         "particles": {
             "texture": "./images/particles/serene-particle.png",
@@ -88,7 +88,7 @@ export const scenes = {
             {"effect": "delay", "shader": "trailsShader", "position": [600, 0], "size" : [100, 100]  },
             {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
             {"effect": "phaser", "shader": "rippleShader", "position": [200, 300], "size" : [100, 100]  },
-            {"effect": "tremolo", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
+            {"effect": "vibrato", "shader": "waveShader", "position": [400, 300], "size" : [100, 100]  }
         ],
         "particles": {
             "texture": "./images/particles/spooky-particle.png",

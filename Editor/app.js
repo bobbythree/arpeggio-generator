@@ -2,7 +2,7 @@ import { scenes } from './data/scenes.js';
 import { arpObjects } from "./data/arpObjects.js";
 import { start, stop, addArp, deleteArp, adjustVolume, nextSynth } from "./audio/arpeggiator.js";
 import { moods } from "./data/moods-chords.js";
-import { initEffectors, updateEffectorVisibility } from "./audio/effector.js";
+import { initEffectors, setEffects, updateEffectorVisibility } from "./audio/effector.js";
 import { setBackround,  } from './utils/background.js';
 import { toggleDebugMode } from './settings.js';
 
@@ -81,6 +81,7 @@ function populateSceneSelector() {
 // Load the selected scene
 function loadScene(sceneName) {
     setBackround(app, Tone.getTransport(), sceneName);
+    initEffectors(app, Tone.getTransport(), sceneName);
 
     // Show only the icons for the selected mood
     for (const mood in moodContainers) {
@@ -202,6 +203,9 @@ app.view.addEventListener("drop", (event) => {
     sprites.push(sprite); // Add the sprite to the array 
 
     app.stage.addChild(sprite); // Add the sprite to the stage
+
+    //Add the shader and audio effect to the sprite
+    setEffects(sprite);
 });
 
 function deleteSprite(spriteId) {
@@ -248,6 +252,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
+    setEffects(this);
 }
 
 function onDragMove() {
@@ -290,8 +295,9 @@ window.addEventListener("keydown", (event) => {
             else {
                 dragTarget.scale.x += 0.1;
                 dragTarget.scale.y += 0.1;
+                adjustVolume(dragTarget.id, 10);
             }
-            adjustVolume(dragTarget.id, 1);
+            
         } else if (event.key === "-") {
             if(dragTarget.scale.x - 0.1 < .15){
                 dragTarget.scale.x = .15;
@@ -300,8 +306,8 @@ window.addEventListener("keydown", (event) => {
             else {
                 dragTarget.scale.x -= 0.1;
                 dragTarget.scale.y -= 0.1;
+                adjustVolume(dragTarget.id, -10);
             }
-            adjustVolume(dragTarget.id, -1);
         }
         else if(event.key === "Delete"){
             app.stage.removeChild(dragTarget);
