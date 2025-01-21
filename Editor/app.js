@@ -252,6 +252,7 @@ function onDragEnd() {
     dragging = false;
     dragData = null;
     this.alpha = 1;
+    setEffects(this);
 }
 
 function onDragMove() {

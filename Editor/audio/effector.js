@@ -41,48 +41,11 @@ export function initEffectors(app, transport, sceneName) {
 
         var effect = lookUpEffect(effectorDefinition.effect);
 
-        // Load the shader file and create a PIXI filter
-        let pixiFilter = lookUpFilter(effectorDefinition.shader);
-        
         // Add the effector to the list
         effectors.push({
             effect: effect,
-            effectFilter: pixiFilter,
+            //effectFilter: pixiFilter,
             rectangle: rectangle
-        });
-    });
-
-    // PIXI update loop
-    app.ticker.add((delta) => {
-        const sprites = app.stage.children.filter(child => child instanceof PIXI.Sprite);
-        sprites.forEach(sprite => {
-            // Scale the intensity of the shader and effect based on the distance the sprite is from the effector center with no effect > maxEffectDistance
-            effectors.forEach(eff => {
-                var rectCenterX = eff.rectangle.x + eff.rectangle.width / 2;
-                var rectCenterY = eff.rectangle.y + eff.rectangle.height / 2;
-                var spriteCenterX = sprite.x;
-                var spriteCenterY = sprite.y;
-                var dist = Math.sqrt(Math.pow(spriteCenterX - rectCenterX, 2) + Math.pow(spriteCenterY - rectCenterY, 2));
-                var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
-
-                // Apply to shader
-                if (sprite.filters) {
-                    sprite.filters.forEach(filter => {
-                        if (filter === eff.effectFilter) {
-                            console.log("Updating filter intensity for filter: " + filter.name + " with intensity: " + intensity);
-                            filter.uniforms.uIntensity = intensity;
-                            filter.uniforms.iTime += delta / 1000;
-                        }
-                    });
-                }
-
-                // Apply to audio effect
-                var currentArp = getArp(sprite.id);
-                if (currentArp) {
-                    console.log(`Adjusting wetness for effect: ${eff.effect.name} with intensity: ${intensity}`);
-                    eff.effect.wet.value = intensity; // Adjust the wetness based on intensity
-                }
-            });
         });
     });
 }
@@ -91,19 +54,36 @@ export function initEffectors(app, transport, sceneName) {
 //called when a sprite is added to the stage
 export function setEffects(sprite) {
     var effFilters = [];
+    sprite.filters = [];
 
     //add the effect to the synth and the shader to the sprite
     effectors.forEach(eff => {
         //add the effect to the synth
         var arp = getArp(sprite.id);
         arp.synth.connect(eff.effect).toDestination();
-        eff.effectFilter.name = eff.effect.name; // Assign a name to the effect for debugging
-        effFilters.push(eff.effectFilter);
+        
+        //check distance to the effector and apply the filter
+        var rectCenterX = eff.rectangle.x + eff.rectangle.width / 2;
+        var rectCenterY = eff.rectangle.y + eff.rectangle.height / 2;
+        var spriteCenterX = sprite.x;
+        var spriteCenterY = sprite.y;
+        var dist = Math.sqrt(Math.pow(spriteCenterX - rectCenterX, 2) + Math.pow(spriteCenterY - rectCenterY, 2));
+        var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
+
+        //Apply the shader effect
+        if(dist < maxEffectDistance) {            
+            if (sprite.filters) {   
+                console.log(sprite.filters);       
+                sprite.filters.push(lookUpFilter(eff.effect.name));
+            }
+        }
+
+        // Apply to audio effect
+        if (arp) {
+            eff.effect.wet.value = intensity; // Adjust the wetness based on intensity
+        }
     });
 
-    //TODO: uncomment to work on shaders again
-    sprite.filters = effFilters;
-    console.log(sprite.filters);
 }
 
 export function updateEffectorVisibility() {
@@ -114,9 +94,7 @@ export function updateEffectorVisibility() {
 //#endregion
 
 
-
 //#region Utilities
-
 //TODO: Do we need to control the initial parameters
 let effectMap = new Map();
 effectMap.set("chorus", new Tone.Chorus(1000, 200, 1).toDestination().start());
@@ -132,15 +110,34 @@ function lookUpEffect(effectName) {
 }
 
 let filterMap = new Map();
-filterMap.set("bloomShader", new PIXI.filters.BloomFilter());
-filterMap.set("glitchShader", new PIXI.filters.GlitchFilter());
-filterMap.set("noiseShader", new PIXI.NoiseFilter());
-filterMap.set("pixelateShader", new PIXI.filters.PixelateFilter());
-filterMap.set("rippleShader", new PIXI.filters.ShockwaveFilter());
-filterMap.set("trailsShader", new PIXI.filters.RGBSplitFilter());
-filterMap.set("waveShader", new PIXI.filters.TwistFilter());
+filterMap.set("chorus", new PIXI.filters.BloomFilter());
+filterMap.set("bitCrusher", new PIXI.filters.GlitchFilter());
+filterMap.set("reverb", new PIXI.NoiseFilter());
+filterMap.set("delay", new PIXI.filters.PixelateFilter());
+filterMap.set("distortion", new PIXI.filters.ShockwaveFilter());
+filterMap.set("phaser", new PIXI.filters.RGBSplitFilter());
+filterMap.set("vibrato", new PIXI.filters.TwistFilter());
 
 function lookUpFilter(effectorName) {
-    return filterMap.get(effectorName);
+    //switch based on effector name
+    console.log("Effector name: " + effectorName);
+    switch (effectorName.toLowerCase()) {
+        case "chorus":
+            return new PIXI.filters.BloomFilter();
+        case "bitcrusher":
+            return new PIXI.filters.GlitchFilter();
+        case "reverb":
+            return new PIXI.NoiseFilter();
+        case "feedbackdelay":
+            return new PIXI.filters.PixelateFilter();
+        case "distortion":
+            return new PIXI.filters.ShockwaveFilter();
+        case "phaser":
+            return new PIXI.filters.RGBSplitFilter();
+        case "vibrato":
+            return new PIXI.filters.AsciiFilter();
+        default:
+            return null;
+    }
 }
 //#endregion
