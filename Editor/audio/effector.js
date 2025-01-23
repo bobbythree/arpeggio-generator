@@ -14,49 +14,41 @@ export function initEffectors(app, transport, sceneName) {
 
     //Load the effects, shaders and rectangle
     effectorDefinitions.forEach((effectorDefinition) => {
-        // const rectangle = new PIXI.Graphics();
-        // rectangle.beginFill(0x66CCFF);
-        // rectangle.x = effectorDefinition.position[0];
-        // rectangle.y = effectorDefinition.position[1];
-        // rectangle.width = effectorDefinition.size[0];
-        // rectangle.height = effectorDefinition.size[1];
-        // rectangle.drawRect(0, 0, effectorDefinition.size[0], effectorDefinition.size[1]);
-        // rectangle.alpha = settings.debugMode ? 0.5 : 0;
-        if(effectorDefinition.effect === 'phaser') {
-            const rectangle = new PIXI.Graphics();
-            rectangle.beginFill(0x0d61ad);            
-            rectangle.x = 0;
-            rectangle.y = 474;
-            rectangle.width = 1280;
-            rectangle.height = 246;
-            rectangle.drawRect(0, 0, 1280, 246);
-            rectangle.alpha = settings.debugMode ? 0.5 : 0;
+        const rectangle = new PIXI.Graphics();
+        rectangle.beginFill(0x000000);
+        rectangle.x = effectorDefinition.position[0];
+        rectangle.y = effectorDefinition.position[1];
+        rectangle.width = effectorDefinition.size[0];
+        rectangle.height = effectorDefinition.size[1];
+        rectangle.drawRect(0, 0, effectorDefinition.size[0], effectorDefinition.size[1]);
+        rectangle.alpha = settings.debugMode ? 0.5 : 0;
+        
 
-            const effectText = new PIXI.Text(effectorDefinition.effect, {
-                fontFamily: 'Arial',
-                fontSize: 14,
-                fill: 0xffffff,
-                align: 'center'
-            });
-            
-            // Center the text on the sprite
-            effectText.anchor.set(0.5);
-            effectText.x = rectangle.width / 2;
-            effectText.y = rectangle.height / 2;
-            
-            rectangle.addChild(effectText);
+        const effectText = new PIXI.Text(effectorDefinition.effect, {
+            fontFamily: 'Arial',
+            fontSize: 14,
+            fill: 0xffffff,
+            align: 'center'
+        });
+        
+        // Center the text on the sprite
+        effectText.anchor.set(0.5);
+        effectText.x = rectangle.width / 2;
+        effectText.y = rectangle.height / 2;
+        
+        rectangle.addChild(effectText);
 
-            app.stage.addChild(rectangle);
+        app.stage.addChild(rectangle);
 
-            var effect = lookUpEffect(effectorDefinition.effect);
+        var effect = lookUpEffect(effectorDefinition.effect);
 
-            // Add the effector to the list
-            effectors.push({
-                effect: effect,
-                //effectFilter: pixiFilter,
-                rectangle: rectangle
-            });
-        }
+        // Add the effector to the list
+        effectors.push({
+            effect: effect,
+            //effectFilter: pixiFilter,
+            rectangle: rectangle
+        });
+    
     });
 }
 
