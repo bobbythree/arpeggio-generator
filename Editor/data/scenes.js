@@ -1,6 +1,6 @@
 export const scenes = {
     "happy": {
-        "backgroundImage": "./images/happy/happy-bg.jpg",
+        "backgroundImage": "./images/happy/ocean-bg.jpg",
         "effectors" : [
             {"effect": "chorus", "shader": "bloomShader", "position": [0, 0], "size" : [100, 100] }, 
             {"effect": "bitCrusher", "shader": "pixelateShader", "position": [300, 0], "size" : [100, 100]  },
