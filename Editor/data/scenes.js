@@ -7,7 +7,7 @@ export const scenes = {
             // {"effect": "reverb", "shader": "glitchShader", "position": [600, 0], "size" : [100, 100]  },
             // {"effect": "delay", "shader": "trailsShader", "position": [900, 0], "size" : [100, 100]  },
             // {"effect": "distortion", "shader": "noiseShader", "position": [0, 300], "size" : [100, 100]  },
-            {"effect": "phaser", "shader": "rippleShader", "position": [0, 474], "size" : [1280, 264]  },
+            { "effect": "phaser", "shader": "rippleShader", "position": [0, 474], "size" : [1280, 264] },
             // {"effect": "vibrato", "shader": "waveShader", "position": [600, 300], "size" : [100, 100]  }
         ],
         "particles": {

@@ -4,7 +4,7 @@ import { getArp } from '../audio/arpeggiator.js';
 
 //#region Effectors
 let effectors = [];
-const maxEffectDistance = 200; 
+const maxEffectDistance = 200;
 
 //Setup the effectors based on the scene
 export function initEffectors(app, transport, sceneName) {
@@ -73,7 +73,13 @@ export function setEffects(sprite) {
         var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
         //Apply the shader effect
-        if(dist < maxEffectDistance) {            
+        // if(dist < maxEffectDistance) {            
+        //     if (sprite.filters) {   
+        //         console.log(sprite.filters);       
+        //         sprite.filters.push(lookUpFilter(eff.effect.name));
+        //     }
+        // }
+        if(sprite.x >= eff.rectangle.x && sprite.y >= eff.rectangle.y) {
             if (sprite.filters) {   
                 console.log(sprite.filters);       
                 sprite.filters.push(lookUpFilter(eff.effect.name));
