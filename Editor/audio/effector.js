@@ -25,7 +25,12 @@ export function initEffectors(app, transport, sceneName) {
         if(effectorDefinition.effect === 'phaser') {
             const rectangle = new PIXI.Graphics();
             rectangle.beginFill(0x0d61ad);            
-            rectangle.drawRect(0, 474, 1280, 720);
+            rectangle.x = 0;
+            rectangle.y = 474;
+            rectangle.width = 1280;
+            rectangle.height = 246;
+            rectangle.drawRect(0, 0, 1280, 246);
+            rectangle.alpha = settings.debugMode ? 0.5 : 0;
 
             const effectText = new PIXI.Text(effectorDefinition.effect, {
                 fontFamily: 'Arial',
@@ -38,7 +43,7 @@ export function initEffectors(app, transport, sceneName) {
             effectText.anchor.set(0.5);
             effectText.x = rectangle.width / 2;
             effectText.y = rectangle.height / 2;
-                
+            
             rectangle.addChild(effectText);
 
             app.stage.addChild(rectangle);
