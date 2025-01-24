@@ -4,7 +4,7 @@ import { getArp } from '../audio/arpeggiator.js';
 
 //#region Effectors
 let effectors = [];
-const maxEffectDistance = 200; 
+const maxEffectDistance = 200;
 
 //Setup the effectors based on the scene
 export function initEffectors(app, transport, sceneName) {
@@ -15,13 +15,14 @@ export function initEffectors(app, transport, sceneName) {
     //Load the effects, shaders and rectangle
     effectorDefinitions.forEach((effectorDefinition) => {
         const rectangle = new PIXI.Graphics();
-        rectangle.beginFill(0x66CCFF);
+        rectangle.beginFill(0x000000);
         rectangle.x = effectorDefinition.position[0];
         rectangle.y = effectorDefinition.position[1];
         rectangle.width = effectorDefinition.size[0];
         rectangle.height = effectorDefinition.size[1];
         rectangle.drawRect(0, 0, effectorDefinition.size[0], effectorDefinition.size[1]);
         rectangle.alpha = settings.debugMode ? 0.5 : 0;
+        
 
         const effectText = new PIXI.Text(effectorDefinition.effect, {
             fontFamily: 'Arial',
@@ -34,7 +35,7 @@ export function initEffectors(app, transport, sceneName) {
         effectText.anchor.set(0.5);
         effectText.x = rectangle.width / 2;
         effectText.y = rectangle.height / 2;
-            
+        
         rectangle.addChild(effectText);
 
         app.stage.addChild(rectangle);
@@ -47,6 +48,7 @@ export function initEffectors(app, transport, sceneName) {
             //effectFilter: pixiFilter,
             rectangle: rectangle
         });
+    
     });
 }
 
@@ -71,7 +73,16 @@ export function setEffects(sprite) {
         var intensity = Math.max(0, 1 - (dist / maxEffectDistance));
 
         //Apply the shader effect
-        if(dist < maxEffectDistance) {            
+        // if(dist < maxEffectDistance) {            
+        //     if (sprite.filters) {   
+        //         console.log(sprite.filters);       
+        //         sprite.filters.push(lookUpFilter(eff.effect.name));
+        //     }
+        // }
+        if(sprite.x >= eff.rectangle.x
+            && sprite.x <= eff.rectangle.x + eff.rectangle.width 
+            && sprite.y >= eff.rectangle.y
+            && sprite.y <= eff.rectangle.y + eff.rectangle.height) {
             if (sprite.filters) {   
                 console.log(sprite.filters);       
                 sprite.filters.push(lookUpFilter(eff.effect.name));
