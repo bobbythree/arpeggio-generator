@@ -79,7 +79,10 @@ export function setEffects(sprite) {
         //         sprite.filters.push(lookUpFilter(eff.effect.name));
         //     }
         // }
-        if(sprite.x >= eff.rectangle.x && sprite.y >= eff.rectangle.y) {
+        if(sprite.x >= eff.rectangle.x
+            && sprite.x <= eff.rectangle.x + eff.rectangle.width 
+            && sprite.y >= eff.rectangle.y
+            && sprite.y <= eff.rectangle.y + eff.rectangle.height) {
             if (sprite.filters) {   
                 console.log(sprite.filters);       
                 sprite.filters.push(lookUpFilter(eff.effect.name));

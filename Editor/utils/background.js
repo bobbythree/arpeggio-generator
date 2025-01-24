@@ -31,10 +31,11 @@ function initParticles(app, sceneName) {
 
     // Particle array
     const particles = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
         const particle = new PIXI.Sprite(particleTexture);
         particle.anchor.set(0.5);
-        particle.tint = scenes[sceneName].particles.color;
+        // particle.tint = scenes[sceneName].particles.color;
+        particle.tint = `hsl(${Math.random() * 360} 50% 50%)`;
         particle.scale.set(Math.random() * 0.5 + 0.5); // Random size
         particle.x = Math.random() * app.screen.width;
         particle.y = Math.random() * app.screen.height;
@@ -58,7 +59,7 @@ function initParticles(app, sceneName) {
             if (particle.y > app.screen.height) particle.y = 0;
 
             // Slowly fade particles in and out
-            particle.alpha += Math.sin(app.ticker.lastTime / 1000) * 0.01;
+            // particle.alpha += Math.sin(app.ticker.lastTime / 1000) * 0.01;
         });
     });
 }
