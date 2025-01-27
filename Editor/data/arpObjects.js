@@ -5,20 +5,20 @@ export const arpObjects = {
         "chordName": "Cmajor9",
         "synthName" : "polySynth"
     },
-    "cloud-01": {
-        "image": "./images/happy/happy-cloud.png",
+    "fish": {
+        "image": "./images/happy/happy-fish.png",
         "mood": "happy",
         "chordName": "Gmajor",
         "synthName" : "polySynth"
     },
-    "tree-01": {
-        "image": "./images/happy/happy-tree.png",
+    "rock": {
+        "image": "./images/happy/happy-rock.png",
         "mood": "happy",
         "chordName": "Cmajor",
         "synthName" : "polySynth"
     },
-    "rock": {
-        "image": "./images/happy/happy-rock.png",
+    "pier": {
+        "image": "./images/happy/happy-pier.png",
         "mood": "happy",
         "chordName": "C5",
         "synthName" : "polySynth"
