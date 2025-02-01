@@ -19,7 +19,8 @@ body {
     cursor: grab;
 }
 #scene {
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 .mood-container {
     display: flex;
@@ -34,6 +35,9 @@ body {
 }
 
 #control-panel {
+    position: absolute;
+    top:50px;
+    right: 50px;
     width: 200px;
     float: right;
     padding: 10px;

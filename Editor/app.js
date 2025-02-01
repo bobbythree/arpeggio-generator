@@ -15,9 +15,14 @@ window.addEventListener("load", (event) => {
 
 const app = new PIXI.Application({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.innerHeight,    
     backgroundColor: 0x1099bb,
+    resizeTo: window
 });
+
+window.addEventListener('resize', () => {
+    
+})
 
 const sprites = [];
 let spriteIdIndex = 0; // pixi has a uid
