@@ -1,12 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     overflow-y: hidden; /* Hide vertical scrollbar */
     overflow-x: hidden; /* Hide horizontal scrollbar */
   }
 #icon-container {
-    display: flex;
-    gap: 5px;
-    padding: 5px;
-    background-color: #f0f0f0;
+    position: absolute;
+    top: 50px;
+    left: 50px;
 }
 .icon {
     width: 50px;
@@ -14,21 +19,14 @@ body {
     cursor: grab;
 }
 #scene {
-    width: 800px;
-    height: 600px;
-    border: 1px solid #ccc;
-    margin-top: 20px;
-    float: left;
+    width: 100%;
 }
 .mood-container {
     display: flex;
-    gap: 5px;
-    padding: 5px;
-    background-color: #f0f0f0;
-    padding: 5px;
-    margin: 5px;
-    border: 2px solid darkgray;
-    min-width: 250px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border: 2px solid black;
 }
 
 #start-button:hover {
