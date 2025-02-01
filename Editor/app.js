@@ -4,7 +4,7 @@ import { start, stop, getArp, addArp, deleteArp, adjustVolume, nextSynth } from 
 import { moods } from "./data/moods-chords.js";
 import { initEffectors, setEffects, updateEffectorVisibility } from "./audio/effector.js";
 import { setBackround,  } from './utils/background.js';
-import { toggleDebugMode } from './settings.js';
+import { toggleControlPanel, toggleDebugMode } from './settings.js';
 
 //event lisener for page load
 window.addEventListener("load", (event) => {
@@ -61,6 +61,11 @@ for (const [name, obj] of Object.entries(arpObjects)) {
     // Add the icon to the appropriate mood container
     moodContainers[obj.mood].appendChild(img);
 }
+
+//toggle control panel display
+document.addEventListener('keyup', (e) => {
+    if(e.key === 'd') toggleControlPanel();
+})
 
 // Populate the scene selector dropdown
 function populateSceneSelector() {
