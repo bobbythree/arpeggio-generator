@@ -20,9 +20,14 @@ const app = new PIXI.Application({
     resizeTo: window
 });
 
-window.addEventListener('resize', () => {
-    
-})
+//resize window event
+window.addEventListener('resize', handleRezise)
+
+function handleRezise() {
+    setTimeout(() => {
+        loadScene('happy');
+    }, 100)
+}
 
 const sprites = [];
 let spriteIdIndex = 0; // pixi has a uid
