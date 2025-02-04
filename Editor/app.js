@@ -23,6 +23,7 @@ const app = new PIXI.Application({
 //resize window event
 window.addEventListener('resize', handleRezise)
 
+//timeout for maximize event
 function handleRezise() {
     setTimeout(() => {
         loadScene('happy');
