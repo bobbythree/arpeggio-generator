@@ -14,10 +14,21 @@ window.addEventListener("load", (event) => {
 });
 
 const app = new PIXI.Application({
-    width: 1280,
-    height: 720,
+    width: window.innerWidth,
+    height: window.innerHeight,    
     backgroundColor: 0x1099bb,
+    resizeTo: window
 });
+
+//resize window event
+window.addEventListener('resize', handleRezise)
+
+//timeout for maximize event
+function handleRezise() {
+    setTimeout(() => {
+        loadScene('happy');
+    }, 100)
+}
 
 const sprites = [];
 let spriteIdIndex = 0; // pixi has a uid
@@ -38,11 +49,6 @@ for (const [name, obj] of Object.entries(arpObjects)) {
         // Create a new container for the mood
         const moodContainer = document.createElement('div');
         moodContainer.className = 'mood-container';
-        
-        // Create a label for the mood
-        const moodLabel = document.createElement('label');
-        moodLabel.textContent = obj.mood;
-        moodContainer.appendChild(moodLabel);
 
         // Add the mood container to the icon container
         iconContainer.appendChild(moodContainer);
